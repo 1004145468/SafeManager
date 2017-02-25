@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SafeManager</string>
+    <string name="login_forgetpassword">忘记密码</string>
+    <string name="login">登　录</string>
+</resources>
