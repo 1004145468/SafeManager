@@ -1,4 +1,4 @@
-package com.yl.safemanager.login;
+package com.yl.safemanager;
 
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.yl.safemanager.R;
 import com.yl.safemanager.base.BaseActivity;
+import com.yl.safemanager.utils.DialogUtils;
+import com.yl.safemanager.utils.SFGT;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,8 @@ public class LoginActivity extends BaseActivity{
     ImageView mPasswordEyeView;
     @BindView(R.id.tv_forgetpassword)
     TextView mForgetView;
+    @BindView(R.id.tv_register)
+    TextView mRegisterView;
 
     private boolean isVisiable = false;
 
@@ -43,6 +47,7 @@ public class LoginActivity extends BaseActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);//初始化ButterKnife的綁定
         mForgetView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
+        mRegisterView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mUserView.addTextChangedListener(new TextChangeHanlder(R.id.et_user));
         mPasswordView.addTextChangedListener(new TextChangeHanlder(R.id.et_password));
     }
@@ -65,14 +70,19 @@ public class LoginActivity extends BaseActivity{
 
     @OnClick(R.id.tv_forgetpassword)
     public void forgetPassword(){
-        //忘记密码
-        Toast.makeText(this, "忘记密码", Toast.LENGTH_SHORT).show();
+       SFGT.gotoForgetPswActivity(this);
+    }
+
+    @OnClick(R.id.tv_register)
+    public void onRegister(){
+        SFGT.gotoRegisterActivity(this);
     }
 
 
     @OnClick(R.id.btn_login)
     public void login(){
-        Toast.makeText(this, "开始登录", Toast.LENGTH_SHORT).show();
+        //TODO 用户的登录
+
     }
 
     class TextChangeHanlder implements TextWatcher{

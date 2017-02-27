@@ -1,5 +1,27 @@
 <resources>
-    <string name="app_name">SafeManager</string>
+    <string name="app_name">安全管家</string>
     <string name="login_forgetpassword">忘记密码</string>
+    <string name="login_forgetpassword_mail">密码重置邮件已发送至邮箱</string>
     <string name="login">登　录</string>
+    <string name="loginnopadding">登录</string>
+    <string name="register">注　册</string>
+    <string name="user">账　号</string>
+    <string name="user_hint">请输入注册邮箱</string>
+    <string name="password">密　码</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="title_activity_base_title_back">BaseTitleBackActivity</string>
+    <string name="register_user">请用邮箱注册</string>
+    <string name="password_hintagain">请确认密码</string>
+    <string name="hasuserID">已有账号？</string>
+    <string name="ok">确　定</string>
+    <string name="isnotmail">请以邮箱作为用户名进行注册</string>
+    <string name="infoisnocomplete">请将信息填写完整</string>
+    <string name="passwordnotequal">两次密码输入不一致</string>
+    <string name="default_nick">安全小粉丝</string>
+    <string name="default_msg">保护手机数据就用安全管家</string>
+    <string name="onregister">用户信息正在注册</string>
+    <string name="register_success">注册成功</string>
+    <string name="default_error">注册失败，请重新确认注册信息</string>
+    <string name="username_exist">该邮箱已被注册！</string>
+    <string name="net_notperfect">网络状况欠佳！</string>
 </resources>
