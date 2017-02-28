@@ -2,6 +2,7 @@ package com.yl.safemanager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.RegexUtils;
 import com.yl.safemanager.utils.SFGT;
+import com.yl.safemanager.utils.SpUtils;
 import com.yl.safemanager.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -65,8 +67,8 @@ public class RegisterActivity extends BaseTitleBackActivity {
     @OnClick(R.id.btn_regeist)
     public void onRegeist() {
         //开始注册
-        String username = mUserNameView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String username = mUserNameView.getText().toString();
+        final String password = mPasswordView.getText().toString();
         String password1 = mPassword2View.getText().toString();
         //非空判断
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password) || TextUtils.isEmpty(password1)) {
@@ -84,18 +86,21 @@ public class RegisterActivity extends BaseTitleBackActivity {
             return;
         }
         DialogUtils.showIndeterminateDialog(this, getResources().getString(R.string.onregister), false, null);
-        BmobUtils.signUpWithFile(this,username, password, ImageUri, new SaveListener<SafeUser>() {
+        BmobUtils.signUpWithFile(this, username, password, ImageUri, new SaveListener<SafeUser>() {
             @Override
             public void done(SafeUser safeUser, BmobException e) {
                 DialogUtils.shutdownIndeterminateDialog();
-                String errorMsg = getResources().getString(R.string.register_success);
+                String errorMsg = null;
                 if (e != null) {
-                    errorMsg  = getResources().getString(R.string.default_error);
+                    errorMsg = getResources().getString(R.string.default_error);
                     if (e.getErrorCode() == 202) {
                         errorMsg = getResources().getString(R.string.username_exist);
                     } else if (e.getErrorCode() == 9015) {
                         errorMsg = getResources().getString(R.string.default_error);
                     }
+                } else {
+                    errorMsg = getResources().getString(R.string.register_success);
+                    SpUtils.saveString(getApplicationContext(), username, ImageUri == null ? "" : ImageUri.toString());//保存头像信息
                 }
                 ToastUtils.showToast(RegisterActivity.this, errorMsg, Effects.standard, R.id.id_root);
             }

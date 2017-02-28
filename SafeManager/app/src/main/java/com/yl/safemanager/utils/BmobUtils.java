@@ -75,6 +75,13 @@ public class BmobUtils {
         });
     }
 
+    public static void login(String username,String password,SaveListener<SafeUser> listener){
+        SafeUser safeUser = new SafeUser();
+        safeUser.setUsername(username);
+        safeUser.setPassword(EncryptUtils.md5Encrypt(password));
+        safeUser.login(listener);
+    }
+
     /**
      * 文件下载成功回调
      */

@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/login_bg">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/id_root"
+        />
+
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_head"
