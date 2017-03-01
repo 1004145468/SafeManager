@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.yl.safemanager.InfoChangeActivity;
+import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
 
@@ -48,6 +49,15 @@ public class SFGT {
             ((Activity) context).startActivityForResult(intent,IMAGEPICK_REQUEST_CODE);
         }
 
+    }
+
+    // 打开功能界面
+    public static void gotoFunctionActivity(Context context){
+        if(context instanceof Activity){
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+            ((Activity) context).finish();
+        }
     }
 
 }

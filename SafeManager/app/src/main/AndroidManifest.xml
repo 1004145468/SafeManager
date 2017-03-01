@@ -27,7 +27,8 @@
             android:name=".base.BaseTitleBackActivity"
             android:label="@string/title_activity_base_title_back" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".InfoChangeActivity"></activity>
+        <activity android:name=".InfoChangeActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -36,4 +36,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.github.sd6352051:NiftyNotification:1.2'
+    compile 'com.android.support:design:25.1.1'
 }

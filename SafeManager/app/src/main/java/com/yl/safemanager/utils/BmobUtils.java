@@ -11,6 +11,7 @@ import com.yl.safemanager.entities.SafeUser;
 
 import java.io.File;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -80,6 +81,10 @@ public class BmobUtils {
         safeUser.setUsername(username);
         safeUser.setPassword(EncryptUtils.md5Encrypt(password));
         safeUser.login(listener);
+    }
+
+    public static SafeUser getCurrentUser(){
+        return BmobUser.getCurrentUser(SafeUser.class);
     }
 
     /**

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="functionnames">
+        <item>文件隐藏</item>
+        <item>短信加解密</item>
+        <item>应用加锁</item>
+        <item>数据备份</item>
+        <item>数据恢复</item>
+        <item>私密数据记录</item>
+        <item>邮件加解密</item>
+        <item>意见反馈</item>
+    </string-array>
+
+    <string-array name="functiondescrips">
+        <item>点击进入</item>
+        <item>点击进入</item>
+        <item>点击进入</item>
+        <item>点击进入</item>
+        <item>点击进入</item>
+        <item>点击进入</item>
+        <item>点击进入</item>
+        <item>点击进入</item>
+    </string-array>
+
+</resources>

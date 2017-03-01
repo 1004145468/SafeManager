@@ -1,6 +1,5 @@
 package com.yl.safemanager;
 
-import android.app.Dialog;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gitonway.lee.niftynotification.lib.Effects;
-import com.gitonway.lee.niftynotification.lib.NiftyNotificationView;
 import com.yl.safemanager.base.BaseActivity;
 import com.yl.safemanager.entities.SafeUser;
 import com.yl.safemanager.utils.BmobUtils;
@@ -53,12 +51,14 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);//初始化ButterKnife的綁定
+        SFGT.gotoFunctionActivity(this);
         mForgetView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mRegisterView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mUserView.addTextChangedListener(new TextChangeHanlder(R.id.et_user));
         mPasswordView.addTextChangedListener(new TextChangeHanlder(R.id.et_password));
+
     }
 
 
@@ -109,7 +109,7 @@ public class LoginActivity extends BaseActivity {
                 if(e != null){
                     ToastUtils.showToast(LoginActivity.this, getString(R.string.userinfo_empty), Effects.thumbSlider, R.id.id_root);
                 }else{
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                   SFGT.gotoFunctionActivity(LoginActivity.this);
                 }
             }
         });
