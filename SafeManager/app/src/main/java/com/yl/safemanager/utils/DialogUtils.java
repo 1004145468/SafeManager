@@ -21,12 +21,10 @@ public class DialogUtils {
 
     //展示一个不确定进度Dialog
     public static void showIndeterminateDialog(Context context, String note, boolean canCancel, DialogInterface.OnCancelListener listener) {
-        if(dialog == null){
-            View dialogView = View.inflate(context, R.layout.dialog_indeterminate, null);
-            noteView = (TextView) dialogView.findViewById(R.id.dialog_note);
-            dialog = new Dialog(context, R.style.dialog);
-            dialog.setContentView(dialogView);
-        }
+        View dialogView = View.inflate(context, R.layout.dialog_indeterminate, null);
+        noteView = (TextView) dialogView.findViewById(R.id.dialog_note);
+        dialog = new Dialog(context, R.style.dialog);
+        dialog.setContentView(dialogView);
         noteView.setText(note);
         dialog.setCancelable(canCancel);
         dialog.setOnCancelListener(listener); //设置取消监听
@@ -38,12 +36,15 @@ public class DialogUtils {
         dialogWindow.setAttributes(attributes);
     }
 
-    public static void shutdownIndeterminateDialog(){
-        if(dialog != null){
+    public static void shutdownIndeterminateDialog() {
+        if (dialog != null) {
             dialog.cancel();
+            dialog = null;
+        }
+        if(noteView != null){
+            noteView = null;
         }
     }
-
 
 
 }

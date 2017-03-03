@@ -16,12 +16,23 @@ import com.yl.safemanager.base.BaseSfHolder;
 import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
 import com.yl.safemanager.entities.SafeUser;
+import com.yl.safemanager.utils.SFGT;
+import com.yl.safemanager.utils.UriUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.yl.safemanager.constant.Constant.FUNCTION_APPLOCK;
+import static com.yl.safemanager.constant.Constant.FUNCTION_DATABACKUP;
+import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECORD;
+import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECOVER;
+import static com.yl.safemanager.constant.Constant.FUNCTION_FILELOCK;
+import static com.yl.safemanager.constant.Constant.FUNCTION_IDEA;
+import static com.yl.safemanager.constant.Constant.FUNCTION_MAILLOCK;
+import static com.yl.safemanager.constant.Constant.FUNCTION_SMSLOCK;
 
 /**
  * Created by YL on 2017/3/1.
@@ -31,10 +42,12 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     private static final String TAG = "FunctionAdapter";
 
+    private Context mContext;
     private LayoutInflater mLayoutInflater;
     private ArrayList<SafeFunctionItem> mDatas;
 
     public FunctionAdapter(Context context, ArrayList<SafeFunctionItem> datas) {
+        this.mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mDatas = datas;
     }
@@ -73,6 +86,8 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
      */
     class HeadViewHolder extends BaseSfHolder {
 
+        private SafeUser safeUser;
+
         @BindView(R.id.head_bg)
         SimpleDraweeView bgView;
         @BindView(R.id.head_nick)
@@ -89,7 +104,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
         @Override
         public void setData(Object data) {
-            SafeUser safeUser = (SafeUser) data;
+            safeUser = (SafeUser) data;
             //绑定数据
             nickView.setText(safeUser.getmNick());
             sexView.setImageResource(safeUser.getmSex() == SafeUser.MAN ? R.drawable.global_icon_male : R.drawable.global_icon_female);
@@ -114,8 +129,10 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     class FunctionViewHolder extends BaseSfHolder {
 
+        private  SafeFunctionInfo info;
+
         @BindView(R.id.function_img)
-        ImageView functionImg;
+        SimpleDraweeView functionImg;
         @BindView(R.id.function_name)
         TextView functionName;
         @BindView(R.id.function_description)
@@ -128,10 +145,40 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
         @Override
         public void setData(Object data) {
-            SafeFunctionInfo info = (SafeFunctionInfo) data;
-            functionImg.setImageResource(info.getFunctionImg());
+            info = (SafeFunctionInfo) data;
+            functionImg.setImageURI(UriUtils.drawable2Uri(info.getFunctionImg()));
             functionName.setText(info.getFunctionName());
             functionDescription.setText(info.getFunctionDescription());
+        }
+
+        @OnClick(R.id.function_total)
+        public void onItemOnClick(){
+            switch (info.getFunctionName()){
+                case FUNCTION_FILELOCK:
+                    SFGT.gotoFileLockActivity(mContext);
+                    break;
+                case FUNCTION_SMSLOCK:
+
+                    break;
+                case FUNCTION_APPLOCK:
+
+                    break;
+                case FUNCTION_DATABACKUP:
+
+                    break;
+                case FUNCTION_DATARECOVER:
+
+                    break;
+                case FUNCTION_DATARECORD:
+
+                    break;
+                case FUNCTION_MAILLOCK:
+
+                    break;
+                case FUNCTION_IDEA:
+
+                    break;
+            }
         }
     }
 }

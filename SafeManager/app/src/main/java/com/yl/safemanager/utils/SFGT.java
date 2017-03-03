@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.yl.safemanager.FileLockActivity;
 import com.yl.safemanager.InfoChangeActivity;
 import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
@@ -58,6 +59,18 @@ public class SFGT {
             context.startActivity(intent);
             ((Activity) context).finish();
         }
+    }
+
+    /**
+     * 跳转到给文件加锁界面
+     * @param context
+     */
+    public static void gotoFileLockActivity(Context context){
+        if(context instanceof Activity){
+            Intent intent = new Intent(context, FileLockActivity.class);
+            context.startActivity(intent);
+        }
+
     }
 
 }

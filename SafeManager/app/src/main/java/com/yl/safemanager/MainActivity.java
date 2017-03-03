@@ -44,8 +44,11 @@ public class MainActivity extends BaseActivity {
     @BindArray(R.array.functiondescrips)
     String[] mFunctionDesc;
 
-    private int[] mFuntionImg = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher
-            , R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+    //功能图标
+    private int[] mFuntionImg = {R.drawable.filestory, R.drawable.sms, R.drawable.app,
+                                R.drawable.backup, R.drawable.recovery, R.drawable.record,
+                                R.drawable.mail, R.drawable.idea};
+
     private LinearLayoutManager linearLayoutManager;
 
     private View mHeadView;
@@ -133,7 +136,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void overshootSmoothToPosition(){
+    private void overshootSmoothToPosition() {
         final ViewGroup.LayoutParams layoutParams = mHeadView.getLayoutParams();
         final int height = layoutParams.height;
         final int tmpHeight = height - mHeadViewHeight;
