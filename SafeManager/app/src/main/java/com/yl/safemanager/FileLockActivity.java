@@ -39,6 +39,12 @@ public class FileLockActivity extends BaseTitleBackActivity {
                 case ENCRYPTION_SUCCESS:
                     Toast.makeText(FileLockActivity.this, "加密成功", Toast.LENGTH_SHORT).show();
                     break;
+                case DECRYPTION_FAIL:
+                    Toast.makeText(FileLockActivity.this, "解密失败", Toast.LENGTH_SHORT).show();
+                    break;
+                case DECRYPTION_SUCCESS:
+                    Toast.makeText(FileLockActivity.this, "解密成功", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -81,7 +87,7 @@ public class FileLockActivity extends BaseTitleBackActivity {
     }
 
     /**
-     * 对文件进行解密
+     * 对文件进行加密
      * @param filePath 源文件绝对路径
      * @param desPath 目标文件绝对路劲
      */
@@ -106,4 +112,32 @@ public class FileLockActivity extends BaseTitleBackActivity {
             }
         }.start();
     }
+
+    /**
+     * 对文件进行解密
+     * @param filePath 源文件绝对路径
+     * @param desPath 目标文件绝对路劲
+     */
+    private void DecryptFile(final String filePath, final String desPath) {
+        new Thread() {
+            @Override
+            public void run() {
+                Boolean result = FileConcealUtils.DecryptionFile(getApplicationContext(), filePath, desPath);
+                if (result) { //成功就删除源文件
+                    File srcFile = new File(filePath);
+                    if (srcFile.exists() && srcFile.isFile()) {
+                        srcFile.delete();
+                    }
+                    mHandler.sendEmptyMessage(DECRYPTION_SUCCESS);
+                } else {
+                    File desFile = new File(desPath); //失败就删除错误文件
+                    if (desFile.exists() && desFile.isFile()) {
+                        desFile.delete();
+                    }
+                    mHandler.sendEmptyMessage(DECRYPTION_FAIL);
+                }
+            }
+        }.start();
+    }
+
 }
