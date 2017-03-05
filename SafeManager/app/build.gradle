@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 24
@@ -26,9 +26,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    //Bmob的数据存储、文件等服务
-    //Bmob兼容Android6.0
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.facebook.fresco:fresco:1.1.0'
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile 'cn.bmob.android:http-legacy:1.0'
@@ -37,6 +37,4 @@ dependencies {
     compile 'com.github.sd6352051:NiftyNotification:1.2'
     compile files('libs/conceal_android.jar')
     compile files('libs/libconceal.jar')
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }

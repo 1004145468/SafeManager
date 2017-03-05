@@ -76,7 +76,7 @@ public class LockFileAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             if (model == null) {
                 return;
             }
-            numView.setText(model.getPosition());
+            numView.setText(String.valueOf(model.getPosition()));
             filenameView.setText(model.getOriginFileName() + FILE_TRANSLATION + model.getLockFileName());
             timeView.setText(model.getSaveTime());
         }
@@ -84,7 +84,7 @@ public class LockFileAdapter extends RecyclerView.Adapter<BaseSfHolder> {
         @OnClick(R.id.id_root)
         public void encryptLockFile() {
             if (listener != null) {
-                listener.DecryptFile(model.getLockFilePath(), model.getOriginFilePath(), model.getId(), model.getPosition());
+                listener.DecryptFile(model);
             }
         }
     }

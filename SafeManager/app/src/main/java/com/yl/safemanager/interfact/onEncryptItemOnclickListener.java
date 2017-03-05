@@ -1,9 +1,11 @@
 package com.yl.safemanager.interfact;
 
+import com.yl.safemanager.entities.LockFileModel;
+
 /**
  * Created by YL on 2017/3/5.
  */
 
 public interface onEncryptItemOnclickListener {
-    void DecryptFile(String filePath, String desPath, long id, int position);
+    void DecryptFile(LockFileModel lockFileModel);
 }

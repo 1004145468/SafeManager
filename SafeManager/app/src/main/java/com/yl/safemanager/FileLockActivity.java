@@ -7,8 +7,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.LockFileAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
@@ -18,9 +20,12 @@ import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.interfact.onEncryptItemOnclickListener;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.FileConcealUtils;
+import com.yl.safemanager.utils.ToastUtils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +44,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
 
     private List<LockFileModel> mDatas;
     private LockFileAdapter lockFileAdapter;
+    private SimpleDateFormat mTimerFormater;
 
     @BindView(R.id.filelock_list)
     RecyclerView mFileLockListView;
@@ -49,16 +55,25 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ENCRYPTION_FAIL:
-                    Toast.makeText(FileLockActivity.this, "加密失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FileLockActivity.this, getString(R.string.encrypt_fail), Toast.LENGTH_SHORT).show();
                     break;
                 case ENCRYPTION_SUCCESS:
-                    Toast.makeText(FileLockActivity.this, "加密失败", Toast.LENGTH_SHORT).show();
+                    LockFileModel lockFileModel = (LockFileModel) msg.obj;
+                    DataBaseUtils.saveLockFileModel(lockFileModel); //加密记录存入数据库
+                    mDatas.add(0, lockFileModel);
+                    lockFileAdapter.notifyItemInserted(0);
+                    Toast.makeText(FileLockActivity.this, getString(R.string.encrypt_success), Toast.LENGTH_SHORT).show();
                     break;
                 case DECRYPTION_FAIL:
-                    Toast.makeText(FileLockActivity.this, "解密失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast(FileLockActivity.this,getString(R.string.decrypt_fail), Effects.thumbSlider,R.id.id_root);
                     break;
                 case DECRYPTION_SUCCESS:
-                    Toast.makeText(FileLockActivity.this, "解密成功", Toast.LENGTH_SHORT).show();
+                    LockFileModel lockFileModel1 = (LockFileModel) msg.obj;
+                    DataBaseUtils.deleteLockFileModel(lockFileModel1.getId());
+                    int position = lockFileModel1.getPosition();
+                    mDatas.remove(position);
+                    lockFileAdapter.notifyItemRemoved(position);
+                    ToastUtils.showToast(FileLockActivity.this,getString(R.string.decrypt_success), Effects.thumbSlider,R.id.id_root);
                     break;
             }
         }
@@ -69,18 +84,17 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataBaseUtils.initRealm(this);
+        mTimerFormater = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         initViews();
         initDatas();
     }
 
     private void initDatas() {
-        DataBaseUtils.getAllLockFileModels(new OnResultAttachedListener<RealmResults<LockFileModel>>() {
+        DataBaseUtils.getAllLockFileModels(new OnResultAttachedListener<List<LockFileModel>>() {
             @Override
-            public void onResult(RealmResults<LockFileModel> lockFileModels) {
-                int length = lockFileModels.size();
-                for (int i = 0; i < length; i++) {
-                    mDatas.add(lockFileModels.get(i));
-                }
+            public void onResult(List<LockFileModel> lockFileModels) {
+                Log.d(TAG, "onResult: " + Thread.currentThread().getName());
+                mDatas.addAll(lockFileModels);
                 lockFileAdapter.notifyDataSetChanged(); //刷新展示
             }
         });
@@ -148,14 +162,10 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
                     }
                     String originName = filePath.substring(filePath.lastIndexOf("/") + 1);
                     String desName = desPath.substring(desPath.lastIndexOf("/") + 1);
-                    DataBaseUtils.saveLockFileModel(originName, desName, filePath, desPath, new OnResultAttachedListener<LockFileModel>() {
-                        @Override
-                        public void onResult(LockFileModel lockFileModel) {
-                            mDatas.add(0, lockFileModel);
-                            lockFileAdapter.notifyItemInserted(0);
-                        }
-                    });
-                    mHandler.sendEmptyMessage(ENCRYPTION_SUCCESS);
+                    LockFileModel lockFileModel = new LockFileModel(
+                            System.currentTimeMillis(), mTimerFormater.format(new Date()),
+                            originName, desName, filePath, desPath);
+                    mHandler.sendMessage(mHandler.obtainMessage(ENCRYPTION_SUCCESS, lockFileModel));
                 } else {
                     File desFile = new File(desPath); //失败就删除错误文件
                     if (desFile.exists() && desFile.isFile()) {
@@ -170,27 +180,21 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
     /**
      * 对文件进行解密
      *
-     * @param filePath 源文件绝对路径
-     * @param desPath  目标文件绝对路劲
+     * @param lockFileModel
      */
-    public void DecryptFile(final String filePath, final String desPath, final long id, final int position) {
+    public void DecryptFile(final LockFileModel lockFileModel) {
         new Thread() {
             @Override
             public void run() {
-                Boolean result = FileConcealUtils.DecryptionFile(getApplicationContext(), filePath, desPath);
+                Boolean result = FileConcealUtils.DecryptionFile(getApplicationContext(), lockFileModel.getLockFilePath(), lockFileModel.getOriginFilePath());
                 if (result) { //成功就删除源文件
-                    File srcFile = new File(filePath);
+                    File srcFile = new File(lockFileModel.getLockFilePath());
                     if (srcFile.exists() && srcFile.isFile()) {
                         srcFile.delete();
                     }
-                    //TODO 删除数据库一条数据
-                    DataBaseUtils.deleteLockFileModel(id);
-                    //TODO recyclerview的數據刷新
-                    mDatas.remove(position);
-                    lockFileAdapter.notifyItemRemoved(position);
-                    mHandler.sendEmptyMessage(DECRYPTION_SUCCESS);
+                    mHandler.sendMessage(mHandler.obtainMessage(DECRYPTION_SUCCESS, lockFileModel));
                 } else {
-                    File desFile = new File(desPath); //失败就删除错误文件
+                    File desFile = new File(lockFileModel.getOriginFilePath()); //失败就删除错误文件
                     if (desFile.exists() && desFile.isFile()) {
                         desFile.delete();
                     }

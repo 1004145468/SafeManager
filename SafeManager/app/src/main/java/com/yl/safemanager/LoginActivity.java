@@ -25,6 +25,7 @@ import com.yl.safemanager.utils.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -51,8 +52,9 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);//初始化ButterKnife的綁定
-        //SFGT.gotoFunctionActivity(this);
+        //初始化ButterKnife的綁定
+        ButterKnife.bind(this);
+        SFGT.gotoFunctionActivity(this);
         mForgetView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mRegisterView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mUserView.addTextChangedListener(new TextChangeHanlder(R.id.et_user));
@@ -100,15 +102,15 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         //用户登录
-        DialogUtils.showIndeterminateDialog(this,getString(R.string.load_userinfo),false,null);
+        DialogUtils.showIndeterminateDialog(this, getString(R.string.load_userinfo), false, null);
         BmobUtils.login(username, password, new SaveListener<SafeUser>() {
             @Override
             public void done(SafeUser safeUser, BmobException e) {
                 DialogUtils.shutdownIndeterminateDialog();
-                if(e != null){
+                if (e != null) {
                     ToastUtils.showToast(LoginActivity.this, getString(R.string.userinfo_empty), Effects.thumbSlider, R.id.id_root);
-                }else{
-                   SFGT.gotoFunctionActivity(LoginActivity.this);
+                } else {
+                    SFGT.gotoFunctionActivity(LoginActivity.this);
                 }
             }
         });
