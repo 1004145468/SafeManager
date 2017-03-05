@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gitonway.lee.niftynotification.lib.Effects;
@@ -53,7 +52,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);//初始化ButterKnife的綁定
-        SFGT.gotoFunctionActivity(this);
+        //SFGT.gotoFunctionActivity(this);
         mForgetView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mRegisterView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mUserView.addTextChangedListener(new TextChangeHanlder(R.id.et_user));

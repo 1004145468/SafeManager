@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.yl.safemanager"
         minSdkVersion 14
@@ -29,14 +30,13 @@ dependencies {
     //Bmob兼容Android6.0
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.facebook.fresco:fresco:1.1.0'
-    compile 'com.jakewharton:butterknife:8.5.1'
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile 'cn.bmob.android:http-legacy:1.0'
     compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.github.sd6352051:NiftyNotification:1.2'
-    compile 'com.android.support:design:25.1.1'
     compile files('libs/conceal_android.jar')
     compile files('libs/libconceal.jar')
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }

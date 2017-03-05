@@ -62,10 +62,10 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
         View rootView = null;
         BaseSfHolder baseSfHolder = null;
         if (viewType == SafeFunctionItem.TYPE_HEAD) {
-            rootView = mLayoutInflater.inflate(R.layout.view_headinfo, parent, false);
+            rootView = mLayoutInflater.inflate(R.layout.item_headinfo, parent, false);
             baseSfHolder = new HeadViewHolder(rootView);
         } else if (viewType == SafeFunctionItem.TYPE_FUNCTION) {
-            rootView = mLayoutInflater.inflate(R.layout.view_functionitem, parent, false);
+            rootView = mLayoutInflater.inflate(R.layout.item_functionitem, parent, false);
             baseSfHolder = new FunctionViewHolder(rootView);
         }
         return baseSfHolder;
