@@ -20,10 +20,12 @@ import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.UriUtils;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 import static com.yl.safemanager.constant.Constant.FUNCTION_APPLOCK;
 import static com.yl.safemanager.constant.Constant.FUNCTION_DATABACKUP;
@@ -161,7 +163,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
                     break;
                 case FUNCTION_APPLOCK:
-
+                    SFGT.gotoAppLockActivity(mContext);
                     break;
                 case FUNCTION_DATABACKUP:
 

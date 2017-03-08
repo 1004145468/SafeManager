@@ -32,4 +32,5 @@
     <string name="encrypt_fail">文件加密失败</string>
     <string name="decrypt_success">文件解密成功</string>
     <string name="decrypt_fail">文件解密失败</string>
+    <string name="loading_appinfo">正在加载应用信息</string>
 </resources>

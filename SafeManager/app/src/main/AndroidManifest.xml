@@ -29,7 +29,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".InfoChangeActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".FileLockActivity"></activity>
+        <activity android:name=".FileLockActivity" />
+        <activity android:name=".AppLockActivity"></activity>
     </application>
 
 </manifest>

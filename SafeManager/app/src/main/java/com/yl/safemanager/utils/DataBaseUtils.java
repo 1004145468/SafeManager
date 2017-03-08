@@ -3,6 +3,7 @@ package com.yl.safemanager.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.yl.safemanager.entities.AppInfo;
 import com.yl.safemanager.entities.LockFileModel;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 
@@ -60,11 +61,11 @@ public class DataBaseUtils {
         });
     }
 
-        /***
-         * 对文件进行解锁时候 调用 （删除一条数据从数据库）
-         *
-         * @param id
-         */
+    /***
+     * 对文件进行解锁时候 调用 （删除一条数据从数据库）
+     *
+     * @param id
+     */
 
     public static void deleteLockFileModel(final long id) {
         mRealm.executeTransaction(new Realm.Transaction() {
@@ -82,23 +83,45 @@ public class DataBaseUtils {
      * 获取所有已经加锁的文件信息
      */
     public static void getAllLockFileModels(final OnResultAttachedListener<List<LockFileModel>> listener) {
-        mRealm.executeTransactionAsync(new Realm.Transaction() {
+        mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmResults<LockFileModel> mFileModels = realm.where(LockFileModel.class).findAllSorted("id", Sort.DESCENDING);
                 if (listener != null) {
-                    List<LockFileModel> models = new ArrayList<>();
-                    int length = mFileModels.size();
-                    for (int i = 0; i < length; i++) {
-                        LockFileModel lockFileModel = mFileModels.get(i);
-                        models.add(new LockFileModel(
-                                lockFileModel.getId(), lockFileModel.getSaveTime(),
-                                lockFileModel.getOriginFileName(), lockFileModel.getLockFileName(),
-                                lockFileModel.getOriginFilePath(), lockFileModel.getLockFilePath()));
-                    }
-                    listener.onResult(models);
+                    listener.onResult(realm.copyFromRealm(mFileModels));
                 }
+            }
+        });
+    }
 
+    /**
+     * 存入加锁应用信息
+     *
+     * @param appInfos
+     */
+    public static void saveLockApp(final List<AppInfo> appInfos) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<AppInfo> all = realm.where(AppInfo.class).findAll();
+                all.deleteAllFromRealm(); //删除并更新存储记录
+                for (AppInfo appInfo : appInfos) {
+                    realm.copyToRealm(appInfo);
+                }
+            }
+        });
+
+    }
+
+    public static void getAllLockApps(final OnResultAttachedListener<List<AppInfo>> listener) {
+        List<AppInfo> mDatas = new ArrayList<>();
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<AppInfo> results = realm.where(AppInfo.class).findAll();
+                if(listener != null){
+                   listener.onResult(realm.copyFromRealm(results));
+                }
             }
         });
     }

@@ -26,15 +26,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile files('libs/conceal_android.jar')
+    compile files('libs/libconceal.jar')
     compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.facebook.fresco:fresco:1.1.0'
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     compile 'cn.bmob.android:http-legacy:1.0'
     compile 'com.android.support:design:24.2.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.github.sd6352051:NiftyNotification:1.2'
-    compile files('libs/conceal_android.jar')
-    compile files('libs/libconceal.jar')
+    testCompile 'junit:junit:4.12'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

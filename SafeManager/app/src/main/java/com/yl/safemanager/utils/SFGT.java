@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.yl.safemanager.AppLockActivity;
 import com.yl.safemanager.FileLockActivity;
 import com.yl.safemanager.InfoChangeActivity;
 import com.yl.safemanager.MainActivity;
@@ -70,7 +71,17 @@ public class SFGT {
             Intent intent = new Intent(context, FileLockActivity.class);
             context.startActivity(intent);
         }
+    }
 
+    /**
+     * 打开应用锁界面
+     * @param context
+     */
+    public static void gotoAppLockActivity(Context context){
+        if(context instanceof Activity){
+            Intent intent = new Intent(context, AppLockActivity.class);
+            context.startActivity(intent);
+        }
     }
 
 }

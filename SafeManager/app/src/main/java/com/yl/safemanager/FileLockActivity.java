@@ -187,19 +187,21 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
             @Override
             public void run() {
                 Boolean result = FileConcealUtils.DecryptionFile(getApplicationContext(), lockFileModel.getLockFilePath(), lockFileModel.getOriginFilePath());
+                int msg_what = -1;
                 if (result) { //成功就删除源文件
                     File srcFile = new File(lockFileModel.getLockFilePath());
                     if (srcFile.exists() && srcFile.isFile()) {
                         srcFile.delete();
                     }
-                    mHandler.sendMessage(mHandler.obtainMessage(DECRYPTION_SUCCESS, lockFileModel));
+                    msg_what = DECRYPTION_SUCCESS;
                 } else {
                     File desFile = new File(lockFileModel.getOriginFilePath()); //失败就删除错误文件
                     if (desFile.exists() && desFile.isFile()) {
                         desFile.delete();
                     }
-                    mHandler.sendEmptyMessage(DECRYPTION_FAIL);
+                    msg_what = DECRYPTION_FAIL;
                 }
+                mHandler.sendMessage(mHandler.obtainMessage(msg_what, lockFileModel));
             }
         }.start();
     }
