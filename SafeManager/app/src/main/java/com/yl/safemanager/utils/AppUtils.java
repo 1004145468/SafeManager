@@ -1,10 +1,12 @@
 package com.yl.safemanager.utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.yl.safemanager.entities.AppInfo;
 
@@ -34,5 +36,16 @@ public class AppUtils {
             appinfos.add(new AppInfo(packageName, appName, icon));
         }
         return appinfos;
+    }
+
+    public static boolean isRunByServiceName(Context context, String shortclassname) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
+        for (ActivityManager.RunningServiceInfo serviceInfo : runningServices) {
+            if (serviceInfo.service.getShortClassName().equals(shortclassname)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,10 +1,12 @@
 package com.yl.safemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -14,6 +16,7 @@ import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.AppInfo;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
+import com.yl.safemanager.services.LockService;
 import com.yl.safemanager.utils.AppUtils;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.DialogUtils;
@@ -60,6 +63,10 @@ public class AppLockActivity extends BaseTitleBackActivity {
         mAppLockRecyclerview.addItemDecoration(new SafeItemDecoration());
         mAdapter = new AppLockAdapter(this, mDatas);
         mAppLockRecyclerview.setAdapter(mAdapter);
+        //初始按钮
+        boolean isRunning = AppUtils.isRunByServiceName(this, "services.LockService");
+        mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
+        mStopButton.setVisibility(isRunning ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -109,11 +116,19 @@ public class AppLockActivity extends BaseTitleBackActivity {
 
     @OnClick(R.id.button_stop)
     public void startService() {
-
+        mStopButton.setVisibility(View.GONE);
+        mPlayingButton.setVisibility(View.VISIBLE);
+        //开启加锁服务
+        Intent intent = new Intent(this, LockService.class);
+        startService(intent);
     }
 
     @OnClick(R.id.button_playing)
     public void stopService() {
-
+        mStopButton.setVisibility(View.VISIBLE);
+        mPlayingButton.setVisibility(View.GONE);
+        //关闭加锁服务
+        Intent intent = new Intent(this, LockService.class);
+        stopService(intent);
     }
 }

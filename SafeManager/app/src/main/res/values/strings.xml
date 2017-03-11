@@ -33,4 +33,6 @@
     <string name="decrypt_success">文件解密成功</string>
     <string name="decrypt_fail">文件解密失败</string>
     <string name="loading_appinfo">正在加载应用信息</string>
+    <string name="please_inputpsw">请输入短密码</string>
+    <string name="password_error">密码错误</string>
 </resources>

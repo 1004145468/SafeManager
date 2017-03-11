@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    >
+
+    <FrameLayout
+        android:id="@+id/id_root"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+    
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/circleround_white_bg"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="10dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="@color/color3"
+            android:text="@string/please_inputpsw"
+            />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:gravity="center_horizontal"
+            android:textColor="@color/color2"
+            />
+
+        <TextView
+            android:id="@+id/password_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/password_error"
+            android:textColor="@color/warnred"
+            android:layout_marginTop="6dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

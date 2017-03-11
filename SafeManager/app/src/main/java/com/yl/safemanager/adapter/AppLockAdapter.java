@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.yl.safemanager.R;
 import com.yl.safemanager.base.BaseSfHolder;
 import com.yl.safemanager.entities.AppInfo;
+import com.yl.safemanager.utils.DataBaseUtils;
 
 import java.util.ArrayList;
 
@@ -75,12 +76,19 @@ public class AppLockAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             iconView.setImageDrawable(appInfo.getIcon());
             nameView.setText(appInfo.getAppName());
             packageView.setText(appInfo.getPackageName());
+            selectView.setImageResource(appInfo.isSelect() ? R.drawable.button_choose_on : R.drawable.button_choose_none);
         }
 
         @OnClick(R.id.app_select)
         public void handleApp() {
             appInfo.setSelect(!appInfo.isSelect());
-            selectView.setImageResource(appInfo.isSelect() ? R.drawable.button_choose_on : R.drawable.button_choose_none);
+            if (appInfo.isSelect()) {
+                DataBaseUtils.saveLockApp(appInfo);
+                selectView.setImageResource(R.drawable.button_choose_on);
+            } else {
+                DataBaseUtils.deleteLockApp(appInfo.getPackageName());
+                selectView.setImageResource(R.drawable.button_choose_none);
+            }
         }
     }
 

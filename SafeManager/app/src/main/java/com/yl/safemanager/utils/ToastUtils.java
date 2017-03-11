@@ -1,6 +1,8 @@
 package com.yl.safemanager.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.widget.Toast;
 
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.gitonway.lee.niftynotification.lib.NiftyNotificationView;
@@ -17,5 +19,9 @@ public class ToastUtils {
         NiftyNotificationView.build(context, msg, effect, layoutid)
                 .setIcon(R.mipmap.ic_launcher)
                 .show();
+    }
+
+    public static void showOriginToast(Context context,String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }

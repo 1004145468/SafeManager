@@ -99,12 +99,14 @@ public class DataBaseUtils {
      *
      * @param appInfos
      */
-    public static void saveLockApp(final List<AppInfo> appInfos) {
+    public static void saveLockApps(final List<AppInfo> appInfos) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmResults<AppInfo> all = realm.where(AppInfo.class).findAll();
-                all.deleteAllFromRealm(); //删除并更新存储记录
+                if (all != null) {
+                    all.deleteAllFromRealm(); //删除并更新存储记录
+                }
                 for (AppInfo appInfo : appInfos) {
                     realm.copyToRealm(appInfo);
                 }
@@ -113,14 +115,49 @@ public class DataBaseUtils {
 
     }
 
+    /**
+     * 获取所有加密应用信息
+     *
+     * @param listener
+     */
     public static void getAllLockApps(final OnResultAttachedListener<List<AppInfo>> listener) {
-        List<AppInfo> mDatas = new ArrayList<>();
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 RealmResults<AppInfo> results = realm.where(AppInfo.class).findAll();
-                if(listener != null){
-                   listener.onResult(realm.copyFromRealm(results));
+                if (listener != null) {
+                    listener.onResult(realm.copyFromRealm(results));
+                }
+            }
+        });
+    }
+
+    /**
+     * 存入一条枷锁应用信息
+     *
+     * @param appinfo
+     */
+    public static void saveLockApp(final AppInfo appinfo) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealm(appinfo);
+            }
+        });
+    }
+
+    /**
+     * 根据包名删除一条加锁应用数据
+     *
+     * @param packageName
+     */
+    public static void deleteLockApp(final String packageName) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                AppInfo appinfo = realm.where(AppInfo.class).equalTo("mPackageName", packageName).findFirst();
+                if (appinfo != null) {
+                    appinfo.deleteFromRealm();
                 }
             }
         });
