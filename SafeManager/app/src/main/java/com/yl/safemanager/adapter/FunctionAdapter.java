@@ -131,7 +131,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     class FunctionViewHolder extends BaseSfHolder {
 
-        private  SafeFunctionInfo info;
+        private SafeFunctionInfo info;
 
         @BindView(R.id.function_img)
         SimpleDraweeView functionImg;
@@ -154,8 +154,8 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
         }
 
         @OnClick(R.id.function_total)
-        public void onItemOnClick(){
-            switch (info.getFunctionName()){
+        public void onItemOnClick() {
+            switch (info.getFunctionName()) {
                 case FUNCTION_FILELOCK:
                     SFGT.gotoFileLockActivity(mContext);
                     break;
@@ -178,7 +178,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
                     break;
                 case FUNCTION_IDEA:
-
+                    SFGT.gotoAdviceActivity(mContext);
                     break;
             }
         }

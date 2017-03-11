@@ -11,6 +11,7 @@ import com.yl.safemanager.entities.SafeUser;
 
 import java.io.File;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
@@ -38,7 +39,7 @@ public class BmobUtils {
             uploadFile(context, uri, new onUploadFileResult() {
                 @Override
                 public void onResult(BmobException e, String fileUrl) {
-                    signUp(context, username, password, e == null ? fileUrl : "" , listener);
+                    signUp(context, username, password, e == null ? fileUrl : "", listener);
                 }
             });
         }
@@ -62,10 +63,7 @@ public class BmobUtils {
      * @param listener 图片上传回调
      */
     public static void uploadFile(Context context, Uri uri, final onUploadFileResult listener) {
-        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String filePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA));
-        cursor.close();
+        String filePath = UriUtils.queryUri(context, uri);
         File file = new File(filePath);
         final BmobFile bmobFile = new BmobFile(file);
         bmobFile.uploadblock(new UploadFileListener() {
@@ -76,15 +74,19 @@ public class BmobUtils {
         });
     }
 
-    public static void login(String username,String password,SaveListener<SafeUser> listener){
+    public static void login(String username, String password, SaveListener<SafeUser> listener) {
         SafeUser safeUser = new SafeUser();
         safeUser.setUsername(username);
         safeUser.setPassword(EncryptUtils.md5Encrypt(password));
         safeUser.login(listener);
     }
 
-    public static SafeUser getCurrentUser(){
+    public static SafeUser getCurrentUser() {
         return BmobUser.getCurrentUser(SafeUser.class);
+    }
+
+    public static void synchroInfo(BmobObject obj, SaveListener<String> listener) {
+        obj.save(listener);
     }
 
     /**

@@ -41,4 +41,11 @@
     <string name="sms_encryptionkey">请输入加密密钥：</string>
     <string name="sms_decryptionKey">请输入解密密钥：</string>
     <string name="activitynofind">无可用界面</string>
+    <string name="give_me_advice">请输入您的意见</string>
+    <string name="gice_me_pic">图片附件</string>
+    <string name="submit">提　交</string>
+    <string name="advice_submitting">感谢您宝贵意见</string>
+    <string name="advice_fail">意见反馈成功</string>
+    <string name="advice_success">意见反馈失败</string>
+    <string name="advice_fileupload_fail">附件上传失败</string>
 </resources>

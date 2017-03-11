@@ -40,7 +40,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".SmsLockActivity"></activity>
+        <activity android:name=".SmsLockActivity" />
+        <activity android:name=".AdviceAcitvity"></activity>
     </application>
 
 </manifest>

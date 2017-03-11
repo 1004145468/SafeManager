@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.yl.safemanager.AdviceAcitvity;
 import com.yl.safemanager.AppLockActivity;
 import com.yl.safemanager.FileLockActivity;
 import com.yl.safemanager.InfoChangeActivity;
@@ -123,4 +124,14 @@ public class SFGT {
         }
     }
 
+    /**
+     * 打开提交建议界面
+     * @param context
+     */
+    public static void gotoAdviceActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, AdviceAcitvity.class);
+            context.startActivity(intent);
+        }
+    }
 }
