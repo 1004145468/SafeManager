@@ -160,7 +160,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
                     SFGT.gotoFileLockActivity(mContext);
                     break;
                 case FUNCTION_SMSLOCK:
-
+                    SFGT.gotoSmsLockActivity(mContext);
                     break;
                 case FUNCTION_APPLOCK:
                     SFGT.gotoAppLockActivity(mContext);

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/circleround_nearwhite_bg"
+    >
+
+    <TextView
+        android:id="@+id/dialog_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#666666"
+        android:layout_centerHorizontal="true"
+        android:textSize="22sp"
+        android:text="@string/sms_decryptionKey"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:singleLine="true"
+        android:textColor="@color/color1"
+        android:inputType="number"
+        android:gravity="center_horizontal"
+        />
+
+    <Button
+        android:id="@+id/dialog_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:enabled="false"
+        android:background="@drawable/select_enable_bg"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:text="@string/ok"/>
+
+</RelativeLayout>

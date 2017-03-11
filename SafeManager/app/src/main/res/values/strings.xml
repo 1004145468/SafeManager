@@ -35,4 +35,10 @@
     <string name="loading_appinfo">正在加载应用信息</string>
     <string name="please_inputpsw">请输入短密码</string>
     <string name="password_error">密码错误</string>
+    <string name="sms_send">加密发送</string>
+    <string name="sms_read">解密查看</string>
+    <string name="sms_content">加解密内容:</string>
+    <string name="sms_encryptionkey">请输入加密密钥：</string>
+    <string name="sms_decryptionKey">请输入解密密钥：</string>
+    <string name="activitynofind">无可用界面</string>
 </resources>
