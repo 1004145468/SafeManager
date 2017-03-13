@@ -13,6 +13,7 @@ import com.yl.safemanager.InfoChangeActivity;
 import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
+import com.yl.safemanager.SMDataActivity;
 import com.yl.safemanager.SmsLockActivity;
 
 /**
@@ -126,11 +127,19 @@ public class SFGT {
 
     /**
      * 打开提交建议界面
+     *
      * @param context
      */
     public static void gotoAdviceActivity(Context context) {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, AdviceAcitvity.class);
+            context.startActivity(intent);
+        }
+    }
+
+    public static void gotoNoteRecordActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, SMDataActivity.class);
             context.startActivity(intent);
         }
     }

@@ -2,19 +2,22 @@ package com.yl.safemanager.utils;
 
 
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
-import android.provider.MediaStore;
 
 import com.yl.safemanager.R;
 import com.yl.safemanager.entities.SafeUser;
+import com.yl.safemanager.entities.SmDataModel;
+import com.yl.safemanager.interfact.OnResultAttachedListener;
 
 import java.io.File;
+import java.util.List;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
@@ -87,6 +90,25 @@ public class BmobUtils {
 
     public static void synchroInfo(BmobObject obj, SaveListener<String> listener) {
         obj.save(listener);
+    }
+
+    /**
+     * 获取私密数据记录
+     *
+     * @param listener
+     */
+    public static void getSmDateModels(final OnResultAttachedListener<List<SmDataModel>> listener) {
+        BmobQuery<SmDataModel> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("mUserId", getCurrentUser().getUsername());
+        bmobQuery.setLimit(50);
+        bmobQuery.findObjects(new FindListener<SmDataModel>() {
+            @Override
+            public void done(List<SmDataModel> list, BmobException e) {
+                if (listener != null) {
+                    listener.onResult(list);
+                }
+            }
+        });
     }
 
     /**

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.yl.safemanager.R;
 import com.yl.safemanager.base.BaseSfHolder;
-import com.yl.safemanager.entities.LockFileModel;
+import com.yl.safemanager.entities.SmDataModel;
 import com.yl.safemanager.interfact.OnItemClickListener;
 
 import java.util.List;
@@ -19,16 +19,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by YL on 2017/3/4.
+ * Created by YL on 2017/3/12.
  */
 
-public class LockFileAdapter extends RecyclerView.Adapter<BaseSfHolder> {
+public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     private OnItemClickListener listener;
     private LayoutInflater mLayoutInflater;
-    private List<LockFileModel> mDatas;
+    private List<SmDataModel> mDatas;
 
-    public LockFileAdapter(Context context, List<LockFileModel> mDatas) {
+    public SMDataAdapter(Context context, List<SmDataModel> mDatas) {
         listener = (OnItemClickListener) context;
         mLayoutInflater = LayoutInflater.from(context);
         this.mDatas = mDatas;
@@ -36,15 +36,13 @@ public class LockFileAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     @Override
     public BaseSfHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = mLayoutInflater.inflate(R.layout.item_filelock, parent, false);
-        return new LockFileHolder(rootView);
+        View rootView = mLayoutInflater.inflate(R.layout.item_smdata, parent, false);
+        return new SMDataHolder(rootView);
     }
 
     @Override
     public void onBindViewHolder(BaseSfHolder holder, int position) {
-        LockFileModel fileModel = mDatas.get(position);
-        fileModel.setPosition(position);
-        holder.setData(fileModel);
+        holder.setData(mDatas.get(position));
     }
 
     @Override
@@ -52,40 +50,39 @@ public class LockFileAdapter extends RecyclerView.Adapter<BaseSfHolder> {
         return mDatas.size();
     }
 
-    class LockFileHolder extends BaseSfHolder {
+    class SMDataHolder extends BaseSfHolder {
 
-        private final String FILE_TRANSLATION = "->";
-
-        @BindView(R.id.tv_num)
-        TextView numView;
-        @BindView(R.id.tv_filename)
-        TextView filenameView;
-        @BindView(R.id.tv_time)
+        @BindView(R.id.smdata_time)
         TextView timeView;
+        @BindView(R.id.smdata_title)
+        TextView titleView;
 
-        private LockFileModel model;
+        private SmDataModel smDataModel;
 
-        public LockFileHolder(View itemView) {
+        public SMDataHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         @Override
         public void setData(Object data) {
-            model = (LockFileModel) data;
-            if (model == null) {
+            if (data == null) {
                 return;
             }
-            numView.setText(String.valueOf(model.getPosition()));
-            filenameView.setText(model.getOriginFileName() + FILE_TRANSLATION + model.getLockFileName());
-            timeView.setText(model.getSaveTime());
+            smDataModel = (SmDataModel) data;
+            timeView.setText(smDataModel.getSavetime());
+            titleView.setText(smDataModel.getTitle());
         }
 
-        @OnClick(R.id.id_root)
-        public void encryptLockFile() {
+        @OnClick(R.id.smdata_root)
+        public void onClick() {
             if (listener != null) {
-                listener.onClick(model);
+                listener.onClick(smDataModel);
             }
         }
+
+
     }
+
+
 }

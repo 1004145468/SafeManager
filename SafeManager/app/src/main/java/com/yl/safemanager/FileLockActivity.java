@@ -17,7 +17,7 @@ import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.LockFileModel;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
-import com.yl.safemanager.interfact.onEncryptItemOnclickListener;
+import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.FileConcealUtils;
 import com.yl.safemanager.utils.ToastUtils;
@@ -30,9 +30,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.realm.RealmResults;
 
-public class FileLockActivity extends BaseTitleBackActivity implements onEncryptItemOnclickListener {
+public class FileLockActivity extends BaseTitleBackActivity implements OnItemClickListener<LockFileModel> {
 
     private static final String TAG = "FileLockActivity";
     private static final int REQUEST_FILE = 1;
@@ -65,7 +64,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
                     Toast.makeText(FileLockActivity.this, getString(R.string.encrypt_success), Toast.LENGTH_SHORT).show();
                     break;
                 case DECRYPTION_FAIL:
-                    ToastUtils.showToast(FileLockActivity.this,getString(R.string.decrypt_fail), Effects.thumbSlider,R.id.id_root);
+                    ToastUtils.showToast(FileLockActivity.this, getString(R.string.decrypt_fail), Effects.thumbSlider, R.id.id_root);
                     break;
                 case DECRYPTION_SUCCESS:
                     LockFileModel lockFileModel1 = (LockFileModel) msg.obj;
@@ -73,7 +72,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
                     int position = lockFileModel1.getPosition();
                     mDatas.remove(position);
                     lockFileAdapter.notifyItemRemoved(position);
-                    ToastUtils.showToast(FileLockActivity.this,getString(R.string.decrypt_success), Effects.thumbSlider,R.id.id_root);
+                    ToastUtils.showToast(FileLockActivity.this, getString(R.string.decrypt_success), Effects.thumbSlider, R.id.id_root);
                     break;
             }
         }
@@ -84,7 +83,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataBaseUtils.initRealm(this);
-        mTimerFormater = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+        mTimerFormater = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
         initViews();
         initDatas();
     }
@@ -182,7 +181,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements onEncrypt
      *
      * @param lockFileModel
      */
-    public void DecryptFile(final LockFileModel lockFileModel) {
+    public void onClick(final LockFileModel lockFileModel) {
         new Thread() {
             @Override
             public void run() {

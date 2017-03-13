@@ -172,7 +172,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
                     break;
                 case FUNCTION_DATARECORD:
-
+                    SFGT.gotoNoteRecordActivity(mContext);
                     break;
                 case FUNCTION_MAILLOCK:
 

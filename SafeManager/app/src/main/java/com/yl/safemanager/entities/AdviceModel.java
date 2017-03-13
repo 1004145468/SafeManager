@@ -14,8 +14,9 @@ public class AdviceModel extends BmobObject {
     private String advice;
     private String filepath;
 
+
     public AdviceModel(String userId, String advice, String filepath) {
-        super(tableName);
+        setTableName(AdviceModel.class.getSimpleName());
         this.userId = userId;
         this.advice = advice;
         this.filepath = filepath;

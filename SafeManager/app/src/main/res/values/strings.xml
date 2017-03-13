@@ -45,7 +45,11 @@
     <string name="gice_me_pic">图片附件</string>
     <string name="submit">提　交</string>
     <string name="advice_submitting">感谢您宝贵意见</string>
-    <string name="advice_fail">意见反馈成功</string>
-    <string name="advice_success">意见反馈失败</string>
+    <string name="advice_fail">意见反馈失败</string>
+    <string name="advice_success">意见反馈成功</string>
     <string name="advice_fileupload_fail">附件上传失败</string>
+    <string name="load_data">正在同步数据,请稍后</string>
+    <string name="new_data">新建文件</string>
+    <string name="new_dataing">文件正在创建</string>
+    <string name="new_data_fail">文件创建失败，请重新尝试！</string>
 </resources>
