@@ -14,7 +14,7 @@ import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
 import com.yl.safemanager.SMDataActivity;
-import com.yl.safemanager.SmsLockActivity;
+import com.yl.safemanager.SMLockActivity;
 
 /**
  * 统跳协议
@@ -98,8 +98,23 @@ public class SFGT {
      * @param context
      */
     public static void gotoSmsLockActivity(Context context) {
+        gotoSMLockActivity(context, SMLockActivity.SMS_TYPE);
+    }
+
+    /**
+     * 打开邮件加解密模块
+     *
+     * @param context
+     */
+    public static void gotoMailLockActivity(Context context) {
+        gotoSMLockActivity(context, SMLockActivity.MAIL_TYPE);
+    }
+
+
+    private static void gotoSMLockActivity(Context context, int type) {
         if (context instanceof Activity) {
-            Intent intent = new Intent(context, SmsLockActivity.class);
+            Intent intent = new Intent(context, SMLockActivity.class);
+            intent.putExtra("type", type);
             context.startActivity(intent);
         }
     }
@@ -122,6 +137,26 @@ public class SFGT {
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, context.getString(R.string.activitynofind), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 打开手机邮箱，并填入内容
+     *
+     * @param context
+     * @param content
+     */
+    public static void openMailBox(Context context, String content) {
+        try {
+            if (context instanceof Activity) {
+                Uri uri = Uri.parse("mailto:");
+                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                intent.putExtra(Intent.EXTRA_TEXT, content); // 正文
+                context.startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, context.getString(R.string.systemmailnofind), Toast.LENGTH_SHORT).show();
         }
     }
 

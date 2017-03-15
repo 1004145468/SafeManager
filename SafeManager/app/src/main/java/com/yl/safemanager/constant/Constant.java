@@ -14,4 +14,5 @@ public class Constant {
     public static final String FUNCTION_DATARECORD = "私密数据记录";
     public static final String FUNCTION_MAILLOCK= "邮件加解密";
     public static final String FUNCTION_IDEA = "意见反馈";
+    public static final String EDIT_RECORD = "编辑记录";
 }

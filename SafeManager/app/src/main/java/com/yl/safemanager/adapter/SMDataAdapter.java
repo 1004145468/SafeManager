@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yl.safemanager.R;
 import com.yl.safemanager.base.BaseSfHolder;
@@ -17,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * Created by YL on 2017/3/12.
@@ -81,7 +83,13 @@ public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             }
         }
 
-
+        @OnLongClick(R.id.smdata_root)
+        public boolean onLongClick() {
+            if (listener != null){
+                listener.onLongClick(smDataModel);
+            }
+            return true;
+        }
     }
 
 

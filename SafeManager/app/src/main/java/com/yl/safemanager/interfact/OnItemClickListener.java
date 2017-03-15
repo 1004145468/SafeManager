@@ -6,4 +6,6 @@ package com.yl.safemanager.interfact;
 
 public interface OnItemClickListener<T> {
     void onClick(T model);
+
+    void onLongClick(T model);
 }

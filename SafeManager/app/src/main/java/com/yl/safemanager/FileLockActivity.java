@@ -204,4 +204,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
             }
         }.start();
     }
+
+    @Override
+    public void onLongClick(LockFileModel model) {}
 }

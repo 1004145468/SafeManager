@@ -1,9 +1,12 @@
 package com.yl.safemanager;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.SMDataAdapter;
@@ -26,6 +29,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class SMDataActivity extends BaseTitleBackActivity implements OnItemClickListener<SmDataModel> {
 
@@ -43,6 +47,11 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initDatas();
     }
 
@@ -57,7 +66,10 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
 
     //加载数据
     private void initDatas() {
-        mDateFormater = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分 E");
+        if (mDatas != null && mDatas.size() > 0) {
+            mDatas.clear(); //清楚缓存
+        }
+        mDateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm E");
         DialogUtils.showIndeterminateDialog(this, getString(R.string.load_data), false, null);
         BmobUtils.getSmDateModels(new OnResultAttachedListener<List<SmDataModel>>() {
             @Override
@@ -106,6 +118,37 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
 
     @Override
     public void onClick(SmDataModel model) {
-        ToastUtils.showOriginToast(this, model.toString());
+        //跳转到SmData数据的编辑界面
+        Intent intent = new Intent(this, EditSmDataActivity.class);
+        intent.putExtra("objectid", model.getObjectId());
+        intent.putExtra("title", model.getTitle());
+        intent.putExtra("content", model.getContent());
+        intent.putExtra("savetime", model.getSavetime());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLongClick(final SmDataModel model) {
+        DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DialogUtils.showIndeterminateDialog(SMDataActivity.this, getString(R.string.load_data), false, null);  //打开进度
+                SmDataModel smDataModel = new SmDataModel();
+                smDataModel.setObjectId(model.getObjectId());
+                BmobUtils.deleteInfo(smDataModel, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        DialogUtils.shutdownIndeterminateDialog(); //隐藏
+                        if (e != null) {
+                            ToastUtils.showToast(SMDataActivity.this, getString(R.string.delete_fail), Effects.flip, R.id.id_root);
+                        } else {
+                            mDatas.remove(model);
+                            mAdapter.notifyDataSetChanged();
+                            ToastUtils.showToast(SMDataActivity.this, getString(R.string.data_update_success), Effects.flip, R.id.id_root);
+                        }
+                    }
+                });
+            }
+        });
     }
 }

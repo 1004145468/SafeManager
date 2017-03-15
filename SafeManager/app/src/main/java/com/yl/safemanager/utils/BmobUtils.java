@@ -19,6 +19,7 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -92,6 +93,14 @@ public class BmobUtils {
         obj.save(listener);
     }
 
+    public static void updateInfo(BmobObject bmobObject, UpdateListener listener) {
+        bmobObject.update(bmobObject.getObjectId(), listener);
+    }
+
+    public static void deleteInfo(BmobObject bmobObject, UpdateListener listener) {
+        bmobObject.delete(listener);
+    }
+
     /**
      * 获取私密数据记录
      *
@@ -99,7 +108,7 @@ public class BmobUtils {
      */
     public static void getSmDateModels(final OnResultAttachedListener<List<SmDataModel>> listener) {
         BmobQuery<SmDataModel> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("mUserId", getCurrentUser().getUsername());
+        bmobQuery.addWhereEqualTo("useid", getCurrentUser().getUsername());
         bmobQuery.setLimit(50);
         bmobQuery.findObjects(new FindListener<SmDataModel>() {
             @Override

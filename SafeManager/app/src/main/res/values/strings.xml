@@ -40,7 +40,8 @@
     <string name="sms_content">加解密内容:</string>
     <string name="sms_encryptionkey">请输入加密密钥：</string>
     <string name="sms_decryptionKey">请输入解密密钥：</string>
-    <string name="activitynofind">无可用界面</string>
+    <string name="activitynofind">您请求的界面不存在</string>
+    <string name="systemmailnofind">请安装邮件应用</string>
     <string name="give_me_advice">请输入您的意见</string>
     <string name="gice_me_pic">图片附件</string>
     <string name="submit">提　交</string>
@@ -52,4 +53,13 @@
     <string name="new_data">新建文件</string>
     <string name="new_dataing">文件正在创建</string>
     <string name="new_data_fail">文件创建失败，请重新尝试！</string>
+    <string name="title">标　题:</string>
+    <string name="content">内　容:</string>
+    <string name="time">保存时间:</string>
+    <string name="synchronization">同　步</string>
+    <string name="dialog_positive">删除</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_deletemsg">是否删除该记录 ？</string>
+    <string name="delete_fail">删除失败</string>
+    <string name="data_update_success">数据更新成功</string>
 </resources>

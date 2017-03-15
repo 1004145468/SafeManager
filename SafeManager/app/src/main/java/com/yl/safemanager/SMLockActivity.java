@@ -4,20 +4,22 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.yl.safemanager.base.BaseActivity;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.DialogUtils;
-import com.yl.safemanager.utils.EncryptUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-public class SmsLockActivity extends BaseTitleBackActivity {
+public class SMLockActivity extends BaseTitleBackActivity {
+
+    public static final int SMS_TYPE = 1;
+    public static final int MAIL_TYPE = 2;
+
+    private int mCurrentType = 0;
 
     @BindView(R.id.sms_content)
     EditText mContextView;
@@ -31,6 +33,7 @@ public class SmsLockActivity extends BaseTitleBackActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mCurrentType = getIntent().getIntExtra("type", SMS_TYPE);
         super.onCreate(savedInstanceState);
     }
 
@@ -46,17 +49,17 @@ public class SmsLockActivity extends BaseTitleBackActivity {
     }
 
     @OnClick(R.id.sms_send)
-    public void lockAndsendSms() {
-        //加密发送短信
+    public void lockAndsendSM() {
+        //加密发送短信或者邮件
         String content = mContextView.getText().toString();
-        DialogUtils.openEnterPwsDialog(this, true, content, null);
+        DialogUtils.openEnterPwsDialog(this, true, mCurrentType, content, null);
     }
 
     @OnClick(R.id.sms_read)
-    public void readSms() {
-        //解密查看短信
+    public void readSM() {
+        //解密查看短信或者邮件
         String content = mContextView.getText().toString();
-        DialogUtils.openEnterPwsDialog(this, false, content, new OnResultAttachedListener<String>() {
+        DialogUtils.openEnterPwsDialog(this, false, mCurrentType, content, new OnResultAttachedListener<String>() {
             @Override
             public void onResult(String s) {
                 mContextView.setText(s);
@@ -68,11 +71,15 @@ public class SmsLockActivity extends BaseTitleBackActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_sms_lock;
+        return R.layout.activity_sm_lock;
     }
 
     @Override
     public String getBarTitle() {
-        return Constant.FUNCTION_SMSLOCK;
+        if (mCurrentType == SMS_TYPE) {
+            return Constant.FUNCTION_SMSLOCK;
+        } else {
+            return Constant.FUNCTION_MAILLOCK;
+        }
     }
 }

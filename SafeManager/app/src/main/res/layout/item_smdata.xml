@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
                 android:padding="8dp"
-                android:text="2017年3月12日11:09:22"
                 android:textColor="@color/color1"
                 android:textSize="15sp" />
 
@@ -45,7 +44,6 @@
                 android:layout_marginLeft="25dp"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="我是标题"
                 android:textColor="@color/depgrep"
                 android:textSize="18sp" />
 

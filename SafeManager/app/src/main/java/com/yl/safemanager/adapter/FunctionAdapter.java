@@ -175,7 +175,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
                     SFGT.gotoNoteRecordActivity(mContext);
                     break;
                 case FUNCTION_MAILLOCK:
-
+                    SFGT.gotoMailLockActivity(mContext);
                     break;
                 case FUNCTION_IDEA:
                     SFGT.gotoAdviceActivity(mContext);
