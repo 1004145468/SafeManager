@@ -40,7 +40,7 @@ public class FileUploadAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     @Override
     public BaseSfHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = mLayoutInflater.inflate(R.layout.item_uploadfile, parent);
+        View rootView = mLayoutInflater.inflate(R.layout.item_uploadfile, parent, false);
         return new FileUploadHolder(rootView);
     }
 

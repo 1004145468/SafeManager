@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yl.safemanager.R;
@@ -25,11 +26,13 @@ public class DialogUtils {
 
     private static Dialog dialog;
     private static TextView noteView;
+    private static ProgressBar progressBar;
+    private static TextView progressView;
 
     //展示一个不确定进度Dialog
     public static void showIndeterminateDialog(Context context, String note, boolean canCancel, DialogInterface.OnCancelListener listener) {
         View dialogView = View.inflate(context, R.layout.dialog_indeterminate, null);
-        noteView = (TextView) dialogView.findViewById(R.id.dialog_note);
+        TextView noteView = (TextView) dialogView.findViewById(R.id.dialog_note);
         dialog = new Dialog(context, R.style.dialog);
         dialog.setContentView(dialogView);
         noteView.setText(note);
@@ -48,9 +51,6 @@ public class DialogUtils {
             dialog.cancel();
             dialog = null;
         }
-        if (noteView != null) {
-            noteView = null;
-        }
     }
 
     /**
@@ -61,7 +61,7 @@ public class DialogUtils {
      */
     public static void openEnterPwsDialog(final Context context, final boolean isEncrption, final int type, final String content, final OnResultAttachedListener<String> listener) {
         View dialogView = View.inflate(context, R.layout.dialog_enterpsw, null);
-        noteView = (TextView) dialogView.findViewById(R.id.dialog_note);
+        TextView noteView = (TextView) dialogView.findViewById(R.id.dialog_note);
         final EditText contentView = (EditText) dialogView.findViewById(R.id.dialog_content);
         final Button okButton = (Button) dialogView.findViewById(R.id.dialog_button);
         contentView.addTextChangedListener(new TextWatcher() {
@@ -124,9 +124,14 @@ public class DialogUtils {
         dialogWindow.setAttributes(attributes);
     }
 
-    public static void showMessageDialog(Context context, String msg,
-                                         DialogInterface.OnClickListener positiveOnclick
-    ) {
+    /**
+     * 展示一个消息感喟对话框
+     *
+     * @param context
+     * @param msg
+     * @param positiveOnclick
+     */
+    public static void showMessageDialog(Context context, String msg, DialogInterface.OnClickListener positiveOnclick) {
         new AlertDialog.Builder(context)
                 .setMessage(msg)
                 .setIcon(null)
@@ -136,5 +141,62 @@ public class DialogUtils {
                 .show();
     }
 
+    public static void showFileLoadDialog(Context context, String dialogmsg) {
+        View dialogView = View.inflate(context, R.layout.dialog_fileload, null);
+        noteView = (TextView) dialogView.findViewById(R.id.fileload_note); //设置展示文本
+        noteView.setText(dialogmsg);
+        //设置进度
+        progressBar = (ProgressBar) dialogView.findViewById(R.id.fileload_progress);
+        progressBar.setProgress(0);
+        //设置进度文本
+        progressView = (TextView) dialogView.findViewById(R.id.fileload_progresstext);
+        progressView.setText("0%");
+        dialog = new Dialog(context, R.style.dialog);
+        dialog.setContentView(dialogView);
+        dialog.setCancelable(false);
+        dialog.show();
+        Window dialogWindow = dialog.getWindow(); //Dialog的承载体,设置Dialog的显示效果
+        WindowManager.LayoutParams attributes = dialogWindow.getAttributes();
+        attributes.width = DensityUtils.dip2px(context, 240);
+        attributes.height = DensityUtils.dip2px(context, 120);
+        dialogWindow.setAttributes(attributes);
+    }
 
+    /**
+     * 更新下载进度条
+     *
+     * @param msg
+     * @param progress
+     * @param currentprogress
+     */
+    public static void updateFileLoadDialog(String msg, int progress, String currentprogress) {
+        if (noteView != null) {
+            noteView.setText(msg);
+        }
+        if (progressBar != null) {
+            progressBar.setProgress(progress);
+        }
+        if (progressView != null) {
+            progressView.setText(currentprogress);
+        }
+    }
+
+    /**
+     * 关闭下载进度条
+     */
+    public static void closeFileLoadDialog() {
+        if (noteView != null) {
+            noteView = null;
+        }
+        if (progressBar != null) {
+            progressBar = null;
+        }
+        if (progressView != null) {
+            progressView = null;
+        }
+        if (dialog != null) {
+            dialog.cancel();
+            dialog = null;
+        }
+    }
 }

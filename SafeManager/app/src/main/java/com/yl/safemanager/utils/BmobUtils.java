@@ -20,6 +20,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -76,6 +77,18 @@ public class BmobUtils {
                 listener.onResult(e, bmobFile.getFileUrl());
             }
         });
+    }
+
+
+    /**
+     * 批量文件上传
+     * @param filePaths
+     * @param listener
+     */
+    public static void batchUploadFile(List<String> filePaths, UploadBatchListener listener) {
+        int filePathSize = filePaths.size();
+        String[] filePathArray = filePaths.toArray(new String[filePathSize]);
+        BmobFile.uploadBatch(filePathArray, listener);
     }
 
     public static void login(String username, String password, SaveListener<SafeUser> listener) {

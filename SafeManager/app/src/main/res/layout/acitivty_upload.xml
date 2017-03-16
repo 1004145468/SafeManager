@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/activity_base_title_back" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
-
     <LinearLayout
-        android:id="@+id/upload_listview"
+        android:id="@+id/upload_botton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp">
+        android:paddingRight="10dp">
 
         <Button
             android:id="@+id/upload_addbtn"
@@ -41,5 +33,20 @@
 
     </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/upload_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/upload_botton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="62dp"
+        android:overScrollMode="never" />
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/id_root"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp" />
+
+</RelativeLayout>

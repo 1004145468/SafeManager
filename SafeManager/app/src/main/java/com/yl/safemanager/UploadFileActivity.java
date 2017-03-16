@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.widget.Button;
 
+import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.FileUploadAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.FileInfo;
 import com.yl.safemanager.interfact.OnItemClickListener;
+import com.yl.safemanager.utils.BmobUtils;
+import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
 
@@ -23,6 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.UploadBatchListener;
 
 import static com.yl.safemanager.utils.SFGT.REQUEST_FILE;
 
@@ -32,14 +38,18 @@ import static com.yl.safemanager.utils.SFGT.REQUEST_FILE;
 
 public class UploadFileActivity extends BaseTitleBackActivity implements OnItemClickListener<FileInfo> {
 
+    private static final String TAG = "UploadFileActivity";
+
     @BindView(R.id.upload_dobtn)
     Button mUploadBtn;
     @BindView(R.id.upload_listview)
     RecyclerView mFileRecyclerView;
 
+    private List<String> mFilePaths;
     private List<FileInfo> mDatas;
     private FileUploadAdapter mFileUploadAdapter;
-
+    private int mCurUploadFileIndex = 0;
+    private int mCurRemoveIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +62,7 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
         mFileRecyclerView.setLayoutManager(linearLayoutManager);
         mFileRecyclerView.addItemDecoration(new SafeItemDecoration());
         mDatas = new ArrayList<>();
+        mFilePaths = new ArrayList<>();
         mFileUploadAdapter = new FileUploadAdapter(this, mDatas);
         mFileRecyclerView.setAdapter(mFileUploadAdapter);
     }
@@ -63,7 +74,45 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
 
     @OnClick(R.id.upload_dobtn)
     public void uploadFile() {
+        final int totalSize = mFilePaths.size();
+        if (totalSize == 0) {
+            return; //没有指定文件 不能上传
+        }
+        DialogUtils.showFileLoadDialog(this, getString(R.string.upload_file));
+        mCurUploadFileIndex = 0; //重置当前上传文件index
+        mCurRemoveIndex = 0;    //重置当前需要移除的index
+        Log.d(TAG, "uploadFile: 总上传文件数" + totalSize);
+        BmobUtils.batchUploadFile(mFilePaths, new UploadBatchListener() {
+            @Override
+            public void onProgress(int i, int i1, int i2, int i3) {
+                //更新文件加载器
+                DialogUtils.updateFileLoadDialog(getString(R.string.upload_file) + "(" + i + "/" + i2 + ")", i1, i1 + "%");
+            }
 
+            @Override
+            public void onSuccess(List<BmobFile> list, List<String> list1) {
+                mCurUploadFileIndex++;
+                Log.d(TAG, "onSuccess: 文件上传成功" + mCurUploadFileIndex);
+                mDatas.remove(mCurRemoveIndex); //成功就移除文件
+                mFilePaths.remove(mCurRemoveIndex); //
+                mFileUploadAdapter.notifyItemRemoved(mCurRemoveIndex);
+                if (mCurUploadFileIndex == totalSize) {
+                    DialogUtils.closeFileLoadDialog();//关闭文件加载器
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                mCurUploadFileIndex++;
+                mCurRemoveIndex++;
+                //展示Toast
+                ToastUtils.showToast(UploadFileActivity.this, mDatas.get(mCurUploadFileIndex - 1).getmFileName() + getString(R.string.upload_filefial),
+                        Effects.flip, R.id.id_root);
+                if (mCurUploadFileIndex == totalSize) {
+                    DialogUtils.closeFileLoadDialog();//关闭文件加载器
+                }
+            }
+        });
     }
 
     @Override
@@ -71,11 +120,13 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_FILE) {
                 Uri fileUri = data.getData();
-                String filePath = fileUri.getPath();  //文件大小
-                File file = new File(filePath);
+                String fileUriPath = fileUri.getPath();
+                File file = new File(fileUriPath);
+                String filePath = file.getAbsolutePath();//文件路径
                 String fileName = file.getName();  //文件名
-                String fileSize = Formatter.formatFileSize(this,file.length()); //文件大小
-                mDatas.add(0,new FileInfo(fileName,filePath,fileSize));
+                String fileSize = Formatter.formatFileSize(this, file.length()); //文件大小
+                mFilePaths.add(0, filePath);
+                mDatas.add(0, new FileInfo(fileName, filePath, fileSize));
                 mFileUploadAdapter.notifyItemInserted(0);
             }
         }

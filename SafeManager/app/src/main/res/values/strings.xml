@@ -64,4 +64,6 @@
     <string name="data_update_success">数据更新成功</string>
     <string name="upload_add">添加</string>
     <string name="upload_do">上传</string>
+    <string name="upload_file">正在上传文件</string>
+    <string name="upload_filefial">上传失败</string>
 </resources>
