@@ -110,6 +110,7 @@ public class BmobUtils {
         BmobQuery<SmDataModel> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("useid", getCurrentUser().getUsername());
         bmobQuery.setLimit(50);
+        bmobQuery.order("-createdAt"); //时间降序
         bmobQuery.findObjects(new FindListener<SmDataModel>() {
             @Override
             public void done(List<SmDataModel> list, BmobException e) {
