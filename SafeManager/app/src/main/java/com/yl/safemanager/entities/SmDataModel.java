@@ -12,6 +12,7 @@ public class SmDataModel extends BmobObject{
     private String savetime;
     private String title;
     private String content;
+    private int position;
 
     public SmDataModel() {
     }
@@ -64,5 +65,13 @@ public class SmDataModel extends BmobObject{
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

@@ -142,8 +142,9 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
                         if (e != null) {
                             ToastUtils.showToast(SMDataActivity.this, getString(R.string.delete_fail), Effects.flip, R.id.id_root);
                         } else {
-                            mDatas.remove(model);
-                            mAdapter.notifyDataSetChanged();
+                            int position = model.getPosition();
+                            mDatas.remove(position);
+                            mAdapter.notifyItemRemoved(position);
                             ToastUtils.showToast(SMDataActivity.this, getString(R.string.data_update_success), Effects.flip, R.id.id_root);
                         }
                     }

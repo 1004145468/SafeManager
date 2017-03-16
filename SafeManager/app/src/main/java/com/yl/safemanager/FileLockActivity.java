@@ -20,6 +20,7 @@ import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.FileConcealUtils;
+import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
 
 import java.io.File;
@@ -31,10 +32,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.yl.safemanager.utils.SFGT.REQUEST_FILE;
+
 public class FileLockActivity extends BaseTitleBackActivity implements OnItemClickListener<LockFileModel> {
 
     private static final String TAG = "FileLockActivity";
-    private static final int REQUEST_FILE = 1;
 
     private static final int ENCRYPTION_FAIL = 2;
     private static final int ENCRYPTION_SUCCESS = 3;
@@ -125,10 +127,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
 
     @OnClick(R.id.filelock_add)
     public void addLockFile() { //添加加密文件
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(intent, REQUEST_FILE);
+        SFGT.openFileChoose(this);
     }
 
     @Override

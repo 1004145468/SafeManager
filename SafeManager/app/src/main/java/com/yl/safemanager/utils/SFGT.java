@@ -15,6 +15,7 @@ import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
 import com.yl.safemanager.SMDataActivity;
 import com.yl.safemanager.SMLockActivity;
+import com.yl.safemanager.UploadFileActivity;
 
 /**
  * 统跳协议
@@ -25,6 +26,7 @@ import com.yl.safemanager.SMLockActivity;
 public class SFGT {
 
     public static int IMAGEPICK_REQUEST_CODE = 1; //打开图库请求码
+    public static final int REQUEST_FILE = 2;
 
     /**
      * 跳转到注册界面
@@ -176,6 +178,27 @@ public class SFGT {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, SMDataActivity.class);
             context.startActivity(intent);
+        }
+    }
+
+    public static void gotoBackupActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, UploadFileActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
+    public static void openFileChoose(Context context) {
+        try {
+            if (context instanceof Activity) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                ((Activity) context).startActivityForResult(intent, REQUEST_FILE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, context.getString(R.string.activitynofind), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -20,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
+import static android.media.CamcorderProfile.get;
+
 /**
  * Created by YL on 2017/3/12.
  */
@@ -44,7 +46,9 @@ public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     @Override
     public void onBindViewHolder(BaseSfHolder holder, int position) {
-        holder.setData(mDatas.get(position));
+        SmDataModel smDataModel = mDatas.get(position);
+        smDataModel.setPosition(position);
+        holder.setData(smDataModel);
     }
 
     @Override

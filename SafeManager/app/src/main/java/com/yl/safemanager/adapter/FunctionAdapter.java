@@ -166,7 +166,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
                     SFGT.gotoAppLockActivity(mContext);
                     break;
                 case FUNCTION_DATABACKUP:
-
+                    SFGT.gotoBackupActivity(mContext);
                     break;
                 case FUNCTION_DATARECOVER:
 
