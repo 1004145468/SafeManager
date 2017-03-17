@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.yl.safemanager.AdviceAcitvity;
 import com.yl.safemanager.AppLockActivity;
+import com.yl.safemanager.DownLoadFileActivity;
 import com.yl.safemanager.FileLockActivity;
 import com.yl.safemanager.InfoChangeActivity;
 import com.yl.safemanager.MainActivity;
@@ -199,6 +200,13 @@ public class SFGT {
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context, context.getString(R.string.activitynofind), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void gotoDownLoadFileActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, DownLoadFileActivity.class);
+            context.startActivity(intent);
         }
     }
 }

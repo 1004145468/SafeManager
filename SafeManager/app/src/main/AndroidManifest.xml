@@ -45,6 +45,7 @@
         <activity android:name=".SMDataActivity" />
         <activity android:name=".EditSmDataActivity"></activity>
         <activity android:name=".UploadFileActivity" />
+        <activity android:name=".DownLoadFileActivity"/>
     </application>
 
 </manifest>

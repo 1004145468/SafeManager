@@ -1,5 +1,7 @@
 package com.yl.safemanager.entities;
 
+import com.yl.safemanager.utils.BmobUtils;
+
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -8,7 +10,7 @@ import cn.bmob.v3.BmobObject;
 
 public class SmDataModel extends BmobObject{
 
-    private String useid;
+    private String userId;
     private String savetime;
     private String title;
     private String content;
@@ -17,20 +19,20 @@ public class SmDataModel extends BmobObject{
     public SmDataModel() {
     }
 
-    public SmDataModel(String useid, String savetime, String title, String content) {
+    public SmDataModel(String savetime, String title, String content) {
         setTableName(SmDataModel.class.getSimpleName());
-        this.useid = useid;
+        this.userId = BmobUtils.getCurrentUser().getUsername();
         this.savetime = savetime;
         this.title = title;
         this.content = content;
     }
 
     public String getUseid() {
-        return useid;
+        return userId;
     }
 
     public void setUseid(String useid) {
-        this.useid = useid;
+        this.userId = useid;
     }
 
     public String getSavetime() {
@@ -60,7 +62,7 @@ public class SmDataModel extends BmobObject{
     @Override
     public String toString() {
         return "SmDataModel{" +
-                "useid='" + useid + '\'' +
+                "useid='" + userId + '\'' +
                 ", savetime='" + savetime + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

@@ -67,8 +67,7 @@ public class EditSmDataActivity extends BaseTitleBackActivity {
             return;
         }
 
-        SmDataModel smDataModel = new SmDataModel(BmobUtils.getCurrentUser().getUsername(),
-                mDateFormater.format(new Date()), currentTitle, currentContent);
+        SmDataModel smDataModel = new SmDataModel(mDateFormater.format(new Date()), currentTitle, currentContent);
         smDataModel.setObjectId(objectId);
         BmobUtils.updateInfo(smDataModel, new UpdateListener() {
             @Override

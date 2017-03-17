@@ -68,7 +68,7 @@ public class AdviceAcitvity extends BaseTitleBackActivity {
         DialogUtils.showIndeterminateDialog(this, getString(R.string.advice_submitting), false, null);
         if (mPicUri == null) {
             //只提交意见
-            AdviceModel adviceModel = new AdviceModel(BmobUtils.getCurrentUser().getUsername(), content, "");
+            AdviceModel adviceModel = new AdviceModel(content, "");
             BmobUtils.synchroInfo(adviceModel, new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
@@ -87,7 +87,7 @@ public class AdviceAcitvity extends BaseTitleBackActivity {
                         DialogUtils.shutdownIndeterminateDialog();
                         ToastUtils.showToast(AdviceAcitvity.this, getString(R.string.advice_fileupload_fail), Effects.slideIn, R.id.id_root);
                     } else {
-                        AdviceModel adviceModel = new AdviceModel(BmobUtils.getCurrentUser().getUsername(), content, fileUrl);
+                        AdviceModel adviceModel = new AdviceModel(content, fileUrl);
                         BmobUtils.synchroInfo(adviceModel, new SaveListener<String>() {
                             @Override
                             public void done(String s, BmobException e) {

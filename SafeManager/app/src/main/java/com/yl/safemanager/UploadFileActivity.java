@@ -15,6 +15,7 @@ import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.FileInfo;
+import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
@@ -22,14 +23,19 @@ import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 
+import static android.media.CamcorderProfile.get;
 import static com.yl.safemanager.utils.SFGT.REQUEST_FILE;
 
 /**
@@ -48,13 +54,15 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
     private List<String> mFilePaths;
     private List<FileInfo> mDatas;
     private FileUploadAdapter mFileUploadAdapter;
-    private int mCurUploadFileIndex = 0;
+    private int mCurUploadFileNum = 0;
     private int mCurRemoveIndex = 0;
+    private SimpleDateFormat mDateFormater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initViews();
+        mDateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm E");
     }
 
     private void initViews() {
@@ -79,7 +87,7 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
             return; //没有指定文件 不能上传
         }
         DialogUtils.showFileLoadDialog(this, getString(R.string.upload_file));
-        mCurUploadFileIndex = 0; //重置当前上传文件index
+        mCurUploadFileNum = 0; //重置当前上传文件index
         mCurRemoveIndex = 0;    //重置当前需要移除的index
         Log.d(TAG, "uploadFile: 总上传文件数" + totalSize);
         BmobUtils.batchUploadFile(mFilePaths, new UploadBatchListener() {
@@ -91,26 +99,37 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
 
             @Override
             public void onSuccess(List<BmobFile> list, List<String> list1) {
-                mCurUploadFileIndex++;
-                Log.d(TAG, "onSuccess: 文件上传成功" + mCurUploadFileIndex);
-                mDatas.remove(mCurRemoveIndex); //成功就移除文件
-                mFilePaths.remove(mCurRemoveIndex); //
-                mFileUploadAdapter.notifyItemRemoved(mCurRemoveIndex);
-                if (mCurUploadFileIndex == totalSize) {
-                    DialogUtils.closeFileLoadDialog();//关闭文件加载器
-                }
+                //文件上传成功后,入数据库
+                final FileInfo fileInfo = mDatas.get(mCurRemoveIndex);
+                final LoadFileInfo loadFileInfo = new LoadFileInfo(fileInfo.getmFileName(),
+                        mDateFormater.format(new Date()), fileInfo.getmFileSize(), list.get(list.size() - 1));
+                BmobUtils.synchroInfo(loadFileInfo, new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e != null) {
+                            ToastUtils.showToast(UploadFileActivity.this, fileInfo.getmFileName() + getString(R.string.upload_filesavafail),
+                                    Effects.flip, R.id.id_root);
+                            loadFileInfo.delete(); //删除上传的记录
+                            mCurRemoveIndex++;
+                        } else {
+                            mDatas.remove(mCurRemoveIndex); //成功就移除文件
+                            mFilePaths.remove(mCurRemoveIndex);
+                            mFileUploadAdapter.notifyItemRemoved(mCurRemoveIndex);
+                        }
+                        mCurUploadFileNum++;
+                        if (mCurUploadFileNum == totalSize) {
+                            DialogUtils.closeFileLoadDialog();//关闭文件加载器
+                        }
+                    }
+                });
             }
 
             @Override
             public void onError(int i, String s) {
-                mCurUploadFileIndex++;
-                mCurRemoveIndex++;
+                DialogUtils.closeFileLoadDialog();//关闭文件加载器
                 //展示Toast
-                ToastUtils.showToast(UploadFileActivity.this, mDatas.get(mCurUploadFileIndex - 1).getmFileName() + getString(R.string.upload_filefial),
+                ToastUtils.showToast(UploadFileActivity.this, mDatas.get(mCurRemoveIndex).getmFileName() + getString(R.string.upload_filefail),
                         Effects.flip, R.id.id_root);
-                if (mCurUploadFileIndex == totalSize) {
-                    DialogUtils.closeFileLoadDialog();//关闭文件加载器
-                }
             }
         });
     }
@@ -145,6 +164,7 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
     @Override
     public void onClick(FileInfo model) {
         int position = model.getPosition();
+        mFilePaths.remove(position);
         mDatas.remove(position);
         mFileUploadAdapter.notifyItemRemoved(position);
     }

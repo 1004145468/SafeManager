@@ -87,8 +87,7 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
     public void addNote() {
         //添加一个记录
         DialogUtils.showIndeterminateDialog(this, getString(R.string.new_dataing), false, null);
-        final SmDataModel smDataModel = new SmDataModel(BmobUtils.getCurrentUser().getUsername(),
-                mDateFormater.format(new Date()), getString(R.string.new_data), "");
+        final SmDataModel smDataModel = new SmDataModel(mDateFormater.format(new Date()), getString(R.string.new_data), "");
         BmobUtils.synchroInfo(smDataModel, new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {

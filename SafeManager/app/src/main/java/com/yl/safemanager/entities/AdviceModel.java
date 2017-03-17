@@ -1,5 +1,7 @@
 package com.yl.safemanager.entities;
 
+import com.yl.safemanager.utils.BmobUtils;
+
 import cn.bmob.v3.BmobObject;
 
 import static cn.bmob.v3.BmobRole.tableName;
@@ -15,9 +17,9 @@ public class AdviceModel extends BmobObject {
     private String filepath;
 
 
-    public AdviceModel(String userId, String advice, String filepath) {
+    public AdviceModel(String advice, String filepath) {
         setTableName(AdviceModel.class.getSimpleName());
-        this.userId = userId;
+        userId = BmobUtils.getCurrentUser().getUsername();
         this.advice = advice;
         this.filepath = filepath;
     }

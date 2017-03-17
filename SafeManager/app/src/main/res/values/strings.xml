@@ -65,5 +65,9 @@
     <string name="upload_add">添加</string>
     <string name="upload_do">上传</string>
     <string name="upload_file">正在上传文件</string>
-    <string name="upload_filefial">上传失败</string>
+    <string name="upload_filefail">文件上传失败</string>
+    <string name="upload_filesavafail">文件存储失败</string>
+    <string name="download_file">正在下载文件</string>
+    <string name="download_filesuccess">下载文件成功,\n文件保存于/SfDown中</string>
+    <string name="download_filefail">下载文件失败</string>
 </resources>

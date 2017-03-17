@@ -1,13 +1,17 @@
 package com.yl.safemanager.entities;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * Created by YL on 2017/3/16.
  */
 
-public class FileInfo {
+public class FileInfo{
 
     private String mFileName;
+
     private String mFilePath;
+
     private String mFileSize;
     private int position;
 

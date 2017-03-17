@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.yl.safemanager.R;
+import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.entities.SafeUser;
 import com.yl.safemanager.entities.SmDataModel;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
@@ -17,6 +18,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -79,9 +81,21 @@ public class BmobUtils {
         });
     }
 
+    /**
+     * 对文件进行下载
+     *
+     * @param bmobFile 下载的文件
+     * @param listener 下载监听器
+     */
+    public static void downloadFile(BmobFile bmobFile, DownloadFileListener listener) {
+        File downFile = FileUtils.createFile("SfDown", bmobFile.getFilename());
+        bmobFile.download(downFile, listener);
+    }
+
 
     /**
      * 批量文件上传
+     *
      * @param filePaths
      * @param listener
      */
@@ -121,12 +135,27 @@ public class BmobUtils {
      */
     public static void getSmDateModels(final OnResultAttachedListener<List<SmDataModel>> listener) {
         BmobQuery<SmDataModel> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("useid", getCurrentUser().getUsername());
+        bmobQuery.addWhereEqualTo("userId", getCurrentUser().getUsername());
         bmobQuery.setLimit(50);
         bmobQuery.order("-createdAt"); //时间降序
         bmobQuery.findObjects(new FindListener<SmDataModel>() {
             @Override
             public void done(List<SmDataModel> list, BmobException e) {
+                if (listener != null) {
+                    listener.onResult(list);
+                }
+            }
+        });
+    }
+
+    public static void getLoadFileInfos(final OnResultAttachedListener<List<LoadFileInfo>> listener) {
+        BmobQuery<LoadFileInfo> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("userId", getCurrentUser().getUsername());
+        bmobQuery.setLimit(50);
+        bmobQuery.order("-createdAt"); //时间降序
+        bmobQuery.findObjects(new FindListener<LoadFileInfo>() {
+            @Override
+            public void done(List<LoadFileInfo> list, BmobException e) {
                 if (listener != null) {
                     listener.onResult(list);
                 }
