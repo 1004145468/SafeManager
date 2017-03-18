@@ -54,7 +54,6 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         //初始化ButterKnife的綁定
         ButterKnife.bind(this);
-        SFGT.gotoFunctionActivity(this);
         mForgetView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mRegisterView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mUserView.addTextChangedListener(new TextChangeHanlder(R.id.et_user));

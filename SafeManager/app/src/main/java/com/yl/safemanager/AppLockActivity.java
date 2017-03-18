@@ -1,5 +1,9 @@
 package com.yl.safemanager;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,8 +11,10 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.yl.safemanager.adapter.AppLockAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
@@ -32,11 +38,11 @@ public class AppLockActivity extends BaseTitleBackActivity {
     @BindView(R.id.applockrecyclerview)
     RecyclerView mAppLockRecyclerview;
 
-    @BindView(R.id.button_stop)
-    ImageView mStopButton;
-
     @BindView(R.id.button_playing)
-    ProgressBar mPlayingButton;
+    ImageView mPlayingButton;
+
+    @BindView(R.id.function_open)
+    TextView mStartBtn;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -48,13 +54,67 @@ public class AppLockActivity extends BaseTitleBackActivity {
 
     private ArrayList<AppInfo> mDatas;
     private AppLockAdapter mAdapter;
+    private AnimatorSet mStartBtnAnim;
+    private AnimatorSet mPlayingBtnAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataBaseUtils.initRealm(this);
+        initAnim();
         initViews();
         initDatas();
+    }
+
+    private void initAnim() {
+        int withHeight = getResources().getDisplayMetrics().heightPixels;
+        mStartBtnAnim = new AnimatorSet();
+        ObjectAnimator StartBtnAnimX = ObjectAnimator.ofFloat(mStartBtn, View.SCALE_X, 0, 1);
+        ObjectAnimator StartBtnAnimY = ObjectAnimator.ofFloat(mStartBtn, View.SCALE_Y, 0, 1);
+        ObjectAnimator StartBtnupAnim = ObjectAnimator.ofFloat(mStartBtn, View.TRANSLATION_Y, 100, 0);
+        StartBtnAnimX.setDuration(800);
+        StartBtnAnimY.setDuration(800);
+        StartBtnupAnim.setDuration(800);
+        StartBtnupAnim.setInterpolator(new OvershootInterpolator());
+        mStartBtnAnim.play(StartBtnAnimX).with(StartBtnAnimY).with(StartBtnupAnim);
+        mStartBtnAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                mStartBtn.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                Intent intent = new Intent(AppLockActivity.this, LockService.class);
+                stopService(intent);
+            }
+        });
+
+        mPlayingBtnAnim = new AnimatorSet();
+        ObjectAnimator PlayingBtnAnimX = ObjectAnimator.ofFloat(mPlayingButton, View.SCALE_X, 0, 1);
+        ObjectAnimator PlayingBtnAnimY = ObjectAnimator.ofFloat(mPlayingButton, View.SCALE_Y, 0, 1);
+        ObjectAnimator PlayingBtnDownAnim = ObjectAnimator.ofFloat(mPlayingButton, View.TRANSLATION_Y, -withHeight, 0);
+        PlayingBtnAnimX.setDuration(800);
+        PlayingBtnAnimY.setDuration(800);
+        PlayingBtnDownAnim.setDuration(800);
+        //PlayingBtnDownAnim.setInterpolator(new OvershootInterpolator());
+        mPlayingBtnAnim.play(PlayingBtnAnimX).with(PlayingBtnAnimY).with(PlayingBtnDownAnim);
+        mPlayingBtnAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                mPlayingButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                Intent intent = new Intent(AppLockActivity.this, LockService.class);
+                startService(intent);
+            }
+        });
     }
 
     private void initViews() {
@@ -64,9 +124,9 @@ public class AppLockActivity extends BaseTitleBackActivity {
         mAdapter = new AppLockAdapter(this, mDatas);
         mAppLockRecyclerview.setAdapter(mAdapter);
         //初始按钮
-        boolean isRunning = AppUtils.isRunByServiceName(this, "services.LockService");
+        boolean isRunning = AppUtils.isRunByServiceName(this, ".services.LockService");
         mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
-        mStopButton.setVisibility(isRunning ? View.GONE : View.VISIBLE);
+        mStartBtn.setVisibility(isRunning ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -114,21 +174,15 @@ public class AppLockActivity extends BaseTitleBackActivity {
         return Constant.FUNCTION_APPLOCK;
     }
 
-    @OnClick(R.id.button_stop)
+    @OnClick(R.id.function_open) //开启加锁服务
     public void startService() {
-        mStopButton.setVisibility(View.GONE);
-        mPlayingButton.setVisibility(View.VISIBLE);
-        //开启加锁服务
-        Intent intent = new Intent(this, LockService.class);
-        startService(intent);
+        mStartBtn.setVisibility(View.GONE);
+        mPlayingBtnAnim.start();
     }
 
-    @OnClick(R.id.button_playing)
+    @OnClick(R.id.button_playing)  //关闭加锁服务
     public void stopService() {
-        mStopButton.setVisibility(View.VISIBLE);
         mPlayingButton.setVisibility(View.GONE);
-        //关闭加锁服务
-        Intent intent = new Intent(this, LockService.class);
-        stopService(intent);
+        mStartBtnAnim.start();
     }
 }

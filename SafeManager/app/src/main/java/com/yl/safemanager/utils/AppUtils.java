@@ -19,6 +19,8 @@ import java.util.List;
 
 public class AppUtils {
 
+    private static final String TAG = "AppUtils";
+
     public static ArrayList<AppInfo> loadAppInfos(Context context) {
         PackageManager packageManager = context.getPackageManager();
         List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
@@ -43,6 +45,7 @@ public class AppUtils {
         List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
         for (ActivityManager.RunningServiceInfo serviceInfo : runningServices) {
             if (serviceInfo.service.getShortClassName().equals(shortclassname)) {
+                Log.d(TAG, "isRunByServiceName: " + serviceInfo.service.getShortClassName());
                 return true;
             }
         }

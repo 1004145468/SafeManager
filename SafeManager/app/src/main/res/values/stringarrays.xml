@@ -12,14 +12,14 @@
     </string-array>
 
     <string-array name="functiondescrips">
-        <item>点击进入</item>
-        <item>点击进入</item>
-        <item>点击进入</item>
-        <item>点击进入</item>
-        <item>点击进入</item>
-        <item>点击进入</item>
-        <item>点击进入</item>
-        <item>点击进入</item>
+        <item>对文件进行加密</item>
+        <item>发送或查看加密短信</item>
+        <item>加锁敏感应用</item>
+        <item>文件放云端更可靠</item>
+        <item>云端恢复数据</item>
+        <item>重要数据云端加密存储</item>
+        <item>发送或查看加密邮件</item>
+        <item>优质应用来自反馈</item>
     </string-array>
 
 </resources>

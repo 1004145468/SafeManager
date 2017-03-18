@@ -18,7 +18,10 @@ import com.yl.safemanager.base.BaseActivity;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
+import com.yl.safemanager.interfact.OnHeadItemClickListener;
 import com.yl.safemanager.utils.BmobUtils;
+import com.yl.safemanager.utils.SFGT;
+import com.yl.safemanager.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +32,17 @@ import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static com.yl.safemanager.constant.Constant.FUNCTION_APPLOCK;
+import static com.yl.safemanager.constant.Constant.FUNCTION_DATABACKUP;
+import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECORD;
+import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECOVER;
+import static com.yl.safemanager.constant.Constant.FUNCTION_FILELOCK;
+import static com.yl.safemanager.constant.Constant.FUNCTION_IDEA;
+import static com.yl.safemanager.constant.Constant.FUNCTION_MAILLOCK;
+import static com.yl.safemanager.constant.Constant.FUNCTION_SMSLOCK;
 import static junit.runner.Version.id;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements OnHeadItemClickListener<SafeFunctionInfo> {
 
     private static final String TAG = "MainActivity";
 
@@ -46,8 +57,8 @@ public class MainActivity extends BaseActivity {
 
     //功能图标
     private int[] mFuntionImg = {R.drawable.filestory, R.drawable.sms, R.drawable.app,
-                                R.drawable.backup, R.drawable.recovery, R.drawable.record,
-                                R.drawable.mail, R.drawable.idea};
+            R.drawable.backup, R.drawable.recovery, R.drawable.record,
+            R.drawable.mail, R.drawable.idea};
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -56,6 +67,8 @@ public class MainActivity extends BaseActivity {
     private double mStartY = 0;
     private boolean isScale = false;
     private ValueAnimator valueAnimator;
+    private FunctionAdapter functionAdapter;
+    private ArrayList<SafeFunctionItem> datas;
 
 
     @Override
@@ -71,6 +84,16 @@ public class MainActivity extends BaseActivity {
         initListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (datas.get(0).getCurrentType() == SafeFunctionItem.TYPE_HEAD) {
+            datas.remove(0);
+        }
+        datas.add(0, new SafeFunctionItem(SafeFunctionItem.TYPE_HEAD, BmobUtils.getCurrentUser()));
+        functionAdapter.notifyDataSetChanged();
+    }
+
     private void initConfig() {
         valueAnimator = ValueAnimator.ofFloat(1);
         valueAnimator.setInterpolator(new OvershootInterpolator());
@@ -79,9 +102,8 @@ public class MainActivity extends BaseActivity {
 
     //构造数据体
     private void initData() {
-        ArrayList<SafeFunctionItem> datas = new ArrayList<>();
-        SafeFunctionItem item = new SafeFunctionItem(SafeFunctionItem.TYPE_HEAD, BmobUtils.getCurrentUser());
-        datas.add(item);
+        datas = new ArrayList<>();
+        SafeFunctionItem item = null;
         SafeFunctionInfo functionInfo = null;
         int length = mFunctionName.length;
         for (int i = 0; i < length; i++) {
@@ -89,11 +111,11 @@ public class MainActivity extends BaseActivity {
             item = new SafeFunctionItem(SafeFunctionItem.TYPE_FUNCTION, functionInfo);
             datas.add(item);
         }
-        mFunctionViews.setAdapter(new FunctionAdapter(this, datas));
+        functionAdapter = new FunctionAdapter(this, datas);
+        mFunctionViews.setAdapter(functionAdapter);
     }
 
     private void initListener() {
-
         mFunctionViews.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -151,5 +173,46 @@ public class MainActivity extends BaseActivity {
             }
         });
         valueAnimator.start();
+    }
+
+    @Override
+    public void onClickMail() {
+        //TODO
+        ToastUtils.showOriginToast(this, "进入聊天");
+    }
+
+    @Override
+    public void onClickInfo() {
+        SFGT.gotoUserInfoActivity(this);
+    }
+
+    @Override
+    public void onClick(SafeFunctionInfo info) {
+        switch (info.getFunctionName()) {
+            case FUNCTION_FILELOCK:
+                SFGT.gotoFileLockActivity(this);
+                break;
+            case FUNCTION_SMSLOCK:
+                SFGT.gotoSmsLockActivity(this);
+                break;
+            case FUNCTION_APPLOCK:
+                SFGT.gotoAppLockActivity(this);
+                break;
+            case FUNCTION_DATABACKUP:
+                SFGT.gotoBackupActivity(this);
+                break;
+            case FUNCTION_DATARECOVER:
+                SFGT.gotoDownLoadFileActivity(this);
+                break;
+            case FUNCTION_DATARECORD:
+                SFGT.gotoNoteRecordActivity(this);
+                break;
+            case FUNCTION_MAILLOCK:
+                SFGT.gotoMailLockActivity(this);
+                break;
+            case FUNCTION_IDEA:
+                SFGT.gotoAdviceActivity(this);
+                break;
+        }
     }
 }

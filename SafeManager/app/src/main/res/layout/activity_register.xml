@@ -69,6 +69,7 @@
             android:textColor="@color/color1"
             android:background="@android:color/transparent"
             android:hint="@string/user_hint"
+            android:textColorHint="@color/color4"
             />
 
     </LinearLayout>
@@ -115,6 +116,7 @@
             android:textColor="@color/color1"
             android:background="@android:color/transparent"
             android:hint="@string/password_hint"
+            android:textColorHint="@color/color4"
             />
 
     </LinearLayout>
@@ -161,6 +163,7 @@
             android:inputType="textPassword"
             android:background="@android:color/transparent"
             android:hint="@string/password_hint"
+            android:textColorHint="@color/color4"
             />
 
     </LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/activity_base_title_back" />
+
+    <TextView
+        android:id="@+id/nick_save"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/nick_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:background="@android:color/transparent"
+        android:textColor="@color/color3"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/nick_textwatcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp"
+        android:text="12"
+        android:textColor="@color/color2"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/info_update"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/rotate_progress"
+        android:visibility="gone"/>
+
+</RelativeLayout>

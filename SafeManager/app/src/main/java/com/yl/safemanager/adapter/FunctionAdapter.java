@@ -16,6 +16,7 @@ import com.yl.safemanager.base.BaseSfHolder;
 import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
 import com.yl.safemanager.entities.SafeUser;
+import com.yl.safemanager.interfact.OnHeadItemClickListener;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.UriUtils;
 
@@ -44,12 +45,12 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     private static final String TAG = "FunctionAdapter";
 
-    private Context mContext;
     private LayoutInflater mLayoutInflater;
+    private OnHeadItemClickListener<SafeFunctionInfo> mListener;
     private ArrayList<SafeFunctionItem> mDatas;
 
     public FunctionAdapter(Context context, ArrayList<SafeFunctionItem> datas) {
-        this.mContext = context;
+        mListener = (OnHeadItemClickListener<SafeFunctionInfo>) context;
         mLayoutInflater = LayoutInflater.from(context);
         mDatas = datas;
     }
@@ -116,14 +117,16 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
         @OnClick(R.id.head_edit)
         public void changePeopleInfo() {
-            Log.d(TAG, "changePeopleInfo: ========================================");
-            //TODO
+            if (mListener != null) {
+                mListener.onClickInfo();
+            }
         }
 
         @OnClick(R.id.head_mail)
         public void gotoConversionListActivity() {
-            Log.d(TAG, "gotoConversionListActivity: ====================================");
-            //TODO
+            if (mListener != null) {
+                mListener.onClickMail();
+            }
         }
 
 
@@ -155,31 +158,8 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
         @OnClick(R.id.function_total)
         public void onItemOnClick() {
-            switch (info.getFunctionName()) {
-                case FUNCTION_FILELOCK:
-                    SFGT.gotoFileLockActivity(mContext);
-                    break;
-                case FUNCTION_SMSLOCK:
-                    SFGT.gotoSmsLockActivity(mContext);
-                    break;
-                case FUNCTION_APPLOCK:
-                    SFGT.gotoAppLockActivity(mContext);
-                    break;
-                case FUNCTION_DATABACKUP:
-                    SFGT.gotoBackupActivity(mContext);
-                    break;
-                case FUNCTION_DATARECOVER:
-                    SFGT.gotoDownLoadFileActivity(mContext);
-                    break;
-                case FUNCTION_DATARECORD:
-                    SFGT.gotoNoteRecordActivity(mContext);
-                    break;
-                case FUNCTION_MAILLOCK:
-                    SFGT.gotoMailLockActivity(mContext);
-                    break;
-                case FUNCTION_IDEA:
-                    SFGT.gotoAdviceActivity(mContext);
-                    break;
+            if (mListener != null) {
+                mListener.onClick(info);
             }
         }
     }

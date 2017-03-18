@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">安全管家</string>
     <string name="login_forgetpassword">忘记密码</string>
+    <string name="reset_forgetpassword">正在重置</string>
+    <string name="changing_password">正在修改</string>
+    <string name="changepassword">更换密码</string>
+    <string name="oldpsw_error">当前密码输入错误</string>
+    <string name="changepsw_fail">密码修改失败，请重新尝试！</string>
     <string name="login_forgetpassword_mail">密码重置邮件已发送至邮箱</string>
+    <string name="login_forgetpassword_mailfail">密码重置失败,请重新尝试！</string>
     <string name="login">登　录</string>
     <string name="loginnopadding">登录</string>
     <string name="register">注　册</string>
@@ -70,4 +76,22 @@
     <string name="download_file">正在下载文件</string>
     <string name="download_filesuccess">下载文件成功,\n文件保存于/SfDown中</string>
     <string name="download_filefail">下载文件失败</string>
+    <string name="nick">昵称</string>
+    <string name="user_id">账号</string>
+    <string name="sex">性别</string>
+    <string name="msg">个性签名</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="save">保存</string>
+    <string name="update_fail">更新失败</string>
+    <string name="headupdate_fail">头像更新失败</string>
+    <string name="function_open">开启</string>
+    <string name="chpsw_old">旧密码：</string>
+    <string name="chpsw_oldhint">请输入当前密码！</string>
+    <string name="chpsw_newhint">新密码不能为空</string>
+    <string name="chpsw_newhint1">两次密码输入不一致</string>
+    <string name="chpsw_new1">新密码：</string>
+    <string name="chpsw_new2">确认密码：</string>
+    <string name="chpsw_ok">确认修改</string>
+    <string name="chpsw_showpsw">显示密码</string>
 </resources>

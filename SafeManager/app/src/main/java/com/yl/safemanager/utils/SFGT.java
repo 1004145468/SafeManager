@@ -8,15 +8,21 @@ import android.widget.Toast;
 
 import com.yl.safemanager.AdviceAcitvity;
 import com.yl.safemanager.AppLockActivity;
+import com.yl.safemanager.ChangeInfoActivity;
+import com.yl.safemanager.ChangePswActivity;
+import com.yl.safemanager.ChangeSexActivity;
 import com.yl.safemanager.DownLoadFileActivity;
 import com.yl.safemanager.FileLockActivity;
-import com.yl.safemanager.InfoChangeActivity;
+import com.yl.safemanager.ForgetPswActivity;
 import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
 import com.yl.safemanager.SMDataActivity;
 import com.yl.safemanager.SMLockActivity;
 import com.yl.safemanager.UploadFileActivity;
+import com.yl.safemanager.UserInfoMotifyActivity;
+
+import static com.yl.safemanager.UserInfoMotifyActivity.CODE_CHANGE_SEX;
 
 /**
  * 统跳协议
@@ -26,7 +32,7 @@ import com.yl.safemanager.UploadFileActivity;
 
 public class SFGT {
 
-    public static int IMAGEPICK_REQUEST_CODE = 1; //打开图库请求码
+    public static final int IMAGEPICK_REQUEST_CODE = 6; //打开图库请求码
     public static final int REQUEST_FILE = 2;
 
     /**
@@ -45,8 +51,7 @@ public class SFGT {
     //跳转到密码找回界面
     public static void gotoForgetPswActivity(Context context) {
         if (context instanceof Activity) {
-            Intent intent = new Intent(context, InfoChangeActivity.class);
-            intent.putExtra(InfoChangeActivity.CONTENY_TYPE, InfoChangeActivity.FIND_PSW);
+            Intent intent = new Intent(context, ForgetPswActivity.class);
             context.startActivity(intent);
             ((Activity) context).overridePendingTransition(R.anim.slide_toleft, R.anim.slide_toright);
         }
@@ -203,9 +208,63 @@ public class SFGT {
         }
     }
 
+    /**
+     * 打开文件下载模块
+     *
+     * @param context
+     */
     public static void gotoDownLoadFileActivity(Context context) {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, DownLoadFileActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
+    /**
+     * 打开个人中心面板
+     *
+     * @param context
+     */
+    public static void gotoUserInfoActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, UserInfoMotifyActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
+    /**
+     * 修改昵称界面
+     *
+     * @param context
+     */
+    public static void gotoChangeInfoActivity(Context context, int requestCode) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, ChangeInfoActivity.class);
+            intent.putExtra("type", requestCode);
+            ((Activity) context).startActivityForResult(intent, requestCode);
+        }
+    }
+
+    /**
+     * 修改性别
+     *
+     * @param context
+     */
+    public static void gotoChangeSexActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, ChangeSexActivity.class);
+            ((Activity) context).startActivityForResult(intent, CODE_CHANGE_SEX);
+        }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param context
+     */
+    public static void gotoChangePswActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, ChangePswActivity.class);
             context.startActivity(intent);
         }
     }

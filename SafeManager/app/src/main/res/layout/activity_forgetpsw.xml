@@ -8,13 +8,13 @@
     <include layout="@layout/activity_base_title_back" />
 
     <TextView
-        android:id="@+id/tv_modify_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@color/color1"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
+        android:text="@string/user_hint"
         />
 
     <EditText
@@ -39,8 +39,8 @@
         android:textColor="@color/warnred"
         android:textSize="16sp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginRight="15dp"
+        android:text=""/>
 
     <Button
         android:id="@+id/btn_operation"

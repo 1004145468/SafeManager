@@ -55,11 +55,12 @@ public class BmobUtils {
     private static void signUp(final Context context, final String username, final String password, String fileUrl, final SaveListener<SafeUser> listener) {
         SafeUser safeUser = new SafeUser();
         safeUser.setUsername(username);
-        safeUser.setPassword(EncryptUtils.md5Encrypt(password));
+        safeUser.setPassword(password);
         safeUser.setmPortrait(fileUrl);
         safeUser.setmNick(context.getResources().getString(R.string.default_nick));
         safeUser.setmSex(SafeUser.MAN);
         safeUser.setmNote(context.getResources().getString(R.string.default_msg));
+        safeUser.setEmail(username);
         safeUser.signUp(listener);
     }
 
@@ -108,7 +109,7 @@ public class BmobUtils {
     public static void login(String username, String password, SaveListener<SafeUser> listener) {
         SafeUser safeUser = new SafeUser();
         safeUser.setUsername(username);
-        safeUser.setPassword(EncryptUtils.md5Encrypt(password));
+        safeUser.setPassword(password);
         safeUser.login(listener);
     }
 
@@ -161,6 +162,27 @@ public class BmobUtils {
                 }
             }
         });
+    }
+
+    /**
+     * 通过邮箱重置密码
+     *
+     * @param email
+     * @param listener
+     */
+    public static void resetPasswordByEmail(String email, UpdateListener listener) {
+        BmobUser.resetPasswordByEmail(email, listener);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param oldpsw   旧密码
+     * @param newpsw   新密码
+     * @param listener 回调
+     */
+    public static void changePsw(String oldpsw, String newpsw, UpdateListener listener) {
+        BmobUser.updateCurrentUserPassword(oldpsw, newpsw, listener);
     }
 
     /**

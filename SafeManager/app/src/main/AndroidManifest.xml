@@ -26,11 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".base.BaseTitleBackActivity"
-            android:label="@string/title_activity_base_title_back" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".InfoChangeActivity" />
+        <activity android:name=".ForgetPswActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FileLockActivity" />
         <activity android:name=".AppLockActivity" />
@@ -43,9 +40,13 @@
         <activity android:name=".SMLockActivity" />
         <activity android:name=".AdviceAcitvity" />
         <activity android:name=".SMDataActivity" />
-        <activity android:name=".EditSmDataActivity"></activity>
+        <activity android:name=".EditSmDataActivity" />
         <activity android:name=".UploadFileActivity" />
-        <activity android:name=".DownLoadFileActivity"/>
+        <activity android:name=".DownLoadFileActivity" />
+        <activity android:name=".UserInfoMotifyActivity" />
+        <activity android:name=".ChangeInfoActivity" />
+        <activity android:name=".ChangeSexActivity" />
+        <activity android:name=".ChangePswActivity"/>
     </application>
 
 </manifest>
