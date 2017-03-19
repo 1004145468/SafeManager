@@ -21,7 +21,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/sms_content"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/color3"/>
 
             <EditText
                 android:id="@+id/sms_content"
@@ -30,14 +31,17 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
-                android:minLines="3" />
+                android:textSize="16sp"
+                android:textColor="@color/color2"
+                android:gravity="left"
+                android:minLines="10" />
 
             <Button
                 android:id="@+id/sms_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/select_enable_bg"
                 android:enabled="false"
@@ -50,8 +54,8 @@
                 android:id="@+id/sms_read"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
                 android:layout_marginTop="18dp"
                 android:background="@drawable/select_enable_bg"
                 android:text="@string/sms_read"

@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yl.safemanager.adapter.AppLockAdapter;
@@ -71,7 +70,18 @@ public class AppLockActivity extends BaseTitleBackActivity {
         initDatas();
     }
 
-    private void initShow() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initShows();
+    }
+
+    private void initShows() {
+        //初始按钮
+        boolean isRunning = AppUtils.isRunByServiceName(this, ".services.LockService");
+        mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
+        mLockConfigButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
+        mStartBtn.setVisibility(isRunning ? View.GONE : View.VISIBLE);
     }
 
     private void initAnim() {
@@ -132,11 +142,6 @@ public class AppLockActivity extends BaseTitleBackActivity {
         mAppLockRecyclerview.addItemDecoration(new SafeItemDecoration());
         mAdapter = new AppLockAdapter(this, mDatas);
         mAppLockRecyclerview.setAdapter(mAdapter);
-        //初始按钮
-        boolean isRunning = AppUtils.isRunByServiceName(this, ".services.LockService");
-        mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
-        mLockConfigButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
-        mStartBtn.setVisibility(isRunning ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -196,8 +201,10 @@ public class AppLockActivity extends BaseTitleBackActivity {
         mStartBtnAnim.start();
     }
 
-    @OnClick(R.id.button_lockconfig)
-    public void setLockConfig() { //设置解锁信息
+    @OnClick(R.id.button_lockconfig)  //设置解锁信息
+    public void setLockConfig() {
+        Intent intent = new Intent(AppLockActivity.this, LockService.class);
+        stopService(intent);
         SFGT.gotoLockConfigActivity(this);
     }
 }
