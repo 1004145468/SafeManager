@@ -1,6 +1,7 @@
 package com.yl.safemanager;
 
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -54,12 +55,20 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         //初始化ButterKnife的綁定
         ButterKnife.bind(this);
-        SFGT.gotoFunctionActivity(this);
+        //SFGT.gotoFunctionActivity(this);
+        initViews();
+    }
+
+    private void initViews() {
         mForgetView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mRegisterView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);//设置下划线
         mUserView.addTextChangedListener(new TextChangeHanlder(R.id.et_user));
         mPasswordView.addTextChangedListener(new TextChangeHanlder(R.id.et_password));
-
+        SafeUser currentUser = BmobUtils.getCurrentUser();
+        if (currentUser != null) {
+            mHeadView.setImageURI(Uri.parse(currentUser.getmPortrait()));
+            mUserView.setText(currentUser.getUsername());
+        }
     }
 
 
