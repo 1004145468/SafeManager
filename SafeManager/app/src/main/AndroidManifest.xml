@@ -12,7 +12,9 @@
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".app.SafeApplication"
@@ -24,10 +26,9 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> 
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ForgetPswActivity" />
         <activity android:name=".MainActivity" />
@@ -48,8 +49,8 @@
         <activity android:name=".UserInfoMotifyActivity" />
         <activity android:name=".ChangeInfoActivity" />
         <activity android:name=".ChangeSexActivity" />
-        <activity android:name=".ChangePswActivity"/>
-        <activity android:name=".LockConfigActivity"/>
+        <activity android:name=".ChangePswActivity" />
+        <activity android:name=".LockConfigActivity" />
     </application>
 
 </manifest>

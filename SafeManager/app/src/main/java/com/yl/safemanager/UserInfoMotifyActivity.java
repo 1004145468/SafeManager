@@ -85,6 +85,12 @@ public class UserInfoMotifyActivity extends BaseTitleBackActivity {
         SFGT.gotoChangePswActivity(this);
     }
 
+    @OnClick(R.id.me_exit)  //退出登录
+    public void exitUser() {
+        setResult(RESULT_OK, null);
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {

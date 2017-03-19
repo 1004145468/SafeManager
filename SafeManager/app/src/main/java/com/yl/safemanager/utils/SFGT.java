@@ -17,6 +17,7 @@ import com.yl.safemanager.DownLoadFileActivity;
 import com.yl.safemanager.FileLockActivity;
 import com.yl.safemanager.ForgetPswActivity;
 import com.yl.safemanager.LockConfigActivity;
+import com.yl.safemanager.LoginActivity;
 import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
@@ -25,8 +26,8 @@ import com.yl.safemanager.SMLockActivity;
 import com.yl.safemanager.UploadFileActivity;
 import com.yl.safemanager.UserInfoMotifyActivity;
 
+import static com.yl.safemanager.MainActivity.EXIT_CODE;
 import static com.yl.safemanager.UserInfoMotifyActivity.CODE_CHANGE_SEX;
-import static com.yl.safemanager.utils.SpUtils.getString;
 
 /**
  * 统跳协议
@@ -238,7 +239,7 @@ public class SFGT {
     public static void gotoUserInfoActivity(Context context) {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, UserInfoMotifyActivity.class);
-            context.startActivity(intent);
+            ((Activity) context).startActivityForResult(intent, EXIT_CODE);
         }
     }
 
@@ -301,6 +302,18 @@ public class SFGT {
         } catch (Exception e) {
             e.printStackTrace();
             ToastUtils.showToast((Activity) context, context.getString(R.string.functionisnavai), Effects.thumbSlider, R.id.id_root);
+        }
+    }
+
+    /**
+     * 打开登录界面
+     *
+     * @param context
+     */
+    public static void gotoLoginActivity(Context context) {
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, LoginActivity.class);
+            context.startActivity(intent);
         }
     }
 }

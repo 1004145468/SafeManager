@@ -1,6 +1,7 @@
 package com.yl.safemanager;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +46,8 @@ import static junit.runner.Version.id;
 public class MainActivity extends BaseActivity implements OnHeadItemClickListener<SafeFunctionInfo> {
 
     private static final String TAG = "MainActivity";
+
+    public static final int EXIT_CODE = 1;
 
     @BindView(R.id.rv_function)
     RecyclerView mFunctionViews;
@@ -213,6 +216,17 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
             case FUNCTION_IDEA:
                 SFGT.gotoAdviceActivity(this);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == EXIT_CODE) {
+                //进入登录界面
+                SFGT.gotoLoginActivity(this);
+                finish();
+            }
         }
     }
 }

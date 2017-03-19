@@ -97,4 +97,5 @@
     <string name="config_shortnum">请配置解锁密码</string>
     <string name="functionisnavai">应用锁功能不可用</string>
     <string name="alert_not">使用应用锁需要打开该选项</string>
+    <string name="exit">退　出</string>
 </resources>
