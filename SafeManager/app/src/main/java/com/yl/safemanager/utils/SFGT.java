@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.AdviceAcitvity;
 import com.yl.safemanager.AppLockActivity;
 import com.yl.safemanager.ChangeInfoActivity;
@@ -25,6 +26,7 @@ import com.yl.safemanager.UploadFileActivity;
 import com.yl.safemanager.UserInfoMotifyActivity;
 
 import static com.yl.safemanager.UserInfoMotifyActivity.CODE_CHANGE_SEX;
+import static com.yl.safemanager.utils.SpUtils.getString;
 
 /**
  * 统跳协议
@@ -91,14 +93,20 @@ public class SFGT {
     }
 
     /**
-     * 打开应用锁界面
+     * 打开应用锁界面,如果没有配置过应用解密码，就打开配置界面
      *
      * @param context
      */
     public static void gotoAppLockActivity(Context context) {
         if (context instanceof Activity) {
-            Intent intent = new Intent(context, AppLockActivity.class);
-            context.startActivity(intent);
+            String shortCode = SpUtils.getString(context, LockConfigActivity.SHORT_CODE);
+            if (shortCode == null) {
+                gotoLockConfigActivity(context);
+            } else {
+                Intent intent = new Intent(context, AppLockActivity.class);
+                context.startActivity(intent);
+            }
+
         }
     }
 
@@ -273,20 +281,26 @@ public class SFGT {
 
     /**
      * 进入密码配置界面
+     *
      * @param context
      */
-    public static void gotoLockConfigActivity(Context context){
+    public static void gotoLockConfigActivity(Context context) {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, LockConfigActivity.class);
             context.startActivity(intent);
-            ((Activity) context).overridePendingTransition(R.anim.slide_totop,0);
+            ((Activity) context).overridePendingTransition(R.anim.slide_totop, 0);
         }
     }
 
-    public static void gotoPermisstion(Context context){
-        if(context instanceof Activity){
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            context.startActivity(intent);
+    public static void gotoPermisstion(Context context) {
+        try {
+            if (context instanceof Activity) {
+                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                context.startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.showToast((Activity) context, context.getString(R.string.functionisnavai), Effects.thumbSlider, R.id.id_root);
         }
     }
 }

@@ -5,6 +5,29 @@
     android:background="@drawable/login_bg">
 
     <LinearLayout
+        android:id="@+id/config_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circleround_alert_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/alert" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alert_not" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -31,10 +54,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
+            android:hint="(≡ω≡)"
             android:maxLength="6"
             android:textColor="@color/color2"
-            android:textSize="16sp"
-            android:hint="(≡ω≡)"/>
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/config_btn"
@@ -47,6 +70,12 @@
             android:textSize="18sp" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/id_root"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>

@@ -9,12 +9,15 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.yl.safemanager.entities.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static cn.bmob.v3.Bmob.getApplicationContext;
 
 /**
  * Created by YL on 2017/3/8.
@@ -78,4 +81,21 @@ public class AppUtils {
             return recentStats.getPackageName();
         }
     }
+
+    /**
+     * 判断是否打开了UsageStatsManager 权限
+     * @param context
+     * @return
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public static boolean hasUsageStatsPermission(Context context) {
+        long ts = System.currentTimeMillis();
+        UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+        List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, 0, ts);
+        if (queryUsageStats == null || queryUsageStats.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
 }

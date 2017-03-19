@@ -71,6 +71,9 @@ public class AppLockActivity extends BaseTitleBackActivity {
         initDatas();
     }
 
+    private void initShow() {
+    }
+
     private void initAnim() {
         int withHeight = getResources().getDisplayMetrics().heightPixels;
         mStartBtnAnim = new AnimatorSet();
