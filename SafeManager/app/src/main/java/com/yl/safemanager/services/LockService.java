@@ -2,8 +2,10 @@ package com.yl.safemanager.services;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Editable;
@@ -13,14 +15,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.gitonway.lee.niftynotification.lib.Effects;
+import com.yl.safemanager.LockConfigActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.entities.AppInfo;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
+import com.yl.safemanager.utils.AppUtils;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.EncryptUtils;
 import com.yl.safemanager.utils.SpUtils;
-import com.yl.safemanager.utils.ToastUtils;
 import com.yl.safemanager.utils.WindowUtils;
 
 import java.util.List;
@@ -36,6 +38,10 @@ public class LockService extends Service {
     private List<AppInfo> mDatas;
     private Timer mTimer;
     private Handler mHander = new Handler();
+
+    private boolean isShowLockView = false;
+    private boolean canShow = true;
+    private String currentLockPackageName = "";
 
     public LockService() {
     }
@@ -65,7 +71,7 @@ public class LockService extends Service {
             }
         });
         DataBaseUtils.closeRealm();
-        mConfigPassword = SpUtils.getString(this, "shortpassword");
+        mConfigPassword = SpUtils.getString(this, LockConfigActivity.SHORT_CODE);
     }
 
     private void initViews() {
@@ -87,9 +93,12 @@ public class LockService extends Service {
                 hintView.setVisibility(View.GONE);
                 if (length == 6) {
                     String content = EncryptUtils.md5Encrypt(editable.toString());
-                    if (content.equals(mConfigPassword)) {
+                    if (mConfigPassword != null && content.equals(mConfigPassword)) {
                         //移除枷鎖面板
+                        passwordView.setText(""); //清除密碼
                         WindowUtils.removeFullScreenView(LockService.this, mContentView);
+                        isShowLockView = false;
+                        canShow = false;
                     } else {
                         //提示密碼錯誤
                         passwordView.setText(""); //清除密碼
@@ -128,23 +137,32 @@ public class LockService extends Service {
      */
     class AppDog extends TimerTask {
 
-        private boolean isShowLockView = false;
         private boolean containerApp = false;
-        private ActivityManager mActivityManager;
         private String topAppPackageName = null;
+        private ActivityManager mActivityManager; //5.0以下
+        private UsageStatsManager usageStatsManager;  //5.0 及以上
 
         public AppDog() {
-            mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { //大于5.0
+                usageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
+            } else {
+                mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            }
         }
 
         @Override
         public void run() {
-            topAppPackageName = mActivityManager.getRunningTasks(1).get(0).topActivity.getPackageName(); //顶层应用的包名
+            topAppPackageName = AppUtils.getTopAppPackageName(mActivityManager, usageStatsManager);//顶层应用的包名
+            if (topAppPackageName == null) {
+                return;
+            }
             containerApp = false;
             for (AppInfo appInfo : mDatas) {
                 if (topAppPackageName.equals(appInfo.getPackageName())) {
+                    Log.d(TAG, "run: 当前应用在加锁列表中=========" + topAppPackageName);
                     containerApp = true;
-                    if (!isShowLockView) {//在加锁列表中并且没有添加解锁界面
+                    if (!isShowLockView && canShow) {//在加锁列表中并且没有添加解锁界面
+                        currentLockPackageName = topAppPackageName;
                         isShowLockView = true;
                         mHander.post(new Runnable() {
                             @Override
@@ -156,6 +174,11 @@ public class LockService extends Service {
                     break;
                 }
             }
+
+            if (!canShow && !topAppPackageName.equals(currentLockPackageName)) {
+                canShow = true;
+            }
+
 
             if (isShowLockView && !containerApp) {  //添加解锁界面 并且么有在加锁列表中
                 isShowLockView = false;

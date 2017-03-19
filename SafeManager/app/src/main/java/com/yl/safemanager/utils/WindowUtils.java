@@ -5,6 +5,7 @@ import android.graphics.PixelFormat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 /**
@@ -25,8 +26,8 @@ public class WindowUtils {
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
         params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        params.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
-        params.format = PixelFormat.TRANSLUCENT;
+        params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        params.format = PixelFormat.RGBA_8888;
         params.gravity = (Gravity.CENTER);
         windowManager.addView(contentView, params);
     }

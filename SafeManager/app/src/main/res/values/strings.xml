@@ -94,4 +94,5 @@
     <string name="chpsw_new2">确认密码：</string>
     <string name="chpsw_ok">确认修改</string>
     <string name="chpsw_showpsw">显示密码</string>
+    <string name="config_shortnum">请配置解锁密码</string>
 </resources>

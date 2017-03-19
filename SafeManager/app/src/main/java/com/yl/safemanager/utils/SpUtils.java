@@ -16,7 +16,8 @@ public class SpUtils {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SP_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(key,value);
-        SharedPreferencesCompat.EditorCompat.getInstance().apply(edit); //异步存放
+        edit.commit();
+        //SharedPreferencesCompat.EditorCompat.getInstance().apply(edit); //异步存放
     }
 
     public static String getString(Context context,String key){

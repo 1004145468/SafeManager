@@ -21,11 +21,11 @@ public class SafeApplication extends Application {
         super.onCreate();
         Fresco.initialize(this); //Fresco的初始化
         Bmob.initialize(this, "ceef00eaf322eef098f0d8acae67d67c"); //Bmob的初始化
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+        /*Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
                 Log.e(TAG, "uncaughtException: " + throwable.toString());  //防止Bmob网络中断情况 应用崩溃
             }
-        });
+        });*/
     }
 }

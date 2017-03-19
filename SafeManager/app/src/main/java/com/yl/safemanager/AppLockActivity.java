@@ -26,6 +26,7 @@ import com.yl.safemanager.services.LockService;
 import com.yl.safemanager.utils.AppUtils;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.DialogUtils;
+import com.yl.safemanager.utils.SFGT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,12 @@ public class AppLockActivity extends BaseTitleBackActivity {
     @BindView(R.id.button_playing)
     ImageView mPlayingButton;
 
+    @BindView(R.id.button_lockconfig)
+    ImageView mLockConfigButton;
+
     @BindView(R.id.function_open)
     TextView mStartBtn;
+
 
     private Handler mHandler = new Handler() {
         @Override
@@ -82,6 +87,7 @@ public class AppLockActivity extends BaseTitleBackActivity {
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
                 mStartBtn.setVisibility(View.VISIBLE);
+                mLockConfigButton.setVisibility(View.GONE);
             }
 
             @Override
@@ -99,7 +105,6 @@ public class AppLockActivity extends BaseTitleBackActivity {
         PlayingBtnAnimX.setDuration(800);
         PlayingBtnAnimY.setDuration(800);
         PlayingBtnDownAnim.setDuration(800);
-        //PlayingBtnDownAnim.setInterpolator(new OvershootInterpolator());
         mPlayingBtnAnim.play(PlayingBtnAnimX).with(PlayingBtnAnimY).with(PlayingBtnDownAnim);
         mPlayingBtnAnim.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -111,6 +116,7 @@ public class AppLockActivity extends BaseTitleBackActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
+                mLockConfigButton.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(AppLockActivity.this, LockService.class);
                 startService(intent);
             }
@@ -126,6 +132,7 @@ public class AppLockActivity extends BaseTitleBackActivity {
         //初始按钮
         boolean isRunning = AppUtils.isRunByServiceName(this, ".services.LockService");
         mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
+        mLockConfigButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
         mStartBtn.setVisibility(isRunning ? View.GONE : View.VISIBLE);
     }
 
@@ -184,5 +191,10 @@ public class AppLockActivity extends BaseTitleBackActivity {
     public void stopService() {
         mPlayingButton.setVisibility(View.GONE);
         mStartBtnAnim.start();
+    }
+
+    @OnClick(R.id.button_lockconfig)
+    public void setLockConfig() { //设置解锁信息
+        SFGT.gotoLockConfigActivity(this);
     }
 }

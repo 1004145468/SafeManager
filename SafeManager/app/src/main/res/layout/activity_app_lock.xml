@@ -29,10 +29,21 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:src="@drawable/play"
+        android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="30dp"/>
+
+    <ImageView
+        android:id="@+id/button_lockconfig"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/applock_lock"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:visibility="gone"
         />
     
 </RelativeLayout>

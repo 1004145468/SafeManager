@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.yl.safemanager.AdviceAcitvity;
@@ -14,6 +15,7 @@ import com.yl.safemanager.ChangeSexActivity;
 import com.yl.safemanager.DownLoadFileActivity;
 import com.yl.safemanager.FileLockActivity;
 import com.yl.safemanager.ForgetPswActivity;
+import com.yl.safemanager.LockConfigActivity;
 import com.yl.safemanager.MainActivity;
 import com.yl.safemanager.R;
 import com.yl.safemanager.RegisterActivity;
@@ -265,6 +267,25 @@ public class SFGT {
     public static void gotoChangePswActivity(Context context) {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, ChangePswActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
+    /**
+     * 进入密码配置界面
+     * @param context
+     */
+    public static void gotoLockConfigActivity(Context context){
+        if (context instanceof Activity) {
+            Intent intent = new Intent(context, LockConfigActivity.class);
+            context.startActivity(intent);
+            ((Activity) context).overridePendingTransition(R.anim.slide_totop,0);
+        }
+    }
+
+    public static void gotoPermisstion(Context context){
+        if(context instanceof Activity){
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             context.startActivity(intent);
         }
     }
