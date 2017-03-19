@@ -34,7 +34,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/color2"
                 android:gravity="left"
-                android:minLines="10" />
+                android:minLines="15" />
 
             <Button
                 android:id="@+id/sms_send"

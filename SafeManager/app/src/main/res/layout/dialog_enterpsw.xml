@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/circleround_nearwhite_bg"
+    android:background="@drawable/circleround_smallgreen_bg"
     >
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textColor="#666666"
         android:layout_centerHorizontal="true"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:text="@string/sms_decryptionKey"
         android:layout_marginTop="20dp"/>
 
@@ -26,6 +26,7 @@
         android:textColor="@color/color1"
         android:inputType="number"
         android:gravity="center_horizontal"
+        android:background="@drawable/stroke_smallgrep_bg"
         />
 
     <Button
@@ -33,9 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         android:enabled="false"
-        android:background="@drawable/select_enable_bg"
-        android:textColor="@color/white"
+        android:background="@android:color/transparent"
+        android:textColor="@color/select_color"
         android:textSize="18sp"
         android:text="@string/ok"/>
 

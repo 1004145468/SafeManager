@@ -1,6 +1,5 @@
 package com.yl.safemanager;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +10,7 @@ import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.FileDownLoadAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
-import com.yl.safemanager.decoraion.SafeItemDecoration;
+import com.yl.safemanager.decoraion.SafeEmptyItemDecoration;
 import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
@@ -69,7 +68,7 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mDownLoadListView.setLayoutManager(linearLayoutManager);
-        mDownLoadListView.addItemDecoration(new SafeItemDecoration());
+        mDownLoadListView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mAdapter = new FileDownLoadAdapter(this, mDatas);
         mDownLoadListView.setAdapter(mAdapter);

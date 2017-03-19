@@ -44,8 +44,8 @@
     <string name="sms_send">加密发送</string>
     <string name="sms_read">解密查看</string>
     <string name="sms_content">加解密内容:</string>
-    <string name="sms_encryptionkey">请输入加密密钥：</string>
-    <string name="sms_decryptionKey">请输入解密密钥：</string>
+    <string name="sms_encryptionkey">请输入加密密钥</string>
+    <string name="sms_decryptionKey">请输入解密密钥</string>
     <string name="activitynofind">您请求的界面不存在</string>
     <string name="systemmailnofind">请安装邮件应用</string>
     <string name="give_me_advice">请输入您的意见</string>
@@ -63,13 +63,13 @@
     <string name="content">内　容:</string>
     <string name="time">保存时间:</string>
     <string name="synchronization">同　步</string>
-    <string name="dialog_positive">删除</string>
+    <string name="dialog_positive">确定</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_deletemsg">是否删除该记录 ？</string>
     <string name="delete_fail">删除失败</string>
     <string name="data_update_success">数据更新成功</string>
-    <string name="upload_add">添加</string>
-    <string name="upload_do">上传</string>
+    <string name="upload_add">添　加</string>
+    <string name="upload_do">上　传</string>
     <string name="upload_file">正在上传文件</string>
     <string name="upload_filefail">文件上传失败</string>
     <string name="upload_filesavafail">文件存储失败</string>
@@ -100,4 +100,5 @@
     <string name="exit">退　出</string>
     <string name="shortcodeisemp">请输入应用解锁密码！</string>
     <string name="shortcodeisshort">请输入6位应用解锁密码！</string>
+    <string name="exitapp">是否退出？</string>
 </resources>

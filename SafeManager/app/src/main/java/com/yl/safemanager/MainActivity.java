@@ -1,6 +1,7 @@
 package com.yl.safemanager;
 
 import android.animation.ValueAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
 import com.yl.safemanager.interfact.OnHeadItemClickListener;
 import com.yl.safemanager.utils.BmobUtils;
+import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
 
@@ -72,7 +74,6 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
     private ValueAnimator valueAnimator;
     private FunctionAdapter functionAdapter;
     private ArrayList<SafeFunctionItem> datas;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,9 +225,23 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
         if (resultCode == RESULT_OK) {
             if (requestCode == EXIT_CODE) {
                 //进入登录界面
+
                 SFGT.gotoLoginActivity(this);
                 finish();
             }
         }
+    }
+
+    /**
+     * 重写后退按钮功能
+     */
+    @Override
+    public void onBackPressed() {
+        DialogUtils.showMessageDialog(this, getString(R.string.exitapp), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
     }
 }

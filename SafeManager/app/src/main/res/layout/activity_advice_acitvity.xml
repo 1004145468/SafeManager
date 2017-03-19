@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/advice_bg"
     >
 
     <include layout="@layout/activity_base_title_back" />
@@ -61,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="70dp"
                 android:background="@drawable/select_enable_bg"
                 android:enabled="false"
                 android:text="@string/submit"

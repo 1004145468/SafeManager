@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.SMDataAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
-import com.yl.safemanager.decoraion.SafeItemDecoration;
+import com.yl.safemanager.decoraion.SafeEmptyItemDecoration;
 import com.yl.safemanager.entities.SmDataModel;
 import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
@@ -58,7 +57,7 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.addItemDecoration(new SafeItemDecoration());
+        mRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mAdapter = new SMDataAdapter(this, mDatas);
         mRecyclerView.setAdapter(mAdapter);

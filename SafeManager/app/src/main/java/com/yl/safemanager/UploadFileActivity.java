@@ -13,7 +13,7 @@ import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.FileUploadAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
-import com.yl.safemanager.decoraion.SafeItemDecoration;
+import com.yl.safemanager.decoraion.SafeEmptyItemDecoration;
 import com.yl.safemanager.entities.FileInfo;
 import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.interfact.OnItemClickListener;
@@ -35,7 +35,6 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 
-import static android.media.CamcorderProfile.get;
 import static com.yl.safemanager.utils.SFGT.REQUEST_FILE;
 
 /**
@@ -68,7 +67,7 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mFileRecyclerView.setLayoutManager(linearLayoutManager);
-        mFileRecyclerView.addItemDecoration(new SafeItemDecoration());
+        mFileRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mFilePaths = new ArrayList<>();
         mFileUploadAdapter = new FileUploadAdapter(this, mDatas);

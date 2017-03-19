@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/word_bg">
 
     <include layout="@layout/activity_base_title_back" />
 
@@ -13,7 +14,8 @@
         android:layout_alignParentBottom="true"
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/upload_addbtn"
@@ -21,7 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/upload_add"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:background="@drawable/select_common_bg"
+            />
 
         <Button
             android:id="@+id/upload_dobtn"
@@ -29,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/upload_do"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:background="@drawable/select_common_bg"
+            android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
 

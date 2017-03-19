@@ -2,9 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/smdata_bg">
+    android:background="@drawable/word_bg">
 
     <include layout="@layout/activity_base_title_back" />
+
+    <ImageView
+        android:id="@+id/note_add"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="12.5dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:src="@drawable/select_noterecord_bg" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/note_listview"
@@ -14,17 +24,6 @@
         android:overScrollMode="never"
         android:paddingLeft="15dp"
         android:paddingRight="15dp" />
-
-    <ImageView
-        android:id="@+id/note_add"
-        android:layout_width="35dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="20dp"
-        android:clickable="true"
-        android:src="@drawable/select_noterecord_bg" />
 
     <FrameLayout
         android:id="@+id/id_root"
