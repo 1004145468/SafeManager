@@ -17,14 +17,12 @@ import android.widget.TextView;
 
 import com.yl.safemanager.LockConfigActivity;
 import com.yl.safemanager.R;
-import com.yl.safemanager.entities.AppInfo;
-import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.AppUtils;
-import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.EncryptUtils;
 import com.yl.safemanager.utils.SpUtils;
 import com.yl.safemanager.utils.WindowUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,7 +33,7 @@ public class LockService extends Service {
 
     private String mConfigPassword = null;
     private View mContentView;
-    private List<AppInfo> mDatas;
+    private List<String> mDatas;
     private Timer mTimer;
     private Handler mHander = new Handler();
 
@@ -54,24 +52,25 @@ public class LockService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //查询所有加锁信息
-        initDatas();
-        //初始化展示面板
-        initViews();
-        //开启定时任务
-        startTimer();
+        if (initDatas(intent)) {
+            //初始化展示面板
+            initViews();
+            //开启定时任务
+            startTimer();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void initDatas() {
-        DataBaseUtils.initRealm(this);
-        DataBaseUtils.getAllLockApps(new OnResultAttachedListener<List<AppInfo>>() {
-            @Override
-            public void onResult(List<AppInfo> appInfos) {
-                mDatas = appInfos;
-            }
-        });
-        DataBaseUtils.closeRealm();
+    private boolean initDatas(Intent intent) {
+        boolean shouldTimer = false;
+        ArrayList<String> appInfos = intent.getStringArrayListExtra("lockapps");
+        if (appInfos != null && appInfos.size() > 0) {
+            mDatas = new ArrayList<>();
+            mDatas.addAll(appInfos);
+            shouldTimer = true;
+        }
         mConfigPassword = SpUtils.getString(this, LockConfigActivity.SHORT_CODE);
+        return shouldTimer;
     }
 
     private void initViews() {
@@ -157,8 +156,8 @@ public class LockService extends Service {
                 return;
             }
             containerApp = false;
-            for (AppInfo appInfo : mDatas) {
-                if (topAppPackageName.equals(appInfo.getPackageName())) {
+            for (String  packageName : mDatas) {
+                if (topAppPackageName.equals(packageName)) {
                     Log.d(TAG, "run: 当前应用在加锁列表中=========" + topAppPackageName);
                     containerApp = true;
                     if (!isShowLockView && canShow) {//在加锁列表中并且没有添加解锁界面

@@ -101,4 +101,6 @@
     <string name="shortcodeisemp">请输入应用解锁密码！</string>
     <string name="shortcodeisshort">请输入6位应用解锁密码！</string>
     <string name="exitapp">是否退出？</string>
+    <string name="preparechat">正在初始化聊天模块,请稍后.</string>
+    <string name="chatto">请输入您要进行聊天的好友账号</string>
 </resources>

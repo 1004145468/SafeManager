@@ -1,6 +1,7 @@
 package com.yl.safemanager.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.yl.safemanager.entities.AppInfo;
@@ -47,6 +48,9 @@ public class DataBaseUtils {
      * @param lockFileModel
      */
     public static void saveLockFileModel(final LockFileModel lockFileModel) {
+        if (lockFileModel == null) {
+            return;
+        }
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -100,6 +104,9 @@ public class DataBaseUtils {
      * @param appInfos
      */
     public static void saveLockApps(final List<AppInfo> appInfos) {
+        if (appInfos == null || appInfos.size() < 1) {
+            return;
+        }
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -138,6 +145,9 @@ public class DataBaseUtils {
      * @param appinfo
      */
     public static void saveLockApp(final AppInfo appinfo) {
+        if (appinfo == null) {
+            return;
+        }
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -152,6 +162,9 @@ public class DataBaseUtils {
      * @param packageName
      */
     public static void deleteLockApp(final String packageName) {
+        if (TextUtils.isEmpty(packageName)) {
+            return;
+        }
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

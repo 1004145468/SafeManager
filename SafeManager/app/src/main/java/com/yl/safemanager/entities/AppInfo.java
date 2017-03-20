@@ -2,6 +2,8 @@ package com.yl.safemanager.entities;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 
@@ -9,7 +11,7 @@ import io.realm.annotations.Ignore;
  * Created by YL on 2017/3/8.
  */
 
-public class AppInfo extends RealmObject {
+public class AppInfo extends RealmObject{
 
     private String mPackageName;
     private String mAppName;

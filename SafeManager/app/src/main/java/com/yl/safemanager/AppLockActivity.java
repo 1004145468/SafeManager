@@ -20,6 +20,7 @@ import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.AppInfo;
+import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.services.LockService;
 import com.yl.safemanager.utils.AppUtils;
@@ -33,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AppLockActivity extends BaseTitleBackActivity {
+public class AppLockActivity extends BaseTitleBackActivity implements OnItemClickListener<AppInfo> {
 
     @BindView(R.id.applockrecyclerview)
     RecyclerView mAppLockRecyclerview;
@@ -56,8 +57,12 @@ public class AppLockActivity extends BaseTitleBackActivity {
         }
     };
 
+
     private ArrayList<AppInfo> mDatas;
     private AppLockAdapter mAdapter;
+
+    private ArrayList<String> mLockApps;
+
     private AnimatorSet mStartBtnAnim;
     private AnimatorSet mPlayingBtnAnim;
 
@@ -66,7 +71,7 @@ public class AppLockActivity extends BaseTitleBackActivity {
         super.onCreate(savedInstanceState);
         DataBaseUtils.initRealm(this);
         initAnim();
-        initViews();
+        initAdapter();
         initDatas();
     }
 
@@ -76,12 +81,10 @@ public class AppLockActivity extends BaseTitleBackActivity {
         initShows();
     }
 
-    private void initShows() {
-        //初始按钮
-        boolean isRunning = AppUtils.isRunByServiceName(this, ".services.LockService");
-        mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
-        mLockConfigButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
-        mStartBtn.setVisibility(isRunning ? View.GONE : View.VISIBLE);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DataBaseUtils.closeRealm();
     }
 
     private void initAnim() {
@@ -99,8 +102,9 @@ public class AppLockActivity extends BaseTitleBackActivity {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                mStartBtn.setVisibility(View.VISIBLE);
                 mLockConfigButton.setVisibility(View.GONE);
+                mPlayingButton.setVisibility(View.GONE);
+                mStartBtn.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -123,6 +127,7 @@ public class AppLockActivity extends BaseTitleBackActivity {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
+                mStartBtn.setVisibility(View.GONE);
                 mPlayingButton.setVisibility(View.VISIBLE);
             }
 
@@ -131,12 +136,13 @@ public class AppLockActivity extends BaseTitleBackActivity {
                 super.onAnimationEnd(animation);
                 mLockConfigButton.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(AppLockActivity.this, LockService.class);
+                intent.putStringArrayListExtra("lockapps",mLockApps);
                 startService(intent);
             }
         });
     }
 
-    private void initViews() {
+    private void initAdapter() {
         mDatas = new ArrayList<>();
         mAppLockRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mAppLockRecyclerview.addItemDecoration(new SafeItemDecoration());
@@ -144,22 +150,37 @@ public class AppLockActivity extends BaseTitleBackActivity {
         mAppLockRecyclerview.setAdapter(mAdapter);
     }
 
+    private void initShows() {
+        //初始按钮
+        boolean isRunning = AppUtils.isRunByServiceName(this, ".services.LockService");
+        mPlayingButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
+        mLockConfigButton.setVisibility(isRunning ? View.VISIBLE : View.GONE);
+        mStartBtn.setVisibility(isRunning ? View.GONE : View.VISIBLE);
+    }
+
     /**
      * 初始化数据加载
      */
     private void initDatas() {
+        mLockApps = new ArrayList<>();
         DialogUtils.showIndeterminateDialog(this, getString(R.string.loading_appinfo), false, null);
         DataBaseUtils.getAllLockApps(new OnResultAttachedListener<List<AppInfo>>() {
             @Override
             public void onResult(final List<AppInfo> lockapps) {
-                //获取曾经需要加密过得
                 new Thread() {
                     @Override
                     public void run() {
+                        if (lockapps != null && lockapps.size() > 0) {
+                            for (AppInfo info : lockapps) {
+                                if (info != null) {
+                                    mLockApps.add(info.getPackageName());
+                                }
+                            }
+                        }
                         ArrayList<AppInfo> appInfos = AppUtils.loadAppInfos(AppLockActivity.this);
-                        for (AppInfo lockapp : lockapps) {
+                        for (String lockapp : mLockApps) {
                             for (AppInfo app : appInfos) {
-                                if (lockapp.getPackageName().equals(app.getPackageName())) {
+                                if (lockapp.equals(app.getPackageName())) {
                                     app.setSelect(true);
                                     break;
                                 }
@@ -174,12 +195,6 @@ public class AppLockActivity extends BaseTitleBackActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        DataBaseUtils.closeRealm();
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.activity_app_lock;
     }
@@ -191,13 +206,11 @@ public class AppLockActivity extends BaseTitleBackActivity {
 
     @OnClick(R.id.function_open) //开启加锁服务
     public void startService() {
-        mStartBtn.setVisibility(View.GONE);
         mPlayingBtnAnim.start();
     }
 
     @OnClick(R.id.button_playing)  //关闭加锁服务
     public void stopService() {
-        mPlayingButton.setVisibility(View.GONE);
         mStartBtnAnim.start();
     }
 
@@ -206,5 +219,23 @@ public class AppLockActivity extends BaseTitleBackActivity {
         Intent intent = new Intent(AppLockActivity.this, LockService.class);
         stopService(intent);
         SFGT.gotoLockConfigActivity(this);
+    }
+
+    @Override
+    public void onClick(AppInfo appInfo) {
+        if (appInfo.isSelect()) {       //存
+            mLockApps.add(appInfo.getPackageName());
+            DataBaseUtils.saveLockApp(appInfo);
+        } else {
+            //删
+            mLockApps.remove(appInfo.getPackageName());
+            DataBaseUtils.deleteLockApp(appInfo.getPackageName());
+        }
+
+    }
+
+    @Override
+    public void onLongClick(AppInfo model) {
+
     }
 }

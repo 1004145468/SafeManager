@@ -37,4 +37,7 @@ dependencies {
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile project(':IMKit')
+    compile project(':IMLib')
+    provided 'com.squareup.retrofit2:retrofit:2.2.0'
 }

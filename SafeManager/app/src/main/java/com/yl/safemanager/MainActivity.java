@@ -1,5 +1,8 @@
 package com.yl.safemanager;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +10,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,17 +18,24 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.TextView;
 
 import com.yl.safemanager.adapter.FunctionAdapter;
 import com.yl.safemanager.base.BaseActivity;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
+import com.yl.safemanager.entities.SafeUser;
+import com.yl.safemanager.entities.TokenResult;
 import com.yl.safemanager.interfact.OnHeadItemClickListener;
+import com.yl.safemanager.networkinterface.SafeNetInterface;
 import com.yl.safemanager.utils.BmobUtils;
+import com.yl.safemanager.utils.ChatUtils;
 import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +44,11 @@ import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
+import io.rong.imlib.RongIMClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.yl.safemanager.constant.Constant.FUNCTION_APPLOCK;
@@ -51,6 +67,9 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
 
     public static final int EXIT_CODE = 1;
 
+    @BindView(R.id.tv_chathint)
+    TextView mChatView;
+
     @BindView(R.id.rv_function)
     RecyclerView mFunctionViews;
 
@@ -59,6 +78,7 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
 
     @BindArray(R.array.functiondescrips)
     String[] mFunctionDesc;
+
 
     //功能图标
     private int[] mFuntionImg = {R.drawable.filestory, R.drawable.sms, R.drawable.app,
@@ -74,6 +94,7 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
     private ValueAnimator valueAnimator;
     private FunctionAdapter functionAdapter;
     private ArrayList<SafeFunctionItem> datas;
+    private ObjectAnimator mChatViewAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +120,20 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
     }
 
     private void initConfig() {
+        mChatView.measure(0, 0);
+        mChatView.setPivotX(0);
+        mChatView.setPivotY(mChatView.getMeasuredHeight() / 2);
+        mChatViewAnim = ObjectAnimator.ofFloat(mChatView, View.SCALE_X, 0, 1);
+        mChatViewAnim.setDuration(500);
+        mChatViewAnim.setInterpolator(new OvershootInterpolator());
+        mChatViewAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                mChatView.setVisibility(View.VISIBLE);
+            }
+        });
+
         valueAnimator = ValueAnimator.ofFloat(1);
         valueAnimator.setInterpolator(new OvershootInterpolator());
         valueAnimator.setDuration(300);
@@ -182,7 +217,7 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
     @Override
     public void onClickMail() {
         //TODO
-        ToastUtils.showOriginToast(this, "进入聊天");
+        enterChat();
     }
 
     @Override
@@ -225,7 +260,6 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
         if (resultCode == RESULT_OK) {
             if (requestCode == EXIT_CODE) {
                 //进入登录界面
-
                 SFGT.gotoLoginActivity(this);
                 finish();
             }
@@ -243,5 +277,52 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
                 finish();
             }
         });
+    }
+
+    private void enterChat() {
+        mChatViewAnim.start(); //开始动画
+        ChatUtils.getToken(new Callback<TokenResult>() {
+            @Override
+            public void onFailure(Call<TokenResult> call, Throwable t) {
+                mChatView.setVisibility(View.GONE);
+                ToastUtils.showOriginToast(MainActivity.this, "服务器繁忙！");
+            }
+
+            @Override
+            public void onResponse(Call<TokenResult> call, Response<TokenResult> response) {
+                if (response == null || response.body() == null) {
+                    mChatView.setVisibility(View.GONE);
+                    ToastUtils.showOriginToast(MainActivity.this, "服务器繁忙！");
+                    return;
+                }
+                String mtoken = response.body().getToken();
+                if (TextUtils.isEmpty(mtoken)) {
+                    mChatView.setVisibility(View.GONE);
+                    ToastUtils.showOriginToast(MainActivity.this, "服务器繁忙！");
+                    return;
+                }
+                ChatUtils.connnect(MainActivity.this, mtoken, new RongIMClient.ConnectCallback() {
+                    @Override
+                    public void onTokenIncorrect() {
+                        mChatView.setVisibility(View.GONE);
+                        ToastUtils.showOriginToast(MainActivity.this, "连接失败，请重新尝试！");
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        mChatView.setVisibility(View.GONE);
+                        ToastUtils.showOriginToast(MainActivity.this, "连接失败，请重新尝试！");
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        mChatView.setVisibility(View.GONE);
+                        //打开聊天界面
+                        SFGT.gotoConversationListActivity(MainActivity.this);
+                    }
+                });
+            }
+        });
+
     }
 }

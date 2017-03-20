@@ -26,6 +26,12 @@ import com.yl.safemanager.SMLockActivity;
 import com.yl.safemanager.UploadFileActivity;
 import com.yl.safemanager.UserInfoMotifyActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+
 import static com.yl.safemanager.MainActivity.EXIT_CODE;
 import static com.yl.safemanager.UserInfoMotifyActivity.CODE_CHANGE_SEX;
 
@@ -314,6 +320,19 @@ public class SFGT {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, LoginActivity.class);
             context.startActivity(intent);
+        }
+    }
+
+    /**
+     * 进入聊天列表
+     * @param context
+     */
+    public static void gotoConversationListActivity(Context context) {
+        if (context instanceof Activity) {
+            Map<String, Boolean> map = new HashMap<>();
+            map.put(Conversation.ConversationType.PRIVATE.getName(), false); // 会话列表需要显示私聊会话, 第二个参数 true 代表私聊会话需要聚合显示
+            map.put(Conversation.ConversationType.GROUP.getName(), false);  // 会话列表需要显示群组会话, 第二个参数 false 代表群组会话不需要聚合显示
+            RongIM.getInstance().startConversationList(context, map);
         }
     }
 }
