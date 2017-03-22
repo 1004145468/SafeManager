@@ -1,17 +1,25 @@
 package com.yl.safemanager.utils;
 
 import android.content.Context;
+import android.os.Handler;
 
 import com.yl.safemanager.app.SafeApplication;
 import com.yl.safemanager.entities.SafeUser;
 import com.yl.safemanager.entities.TokenResult;
-import com.yl.safemanager.networkinterface.SafeNetInterface;
+import com.yl.safemanager.interfact.OnResultAttachedListener;
 
+import java.io.IOException;
+
+import cn.bmob.v3.helper.GsonUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static cn.bmob.v3.Bmob.getApplicationContext;
 
@@ -26,18 +34,52 @@ public class ChatUtils {
      *
      * @param listener
      */
-    public static void getToken(Callback<TokenResult> listener) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.cn.ronghub.com")
-                .build();
-
-        SafeNetInterface safeNetInterface = retrofit.create(SafeNetInterface.class);
+    public static void getTokenByPost(final OnResultAttachedListener<TokenResult> listener) {
         SafeUser currentUser = BmobUtils.getCurrentUser();
         if (currentUser == null) {
-            return;
+            if (listener != null) {
+                listener.onResult(null);
+                return;
+            }
         }
-        Call<TokenResult> resultCall = safeNetInterface.getToken(currentUser.getUsername(), currentUser.getmNick(), currentUser.getmPortrait());
-        resultCall.enqueue(listener);
+        final Handler handler = new Handler();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody formBody = new FormBody.Builder()
+                .add("userId", currentUser.getUsername())
+                .add("name", currentUser.getmNick())
+                .add("portraitUri", currentUser.getmPortrait())
+                .build();
+        Request request = new Request.Builder()
+                .url("http://123.207.237.185:8080/SafeManager/user/getToken")
+                .post(formBody)
+                .build();
+        Call tokenCall = okHttpClient.newCall(request);
+        tokenCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (listener != null) {
+                            listener.onResult(null);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                final TokenResult tokenBean = (TokenResult) GsonUtil.toObject(response.body().string(), TokenResult.class);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (listener != null) {
+                            listener.onResult(tokenBean);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     /**

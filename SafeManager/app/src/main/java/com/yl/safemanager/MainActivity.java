@@ -6,17 +6,14 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
@@ -25,32 +22,22 @@ import com.yl.safemanager.base.BaseActivity;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
-import com.yl.safemanager.entities.SafeUser;
 import com.yl.safemanager.entities.TokenResult;
 import com.yl.safemanager.interfact.OnHeadItemClickListener;
-import com.yl.safemanager.networkinterface.SafeNetInterface;
+import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.ChatUtils;
 import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.v3.Bmob;
 import io.rong.imlib.RongIMClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.yl.safemanager.constant.Constant.FUNCTION_APPLOCK;
 import static com.yl.safemanager.constant.Constant.FUNCTION_DATABACKUP;
 import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECORD;
@@ -59,7 +46,6 @@ import static com.yl.safemanager.constant.Constant.FUNCTION_FILELOCK;
 import static com.yl.safemanager.constant.Constant.FUNCTION_IDEA;
 import static com.yl.safemanager.constant.Constant.FUNCTION_MAILLOCK;
 import static com.yl.safemanager.constant.Constant.FUNCTION_SMSLOCK;
-import static junit.runner.Version.id;
 
 public class MainActivity extends BaseActivity implements OnHeadItemClickListener<SafeFunctionInfo> {
 
@@ -281,48 +267,35 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
 
     private void enterChat() {
         mChatViewAnim.start(); //开始动画
-        ChatUtils.getToken(new Callback<TokenResult>() {
+        ChatUtils.getTokenByPost(new OnResultAttachedListener<TokenResult>() {
             @Override
-            public void onFailure(Call<TokenResult> call, Throwable t) {
-                mChatView.setVisibility(View.GONE);
-                ToastUtils.showOriginToast(MainActivity.this, "服务器繁忙！");
-            }
-
-            @Override
-            public void onResponse(Call<TokenResult> call, Response<TokenResult> response) {
-                if (response == null || response.body() == null) {
+            public void onResult(TokenResult tokenResult) {
+                if (tokenResult == null || TextUtils.isEmpty(tokenResult.getToken())) {
                     mChatView.setVisibility(View.GONE);
                     ToastUtils.showOriginToast(MainActivity.this, "服务器繁忙！");
-                    return;
-                }
-                String mtoken = response.body().getToken();
-                if (TextUtils.isEmpty(mtoken)) {
-                    mChatView.setVisibility(View.GONE);
-                    ToastUtils.showOriginToast(MainActivity.this, "服务器繁忙！");
-                    return;
-                }
-                ChatUtils.connnect(MainActivity.this, mtoken, new RongIMClient.ConnectCallback() {
-                    @Override
-                    public void onTokenIncorrect() {
-                        mChatView.setVisibility(View.GONE);
-                        ToastUtils.showOriginToast(MainActivity.this, "连接失败，请重新尝试！");
-                    }
+                } else {
+                    ChatUtils.connnect(MainActivity.this, tokenResult.getToken(), new RongIMClient.ConnectCallback() {
+                        @Override
+                        public void onTokenIncorrect() {
+                            mChatView.setVisibility(View.GONE);
+                            ToastUtils.showOriginToast(MainActivity.this, "连接失败，请重新尝试！");
+                        }
 
-                    @Override
-                    public void onError(RongIMClient.ErrorCode errorCode) {
-                        mChatView.setVisibility(View.GONE);
-                        ToastUtils.showOriginToast(MainActivity.this, "连接失败，请重新尝试！");
-                    }
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            mChatView.setVisibility(View.GONE);
+                            ToastUtils.showOriginToast(MainActivity.this, "连接失败，请重新尝试！");
+                        }
 
-                    @Override
-                    public void onSuccess(String s) {
-                        mChatView.setVisibility(View.GONE);
-                        //打开聊天界面
-                        SFGT.gotoConversationListActivity(MainActivity.this);
-                    }
-                });
+                        @Override
+                        public void onSuccess(String s) {
+                            mChatView.setVisibility(View.GONE);
+                            //打开聊天界面
+                            SFGT.gotoConversationListActivity(MainActivity.this);
+                        }
+                    });
+                }
             }
         });
-
     }
 }
