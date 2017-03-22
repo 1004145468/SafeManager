@@ -325,6 +325,7 @@ public class SFGT {
 
     /**
      * 进入聊天列表
+     *
      * @param context
      */
     public static void gotoConversationListActivity(Context context) {
@@ -333,6 +334,17 @@ public class SFGT {
             map.put(Conversation.ConversationType.PRIVATE.getName(), false); // 会话列表需要显示私聊会话, 第二个参数 true 代表私聊会话需要聚合显示
             map.put(Conversation.ConversationType.GROUP.getName(), false);  // 会话列表需要显示群组会话, 第二个参数 false 代表群组会话不需要聚合显示
             RongIM.getInstance().startConversationList(context, map);
+        }
+    }
+
+    /**
+     * 进入聊天界面
+     * @param context
+     * @param frientId
+     */
+    public static void gotoConversionActivity(Context context, String frientId) {
+        if (context instanceof Activity) {
+            RongIM.getInstance().startPrivateChat(context, frientId, frientId);
         }
     }
 }

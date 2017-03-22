@@ -186,9 +186,32 @@ public class BmobUtils {
     }
 
     /**
+     * 根据用户id获取用户信息
+     *
+     * @param userid
+     */
+    public static void getUserInfo(String userid, final OnResultAttachedListener<SafeUser> listener) {
+        BmobQuery<SafeUser> safeUserBmobQuery = new BmobQuery<>();
+        safeUserBmobQuery.addWhereEqualTo("username", userid);
+        safeUserBmobQuery.setLimit(1);
+        safeUserBmobQuery.findObjects(new FindListener<SafeUser>() {
+            @Override
+            public void done(List<SafeUser> list, BmobException e) {
+                if (e == null && list != null && list.size() > 0) {
+                    if (listener != null) {
+                        listener.onResult(list.get(0));
+                    }
+                }
+            }
+        });
+    }
+
+    /**
      * 文件下载成功回调
      */
     public interface onUploadFileResult {
         void onResult(BmobException e, String fileUrl);
+
+
     }
 }
