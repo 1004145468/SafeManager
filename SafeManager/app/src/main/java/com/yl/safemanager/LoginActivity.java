@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         //初始化ButterKnife的綁定
         ButterKnife.bind(this);
-        SFGT.gotoFunctionActivity(this);
+        //SFGT.gotoFunctionActivity(this);
         initViews();
     }
 

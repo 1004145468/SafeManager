@@ -100,6 +100,7 @@ public class BmobUtils {
                 try {
                     fileOutputStream = new FileOutputStream(compressPath.toString());
                     boolean compressResult = originBitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOutputStream);
+                    originBitmap.recycle(); //回收图片
                     if (compressResult) {
                         Log.d(TAG, "doInBackground: ====================== 文件压缩成功");
                         return compressPath.toString();

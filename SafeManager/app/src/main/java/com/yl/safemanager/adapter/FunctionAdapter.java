@@ -1,9 +1,7 @@
 package com.yl.safemanager.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,25 +15,13 @@ import com.yl.safemanager.entities.SafeFunctionInfo;
 import com.yl.safemanager.entities.SafeFunctionItem;
 import com.yl.safemanager.entities.SafeUser;
 import com.yl.safemanager.interfact.OnHeadItemClickListener;
-import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.UriUtils;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
-
-import static com.yl.safemanager.constant.Constant.FUNCTION_APPLOCK;
-import static com.yl.safemanager.constant.Constant.FUNCTION_DATABACKUP;
-import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECORD;
-import static com.yl.safemanager.constant.Constant.FUNCTION_DATARECOVER;
-import static com.yl.safemanager.constant.Constant.FUNCTION_FILELOCK;
-import static com.yl.safemanager.constant.Constant.FUNCTION_IDEA;
-import static com.yl.safemanager.constant.Constant.FUNCTION_MAILLOCK;
-import static com.yl.safemanager.constant.Constant.FUNCTION_SMSLOCK;
 
 /**
  * Created by YL on 2017/3/1.
@@ -112,7 +98,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             nickView.setText(safeUser.getmNick());
             sexView.setImageResource(safeUser.getmSex() == SafeUser.MAN ? R.drawable.global_icon_male : R.drawable.global_icon_female);
             msgView.setText(safeUser.getmNote());
-            bgView.setImageURI(Uri.parse(safeUser.getmPortrait()));
+            bgView.setImageURI(safeUser.getmPortrait());
         }
 
         @OnClick(R.id.head_edit)
