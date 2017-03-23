@@ -18,6 +18,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 import static com.yl.safemanager.utils.SFGT.IMAGEPICK_REQUEST_CODE;
 
@@ -121,7 +123,7 @@ public class UserInfoMotifyActivity extends BaseTitleBackActivity {
                 if (e != null) {
                     ToastUtils.showToast(UserInfoMotifyActivity.this, getString(R.string.upload_filefail), Effects.thumbSlider, R.id.id_root);
                 } else {
-                    SafeUser currentUser = BmobUtils.getCurrentUser();
+                    final SafeUser currentUser = BmobUtils.getCurrentUser();
                     currentUser.setmPortrait(fileUrl);
                     BmobUtils.updateInfo(currentUser, new UpdateListener() {
                         @Override
@@ -130,6 +132,9 @@ public class UserInfoMotifyActivity extends BaseTitleBackActivity {
                                 ToastUtils.showToast(UserInfoMotifyActivity.this, getString(R.string.headupdate_fail), Effects.thumbSlider, R.id.id_root);
                             } else {
                                 mHeadView.setImageURI(fileUrl); //设置新图片
+                                //刷新聊天模块该用户头像
+                                UserInfo userInfo = new UserInfo(currentUser.getUsername(), currentUser.getmNick(), Uri.parse(fileUrl));
+                                RongIM.getInstance().refreshUserInfoCache(userInfo);
                             }
                         }
                     });

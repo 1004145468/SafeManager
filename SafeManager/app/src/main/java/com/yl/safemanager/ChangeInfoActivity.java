@@ -1,6 +1,7 @@
 package com.yl.safemanager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -18,6 +19,8 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 import static com.yl.safemanager.UserInfoMotifyActivity.CODE_CHANGE_MSG;
 import static com.yl.safemanager.UserInfoMotifyActivity.CODE_CHANGE_NICK;
@@ -91,6 +94,10 @@ public class ChangeInfoActivity extends BaseTitleBackActivity {
             public void done(BmobException e) {
                 mUpdateBar.setVisibility(View.GONE);
                 if(e == null){
+                    //刷新聊天模块该用户头像
+                    UserInfo userInfo = new UserInfo(currentUser.getUsername(), currentUser.getmNick(), Uri.parse(currentUser.getmPortrait()));
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("data", newInfo);
                     setResult(RESULT_OK, resultIntent);
