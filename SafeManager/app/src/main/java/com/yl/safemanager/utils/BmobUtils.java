@@ -1,8 +1,13 @@
 package com.yl.safemanager.utils;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import com.yl.safemanager.R;
 import com.yl.safemanager.entities.LoadFileInfo;
@@ -11,7 +16,11 @@ import com.yl.safemanager.entities.SmDataModel;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.FileHandler;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -24,6 +33,9 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
+
+import static cn.bmob.v3.BmobRealTimeData.TAG;
+import static com.xiaomi.push.thrift.a.S;
 
 /**
  * Created by YL on 2017/2/27.
@@ -72,14 +84,54 @@ public class BmobUtils {
      */
     public static void uploadFile(Context context, Uri uri, final onUploadFileResult listener) {
         String filePath = UriUtils.queryUri(context, uri);
-        File file = new File(filePath);
-        final BmobFile bmobFile = new BmobFile(file);
-        bmobFile.uploadblock(new UploadFileListener() {
+        if (filePath == null) {
+            return;
+        }
+        new AsyncTask<String, Void, String>() {
             @Override
-            public void done(BmobException e) {
-                listener.onResult(e, bmobFile.getFileUrl());
+            protected String doInBackground(String... params) {
+                String originFilePath = params[0];  // 获取源文件的路径
+                String fileHeadPath = originFilePath.substring(0, originFilePath.lastIndexOf(File.separator) + 1);
+                String fileName = originFilePath.substring(originFilePath.lastIndexOf(File.separator) + 1); //文件名
+                StringBuilder compressPath = new StringBuilder();
+                compressPath.append(fileHeadPath).append("compress_").append(fileName);
+                Bitmap originBitmap = BitmapFactory.decodeFile(originFilePath);
+                FileOutputStream fileOutputStream = null;
+                try {
+                    fileOutputStream = new FileOutputStream(compressPath.toString());
+                    boolean compressResult = originBitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOutputStream);
+                    if (compressResult) {
+                        Log.d(TAG, "doInBackground: ====================== 文件压缩成功");
+                        return compressPath.toString();
+                    }
+                    return originFilePath;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    return originFilePath;
+                } finally {
+                    try {
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        });
+
+            @Override
+            protected void onPostExecute(String filePath) {
+                File file = new File(filePath);
+                final BmobFile bmobFile = new BmobFile(file);
+                bmobFile.uploadblock(new UploadFileListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (listener != null) {
+                            listener.onResult(e, bmobFile.getFileUrl());
+                        }
+                    }
+                });
+            }
+
+        }.execute(filePath);
     }
 
     /**

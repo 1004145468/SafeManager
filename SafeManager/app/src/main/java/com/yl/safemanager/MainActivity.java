@@ -202,7 +202,6 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
 
     @Override
     public void onClickMail() {
-        //TODO
         enterChat();
     }
 

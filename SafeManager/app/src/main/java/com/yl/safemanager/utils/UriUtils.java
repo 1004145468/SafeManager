@@ -16,6 +16,9 @@ public class UriUtils {
     }
 
     public static String queryUri(Context context, Uri uri) {
+        if (uri == null) {
+            return null;
+        }
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         String filePath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA));
