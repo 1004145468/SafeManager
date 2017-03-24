@@ -9,8 +9,8 @@
         android:id="@+id/head_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:placeholderImage="@drawable/default_head"
-        app:placeholderImageScaleType="fitCenter" />
+        app:placeholderImage="@drawable/main_defaultbg"
+        app:placeholderImageScaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="wrap_content"
