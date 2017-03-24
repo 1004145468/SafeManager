@@ -38,6 +38,8 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
 
     private static final String TAG = "FileLockActivity";
 
+    private static final String LockFileIndex = ".";
+
     private static final int ENCRYPTION_FAIL = 2;
     private static final int ENCRYPTION_SUCCESS = 3;
     private static final int DECRYPTION_FAIL = 4;
@@ -62,7 +64,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
                     LockFileModel lockFileModel = (LockFileModel) msg.obj;
                     DataBaseUtils.saveLockFileModel(lockFileModel); //加密记录存入数据库
                     mDatas.add(0, lockFileModel);
-                    lockFileAdapter.notifyItemInserted(0);
+                    lockFileAdapter.notifyDataSetChanged();
                     Toast.makeText(FileLockActivity.this, getString(R.string.encrypt_success), Toast.LENGTH_SHORT).show();
                     break;
                 case DECRYPTION_FAIL:
@@ -71,9 +73,8 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
                 case DECRYPTION_SUCCESS:
                     LockFileModel lockFileModel1 = (LockFileModel) msg.obj;
                     DataBaseUtils.deleteLockFileModel(lockFileModel1.getId());
-                    int position = lockFileModel1.getPosition();
-                    mDatas.remove(position);
-                    lockFileAdapter.notifyItemRemoved(position);
+                    mDatas.remove(lockFileModel1);
+                    lockFileAdapter.notifyDataSetChanged();
                     ToastUtils.showToast(FileLockActivity.this, getString(R.string.decrypt_success), Effects.thumbSlider, R.id.id_root);
                     break;
             }
@@ -94,7 +95,6 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
         DataBaseUtils.getAllLockFileModels(new OnResultAttachedListener<List<LockFileModel>>() {
             @Override
             public void onResult(List<LockFileModel> lockFileModels) {
-                Log.d(TAG, "onResult: " + Thread.currentThread().getName());
                 mDatas.addAll(lockFileModels);
                 lockFileAdapter.notifyDataSetChanged(); //刷新展示
             }
@@ -136,7 +136,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
             if (requestCode == REQUEST_FILE) {
                 Uri uri = data.getData();
                 String srcPath = uri.getPath();
-                String desPath = srcPath.substring(0, srcPath.lastIndexOf("/") + 1) + "LOCK" + srcPath.substring(srcPath.lastIndexOf("/") + 1);
+                String desPath = srcPath.substring(0, srcPath.lastIndexOf("/") + 1) + LockFileIndex + srcPath.substring(srcPath.lastIndexOf("/") + 1);
                 EncryptFile(srcPath, desPath); //文件加密
             }
         }
@@ -205,5 +205,6 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
     }
 
     @Override
-    public void onLongClick(LockFileModel model) {}
+    public void onLongClick(LockFileModel model) {
+    }
 }
