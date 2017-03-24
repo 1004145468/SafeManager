@@ -145,7 +145,7 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
                 String fileSize = Formatter.formatFileSize(this, file.length()); //文件大小
                 mFilePaths.add(0, filePath);
                 mDatas.add(0, new FileInfo(fileName, filePath, fileSize));
-                mFileUploadAdapter.notifyItemInserted(0);
+                mFileUploadAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -162,10 +162,9 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
 
     @Override
     public void onClick(FileInfo model) {
-        int position = model.getPosition();
-        mFilePaths.remove(position);
-        mDatas.remove(position);
-        mFileUploadAdapter.notifyItemRemoved(position);
+        mFilePaths.remove(model.getmFilePath());
+        mDatas.remove(model);
+        mFileUploadAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -46,9 +46,7 @@ public class FileUploadAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     @Override
     public void onBindViewHolder(BaseSfHolder holder, int position) {
-        FileInfo fileInfo = mDatas.get(position);
-        fileInfo.setPosition(position);
-        holder.setData(fileInfo);
+        holder.setData(mDatas.get(position));
     }
 
     @Override

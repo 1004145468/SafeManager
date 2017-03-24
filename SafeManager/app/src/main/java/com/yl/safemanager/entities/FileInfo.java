@@ -1,7 +1,5 @@
 package com.yl.safemanager.entities;
 
-import cn.bmob.v3.BmobObject;
-
 /**
  * Created by YL on 2017/3/16.
  */

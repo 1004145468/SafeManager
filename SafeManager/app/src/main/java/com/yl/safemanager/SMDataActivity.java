@@ -96,7 +96,7 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
                     ToastUtils.showToast(SMDataActivity.this, getString(R.string.new_data_fail), Effects.flip, R.id.id_root);
                 } else {
                     mDatas.add(0, smDataModel);
-                    mAdapter.notifyItemInserted(0);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -140,9 +140,8 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
                         if (e != null) {
                             ToastUtils.showToast(SMDataActivity.this, getString(R.string.delete_fail), Effects.flip, R.id.id_root);
                         } else {
-                            int position = model.getPosition();
-                            mDatas.remove(position);
-                            mAdapter.notifyItemRemoved(position);
+                            mDatas.remove(model);
+                            mAdapter.notifyDataSetChanged();
                             ToastUtils.showToast(SMDataActivity.this, getString(R.string.data_update_success), Effects.flip, R.id.id_root);
                         }
                     }
