@@ -172,12 +172,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_send.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_sel_picsel_toolbar_back.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_back.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_ic_star_selector.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_ic_star_selector.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_sel_picsel_toolbar_back.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_back.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\release\\drawable\\rc_corner_location_style.xml",

@@ -15,9 +15,6 @@
     <string name="user_hint">请输入注册邮箱</string>
     <string name="password">密　码</string>
     <string name="password_hint">请输入密码</string>
-    <string name="title_activity_base_title_back">BaseTitleBackActivity</string>
-    <string name="register_user">请用邮箱注册</string>
-    <string name="password_hintagain">请确认密码</string>
     <string name="hasuserID">已有账号？</string>
     <string name="ok">确　定</string>
     <string name="isnotmail">请以邮箱作为用户名进行注册</string>
@@ -29,7 +26,6 @@
     <string name="register_success">账号注册成功，请尽快激活</string>
     <string name="default_error">注册失败，请重新确认注册信息</string>
     <string name="username_exist">该邮箱已被注册！</string>
-    <string name="net_notperfect">网络状况欠佳！</string>
     <string name="username_empty">请填写完整的用户名</string>
     <string name="password_empty">请将密码填写完整</string>
     <string name="load_userinfo">正在加载用户信息</string>
@@ -83,7 +79,6 @@
     <string name="man">男</string>
     <string name="woman">女</string>
     <string name="save">保存</string>
-    <string name="update_fail">更新失败</string>
     <string name="headupdate_fail">头像更新失败</string>
     <string name="function_open">开启</string>
     <string name="chpsw_old">旧密码：</string>
@@ -93,7 +88,6 @@
     <string name="chpsw_new1">新密码：</string>
     <string name="chpsw_new2">确认密码：</string>
     <string name="chpsw_ok">确认修改</string>
-    <string name="chpsw_showpsw">显示密码</string>
     <string name="config_shortnum">请配置解锁密码</string>
     <string name="functionisnavai">应用锁功能不可用</string>
     <string name="alert_not">使用应用锁需要打开该选项</string>

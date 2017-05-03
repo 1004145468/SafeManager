@@ -8,11 +8,9 @@
     <color name="warnred">#CD475D</color>
     <color name="grey">#aaaaaa</color>
     <color name="depgrep">#444444</color>
-    <color name="textcolor">#aaffffff</color>
     <color name="color1">#666666</color>
     <color name="color2">#6E6FA6</color>
     <color name="color3">#333333</color>
     <color name="color4">#33666666</color>
     <color name="color5">#88888888</color>
-    <color name="color6">#66666666</color>
 </resources>
