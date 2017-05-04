@@ -125,7 +125,7 @@ public class DialogUtils {
     }
 
     /**
-     * 展示一个消息感喟对话框
+     * 展示一个消息对话框
      *
      * @param context
      * @param msg

@@ -52,12 +52,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_corner_style.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_ic_star_selector.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_ic_star_selector.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_menu_text_selector.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_menu_text_selector.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_ic_star_selector.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\bundles\\debug\\res\\drawable\\rc_ic_star_selector.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\rc_read_receipt_request_button.xml",

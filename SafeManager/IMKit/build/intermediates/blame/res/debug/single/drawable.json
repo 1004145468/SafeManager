@@ -8,12 +8,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_cs_group_checkbox_selector.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_sel_picsel_toolbar_send.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_send.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_btn_voice.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_btn_voice.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_sel_picsel_toolbar_send.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\drawable\\rc_sel_picsel_toolbar_send.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\drawable\\rc_sel_picsel_toolbar_back.xml",
