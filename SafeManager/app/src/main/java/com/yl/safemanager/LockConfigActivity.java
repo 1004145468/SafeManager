@@ -46,11 +46,14 @@ public class LockConfigActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         initViews();
+
     }
 
     private void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !AppUtils.hasUsageStatsPermission(this)) {
             mAlertView.setVisibility(View.VISIBLE);
+        }else{
+            mAlertView.setVisibility(View.INVISIBLE);
         }
     }
 
