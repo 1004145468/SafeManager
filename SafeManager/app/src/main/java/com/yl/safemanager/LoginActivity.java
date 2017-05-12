@@ -116,7 +116,8 @@ public class LoginActivity extends BaseActivity {
             public void done(SafeUser safeUser, BmobException e) {
                 DialogUtils.shutdownIndeterminateDialog();
                 if (e != null) {
-                    ToastUtils.showToast(LoginActivity.this, getString(R.string.userinfo_empty), Effects.thumbSlider, R.id.id_root);
+                    String errorMsg = e.getErrorCode() == 9016? getString(R.string.netfail) : getString(R.string.userinfo_empty);
+                    ToastUtils.showToast(LoginActivity.this, errorMsg, Effects.thumbSlider, R.id.id_root);
                 } else {
                     SFGT.gotoFunctionActivity(LoginActivity.this);
                 }

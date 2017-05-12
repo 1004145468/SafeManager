@@ -1,6 +1,8 @@
 package com.yl.safemanager.utils;
 
 import android.content.Context;
+import android.os.SystemClock;
+import android.util.Log;
 
 import com.facebook.android.crypto.keychain.AndroidConceal;
 import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain;
@@ -41,11 +43,10 @@ public class FileConcealUtils {
         File srcFile = new File(srcPath);
         File outFile = new File(desPath);
         FileInputStream fileInputStream = null;
-        FileOutputStream fileOutputStream = null;
         OutputStream outputStream = null;
         try {
             fileInputStream = new FileInputStream(srcFile);
-            fileOutputStream = new FileOutputStream(outFile);
+            FileOutputStream fileOutputStream = new FileOutputStream(outFile);
             outputStream = crypto.getCipherOutputStream(fileOutputStream, Entity.create("entity_id"));
             byte[] data = new byte[2048];
             int len = 0;
@@ -70,16 +71,6 @@ public class FileConcealUtils {
                     e.printStackTrace();
                 }
             }
-<<<<<<< HEAD
-=======
-            if(fileOutputStream != null){
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
->>>>>>> ab21fdd22c876f1eb607e9722ae0023f809125c5
             if(outputStream != null){
                 try {
                     outputStream.close();
@@ -101,11 +92,10 @@ public class FileConcealUtils {
         }
         File srcFile = new File(srcPath);
         File outFile = new File(desPath);
-        FileInputStream fileInputStream = null;
         InputStream inputStream = null;
         FileOutputStream fileOutputStream = null;
         try {
-            fileInputStream = new FileInputStream(srcFile);
+            FileInputStream fileInputStream = new FileInputStream(srcFile);
             inputStream = crypto.getCipherInputStream(fileInputStream, Entity.create("entity_id"));
             fileOutputStream = new FileOutputStream(outFile);
             byte[] data = new byte[2048];
@@ -124,16 +114,6 @@ public class FileConcealUtils {
             e.printStackTrace();
             return false;
         } finally {
-<<<<<<< HEAD
-=======
-            if(fileInputStream != null){
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
->>>>>>> ab21fdd22c876f1eb607e9722ae0023f809125c5
             if(inputStream != null){
                 try {
                     inputStream.close();

@@ -1,7 +1,6 @@
 package com.yl.safemanager.utils;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.FileHandler;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
@@ -35,7 +33,6 @@ import cn.bmob.v3.listener.UploadBatchListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import static cn.bmob.v3.BmobRealTimeData.TAG;
-import static com.xiaomi.push.thrift.a.S;
 
 /**
  * Created by YL on 2017/2/27.

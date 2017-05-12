@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.yl.safemanager.R;
+import com.yl.safemanager.utils.ToastUtils;
 
 import cn.bmob.v3.Bmob;
 import io.rong.imkit.RongIM;
@@ -29,12 +31,12 @@ public class SafeApplication extends Application {
         Bmob.initialize(this, "ceef00eaf322eef098f0d8acae67d67c"); //Bmob的初始化
         RongIM.init(this); //融云初始化
 
-        /*Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
                 Log.e(TAG, "uncaughtException: " + throwable.toString());  //防止Bmob网络中断情况 应用崩溃
             }
-        });*/
+        });
     }
 
     public static String getCurProcessName(Context context) {

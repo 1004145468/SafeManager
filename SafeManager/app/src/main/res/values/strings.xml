@@ -25,6 +25,7 @@
     <string name="onregister">用户信息正在注册</string>
     <string name="register_success">账号注册成功，请尽快激活</string>
     <string name="default_error">注册失败，请重新确认注册信息</string>
+    <string name="netfail">连接网络失败！</string>
     <string name="username_exist">该邮箱已被注册！</string>
     <string name="username_empty">请填写完整的用户名</string>
     <string name="password_empty">请将密码填写完整</string>

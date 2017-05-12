@@ -67,9 +67,9 @@ public class RegisterActivity extends BaseTitleBackActivity {
     @OnClick(R.id.btn_regeist)
     public void onRegeist() {
         //开始注册
-        final String username = mUserNameView.getText().toString();
-        final String password = mPasswordView.getText().toString();
-        String password1 = mPassword2View.getText().toString();
+        final String username = mUserNameView.getText().toString().trim();
+        final String password = mPasswordView.getText().toString().trim();
+        String password1 = mPassword2View.getText().toString().trim();
         //非空判断
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password) || TextUtils.isEmpty(password1)) {
             ToastUtils.showToast(this, getResources().getString(R.string.infoisnocomplete), Effects.slideIn, R.id.id_root);
@@ -95,8 +95,8 @@ public class RegisterActivity extends BaseTitleBackActivity {
                     errorMsg = getResources().getString(R.string.default_error);
                     if (e.getErrorCode() == 202) {
                         errorMsg = getResources().getString(R.string.username_exist);
-                    } else if (e.getErrorCode() == 9015) {
-                        errorMsg = getResources().getString(R.string.default_error);
+                    } else if (e.getErrorCode() == 9016) {
+                        errorMsg = getResources().getString(R.string.netfail);
                     }
                 } else {
                     errorMsg = getResources().getString(R.string.register_success);
