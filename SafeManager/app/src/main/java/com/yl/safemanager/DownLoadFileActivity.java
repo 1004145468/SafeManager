@@ -95,9 +95,9 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
             public void done(String s, BmobException e) {
                 DialogUtils.closeFileLoadDialog();
                 if (e != null) {
-                    ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.download_filefail), Effects.thumbSlider, R.id.id_root);
+                    ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.download_filefail), Effects.flip, R.id.id_root);
                 } else {
-                    ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.download_filesuccess), Effects.thumbSlider, R.id.id_root);
+                    ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.download_filesuccess), Effects.flip, R.id.id_root);
                 }
             }
 
@@ -122,7 +122,7 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
                     @Override
                     public void done(BmobException e) {
                         if (e != null) {
-                            ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.delete_fail), Effects.thumbSlider, R.id.id_root);
+                            ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.delete_fail), Effects.flip, R.id.id_root);
                         } else {
                             mDatas.remove(position);
                             mAdapter.notifyItemRemoved(position);
