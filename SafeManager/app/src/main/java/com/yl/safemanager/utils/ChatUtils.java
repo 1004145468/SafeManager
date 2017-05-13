@@ -50,7 +50,7 @@ public class ChatUtils {
                 .add("portraitUri", currentUser.getmPortrait())
                 .build();
         Request request = new Request.Builder()
-                .url("http://123.207.237.185:8080/SafeManager/user/getToken")
+                .url("http://139.199.182.122/SafeManager/user/getToken")
                 .post(formBody)
                 .build();
         Call tokenCall = okHttpClient.newCall(request);
