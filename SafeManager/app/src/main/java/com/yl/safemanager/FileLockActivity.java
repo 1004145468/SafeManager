@@ -7,17 +7,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.LockFileAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.LockFileModel;
-import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.interfact.OnItemClickListener;
+import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.FileConcealUtils;
 import com.yl.safemanager.utils.SFGT;
@@ -58,24 +55,24 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case ENCRYPTION_FAIL:
-                    Toast.makeText(FileLockActivity.this, getString(R.string.encrypt_fail), Toast.LENGTH_SHORT).show();
+                    ToastUtils.showOriginToast(FileLockActivity.this, getString(R.string.encrypt_fail));
                     break;
                 case ENCRYPTION_SUCCESS:
+                    ToastUtils.showOriginToast(FileLockActivity.this, getString(R.string.encrypt_success));
                     LockFileModel lockFileModel = (LockFileModel) msg.obj;
                     DataBaseUtils.saveLockFileModel(lockFileModel); //加密记录存入数据库
                     mDatas.add(0, lockFileModel);
                     lockFileAdapter.notifyDataSetChanged();
-                    Toast.makeText(FileLockActivity.this, getString(R.string.encrypt_success), Toast.LENGTH_SHORT).show();
                     break;
                 case DECRYPTION_FAIL:
-                    ToastUtils.showToast(FileLockActivity.this, getString(R.string.decrypt_fail), Effects.thumbSlider, R.id.id_root);
+                    ToastUtils.showOriginToast(FileLockActivity.this, getString(R.string.decrypt_fail));
                     break;
                 case DECRYPTION_SUCCESS:
+                    ToastUtils.showOriginToast(FileLockActivity.this, getString(R.string.decrypt_success));
                     LockFileModel lockFileModel1 = (LockFileModel) msg.obj;
                     DataBaseUtils.deleteLockFileModel(lockFileModel1.getId());
                     mDatas.remove(lockFileModel1);
                     lockFileAdapter.notifyDataSetChanged();
-                    ToastUtils.showToast(FileLockActivity.this, getString(R.string.decrypt_success), Effects.thumbSlider, R.id.id_root);
                     break;
             }
         }
@@ -185,21 +182,19 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
             @Override
             public void run() {
                 Boolean result = FileConcealUtils.DecryptionFile(getApplicationContext(), lockFileModel.getLockFilePath(), lockFileModel.getOriginFilePath());
-                int msg_what = -1;
                 if (result) { //成功就删除源文件
                     File srcFile = new File(lockFileModel.getLockFilePath());
                     if (srcFile.exists() && srcFile.isFile()) {
                         srcFile.delete();
                     }
-                    msg_what = DECRYPTION_SUCCESS;
+                    mHandler.sendMessage(mHandler.obtainMessage(DECRYPTION_SUCCESS, lockFileModel));
                 } else {
                     File desFile = new File(lockFileModel.getOriginFilePath()); //失败就删除错误文件
                     if (desFile.exists() && desFile.isFile()) {
                         desFile.delete();
                     }
-                    msg_what = DECRYPTION_FAIL;
+                    mHandler.sendEmptyMessage(DECRYPTION_FAIL);
                 }
-                mHandler.sendMessage(mHandler.obtainMessage(msg_what, lockFileModel));
             }
         }.start();
     }
