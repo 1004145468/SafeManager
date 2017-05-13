@@ -41,8 +41,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".SMLockActivity" />
-        <activity android:name=".AdviceAcitvity" />
+        <activity android:name=".SMLockActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".AdviceAcitvity" android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".SMDataActivity" />
         <activity android:name=".EditSmDataActivity" />
         <activity android:name=".UploadFileActivity" />
