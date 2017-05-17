@@ -1,10 +1,10 @@
 package com.yl.safemanager;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Button;
@@ -21,6 +21,7 @@ import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
+import com.yl.safemanager.utils.UriUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -137,8 +138,10 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_FILE) {
-                Uri fileUri = data.getData();
-                String fileUriPath = fileUri.getPath();
+                String fileUriPath = UriUtils.queryFileUri(this, data.getData());
+                if (TextUtils.isEmpty(fileUriPath)) {
+                    return;
+                }
                 File file = new File(fileUriPath);
                 String filePath = file.getAbsolutePath();//文件路径
                 String fileName = file.getName();  //文件名

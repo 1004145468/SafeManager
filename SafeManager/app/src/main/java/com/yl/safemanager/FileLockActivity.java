@@ -1,12 +1,13 @@
 package com.yl.safemanager;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.yl.safemanager.adapter.LockFileAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
@@ -19,6 +20,7 @@ import com.yl.safemanager.utils.DataBaseUtils;
 import com.yl.safemanager.utils.FileConcealUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
+import com.yl.safemanager.utils.UriUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -131,8 +133,10 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_FILE) {
-                Uri uri = data.getData();
-                String srcPath = uri.getPath();
+                String srcPath = UriUtils.queryFileUri(this, data.getData());
+                if (TextUtils.isEmpty(srcPath)) {
+                    return;
+                }
                 String desPath = srcPath.substring(0, srcPath.lastIndexOf("/") + 1) + LockFileIndex + srcPath.substring(srcPath.lastIndexOf("/") + 1);
                 EncryptFile(srcPath, desPath); //文件加密
             }
