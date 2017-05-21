@@ -9,8 +9,8 @@ android {
         applicationId "com.yl.safemanager"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 2
-        versionName "1.2.1"
+        versionCode 4
+        versionName "1.3.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {

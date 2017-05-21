@@ -7,7 +7,12 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.yl.safemanager.entities.SafeUser;
+import com.yl.safemanager.interfact.OnResultAttachedListener;
+import com.yl.safemanager.utils.BmobUtils;
+import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.SFGT;
+import com.yl.safemanager.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +24,7 @@ import io.rong.imkit.userInfoCache.RongUserInfoManager;
  * Created by YL on 2017/3/19.
  */
 
-public class ConversationListActivity extends FragmentActivity{
+public class ConversationListActivity extends FragmentActivity {
 
     @BindView(R.id.tv_title)
     TextView mTitleView;
@@ -41,8 +46,22 @@ public class ConversationListActivity extends FragmentActivity{
         if (TextUtils.isEmpty(frientId)) {
             return;
         }
-        SFGT.gotoConversionActivity(this, frientId);
-
+        //判断好友是否存在
+        DialogUtils.showIndeterminateDialog(this, getString(R.string.findthispeople), false, null);
+        BmobUtils.isExistUser(frientId, new OnResultAttachedListener<SafeUser>() {
+            @Override
+            public void onResult(SafeUser findUser) {
+                DialogUtils.shutdownIndeterminateDialog();
+                if (findUser != null) {
+                    SFGT.gotoConversionActivity(ConversationListActivity.this, findUser.getmNick());
+                } else {
+                    //提示用户不存在
+                    ToastUtils.showOriginToast(ConversationListActivity.this, getString(R.string.peopleisnotexist));
+                    //消除内容
+                    mFriendView.setText("");
+                }
+            }
+        });
     }
 
     @OnClick(R.id.btn_back)

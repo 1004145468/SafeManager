@@ -99,4 +99,6 @@
     <string name="preparechat">正在初始化聊天模块,请稍后.</string>
     <string name="chatto">请输入您要进行聊天的好友账号</string>
     <string name="chathistory">聊天历史</string>
+    <string name="findthispeople">检索用户信息</string>
+    <string name="peopleisnotexist">该用户不存在！</string>
 </resources>

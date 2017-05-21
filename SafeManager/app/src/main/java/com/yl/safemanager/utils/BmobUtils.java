@@ -257,11 +257,31 @@ public class BmobUtils {
     }
 
     /**
+     * 判断是否存在该用户
+     *
+     * @param userid 用户名
+     */
+    public static void isExistUser(String userid, final OnResultAttachedListener<SafeUser> listener) {
+        BmobQuery<SafeUser> mUserQuery = new BmobQuery<>();
+        mUserQuery.addWhereEqualTo("username", userid);
+        mUserQuery.findObjects(new FindListener<SafeUser>() {
+            @Override
+            public void done(List<SafeUser> list, BmobException e) {
+              if(listener != null){
+                  if(list != null && list.size() > 0){
+                      listener.onResult(list.get(0));
+                  }else{
+                      listener.onResult(null);
+                  }
+              }
+            }
+        });
+    }
+
+    /**
      * 文件下载成功回调
      */
     public interface onUploadFileResult {
         void onResult(BmobException e, String fileUrl);
-
-
     }
 }

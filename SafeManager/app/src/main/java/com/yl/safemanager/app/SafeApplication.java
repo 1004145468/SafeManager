@@ -30,7 +30,7 @@ public class SafeApplication extends Application {
 
         BmobConfig bmobConfig =new BmobConfig.Builder(this)
         .setApplicationId("ceef00eaf322eef098f0d8acae67d67c")
-        .setConnectTimeout(10)
+        .setConnectTimeout(5)
         .setUploadBlockSize(512*1024)
         .build();
         Bmob.initialize(bmobConfig); //Bmob的初始化
