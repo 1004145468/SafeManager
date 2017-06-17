@@ -101,4 +101,6 @@
     <string name="chathistory">聊天历史</string>
     <string name="findthispeople">检索用户信息</string>
     <string name="peopleisnotexist">该用户不存在！</string>
+    <string name="encryptingfile">正在加密文件，请稍后...</string>
+    <string name="decryptingfile">正在解密文件，请稍后...</string>
 </resources>

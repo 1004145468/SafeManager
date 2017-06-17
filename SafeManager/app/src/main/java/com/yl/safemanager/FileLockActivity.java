@@ -17,6 +17,7 @@ import com.yl.safemanager.entities.LockFileModel;
 import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.DataBaseUtils;
+import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.FileConcealUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.ToastUtils;
@@ -55,6 +56,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            DialogUtils.shutdownIndeterminateDialog(); //关闭不确定对话框
             switch (msg.what) {
                 case ENCRYPTION_FAIL:
                     ToastUtils.showOriginToast(FileLockActivity.this, getString(R.string.encrypt_fail));
@@ -150,6 +152,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
      * @param desPath  目标文件绝对路劲
      */
     private void EncryptFile(final String filePath, final String desPath) {
+        DialogUtils.showIndeterminateDialog(this,getString(R.string.encryptingfile),false,null);  //展示正在加密对话框
         new Thread() {
             @Override
             public void run() {
@@ -182,6 +185,7 @@ public class FileLockActivity extends BaseTitleBackActivity implements OnItemCli
      * @param lockFileModel
      */
     public void onClick(final LockFileModel lockFileModel) {
+        DialogUtils.showIndeterminateDialog(this,getString(R.string.decryptingfile),false,null); //展示正在解密对话框
         new Thread() {
             @Override
             public void run() {
