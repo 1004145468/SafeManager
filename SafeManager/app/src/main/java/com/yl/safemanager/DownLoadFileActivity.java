@@ -11,12 +11,15 @@ import com.yl.safemanager.adapter.FileDownLoadAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeEmptyItemDecoration;
+import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.interfact.OnItemClickListener;
+import com.yl.safemanager.interfact.OnItemSwipeListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.ToastUtils;
+import com.yl.safemanager.view.SwipeItemLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by YL on 2017/3/17.
  */
 
-public class DownLoadFileActivity extends BaseTitleBackActivity implements OnItemClickListener<LoadFileInfo> {
+public class DownLoadFileActivity extends BaseTitleBackActivity implements OnItemSwipeListener<LoadFileInfo>, OnItemClickListener<LoadFileInfo> {
 
     private static final String TAG = "DownLoadFileActivity";
 
@@ -68,10 +71,10 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mDownLoadListView.setLayoutManager(linearLayoutManager);
-        mDownLoadListView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mAdapter = new FileDownLoadAdapter(this, mDatas);
         mDownLoadListView.setAdapter(mAdapter);
+        mDownLoadListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
     @Override
@@ -82,6 +85,18 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
     @Override
     public String getBarTitle() {
         return Constant.FUNCTION_DATARECOVER;
+    }
+
+    @Override
+    public void onItemDone(LoadFileInfo model, int viewid) {
+        switch (viewid) {
+            case R.id.file_share:  //分享
+                ToastUtils.showOriginToast(this, "开始分享");
+                break;
+            case R.id.file_delete: // 删除
+                deleteFile(model);
+                break;
+        }
     }
 
     @Override
@@ -110,27 +125,31 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
 
     @Override
     public void onLongClick(LoadFileInfo model) {
-        final int position = model.getPosition();
+    }
+
+    private void deleteFile(final LoadFileInfo model) {
         final String objectId = model.getObjectId();
         DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //删除文件
+                final String downLoadString = getString(R.string.delete_file);
+                DialogUtils.showIndeterminateDialog(DownLoadFileActivity.this, downLoadString, false, null);
                 LoadFileInfo loadFileInfo = new LoadFileInfo();
                 loadFileInfo.setObjectId(objectId);
                 BmobUtils.deleteInfo(loadFileInfo, new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
+                        DialogUtils.closeFileLoadDialog();
                         if (e != null) {
                             ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.delete_fail), Effects.flip, R.id.id_root);
                         } else {
-                            mDatas.remove(position);
-                            mAdapter.notifyItemRemoved(position);
+                            mDatas.remove(model);
+                            mAdapter.notifyDataSetChanged();
                         }
                     }
                 });
             }
         });
-
     }
 }

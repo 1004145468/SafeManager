@@ -65,12 +65,11 @@
     <string name="dialog_deletemsg">是否删除该记录 ？</string>
     <string name="delete_fail">删除失败</string>
     <string name="data_update_success">数据更新成功</string>
-    <string name="upload_add">添　加</string>
-    <string name="upload_do">上　传</string>
     <string name="upload_file">正在上传文件</string>
     <string name="upload_filefail">文件上传失败</string>
     <string name="upload_filesavafail">文件存储失败</string>
     <string name="download_file">正在下载文件</string>
+    <string name="delete_file">删除同步文件中</string>
     <string name="download_filesuccess">下载文件成功,\n文件保存于/SfDown中</string>
     <string name="download_filefail">下载文件失败</string>
     <string name="nick">昵称</string>
@@ -103,4 +102,6 @@
     <string name="peopleisnotexist">该用户不存在！</string>
     <string name="encryptingfile">正在加密文件，请稍后...</string>
     <string name="decryptingfile">正在解密文件，请稍后...</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
 </resources>

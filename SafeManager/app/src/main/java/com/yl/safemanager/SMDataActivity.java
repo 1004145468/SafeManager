@@ -12,12 +12,15 @@ import com.yl.safemanager.adapter.SMDataAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeEmptyItemDecoration;
+import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.entities.SmDataModel;
 import com.yl.safemanager.interfact.OnItemClickListener;
+import com.yl.safemanager.interfact.OnItemSwipeListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.ToastUtils;
+import com.yl.safemanager.view.SwipeItemLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class SMDataActivity extends BaseTitleBackActivity implements OnItemClickListener<SmDataModel> {
+public class SMDataActivity extends BaseTitleBackActivity implements OnItemSwipeListener<SmDataModel>,OnItemClickListener<SmDataModel> {
 
     private static final String TAG = "SMDataActivity";
 
@@ -57,10 +60,10 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mAdapter = new SMDataAdapter(this, mDatas);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
     //加载数据
@@ -126,7 +129,22 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemClick
     }
 
     @Override
-    public void onLongClick(final SmDataModel model) {
+    public void onLongClick(SmDataModel model) {
+    }
+
+    @Override
+    public void onItemDone(SmDataModel smDataModel, int viewid) {
+        switch (viewid){
+            case R.id.smdata_share:  //分享
+                ToastUtils.showOriginToast(this, "开始分享");
+                break;
+            case R.id.smdata_delete: //删除
+                deleteNote(smDataModel);
+                break;
+        }
+    }
+
+    private void deleteNote(final SmDataModel model) {
         DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

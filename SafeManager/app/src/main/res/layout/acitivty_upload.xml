@@ -2,57 +2,64 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/word_bg">
+    android:orientation="vertical">
 
     <include layout="@layout/activity_base_title_back" />
 
-    <LinearLayout
-        android:id="@+id/upload_botton"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/upload_add"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:orientation="horizontal">
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="17dp"
+        android:clickable="true"
+        android:src="@drawable/select_add" />
 
-        <Button
-            android:id="@+id/upload_addbtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/upload_add"
-            android:textSize="16sp"
-            android:background="@drawable/select_common_bg"
-            />
-
-        <Button
-            android:id="@+id/upload_dobtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/upload_do"
-            android:textSize="16sp"
-            android:background="@drawable/select_common_bg"
-            android:layout_marginLeft="10dp"/>
-
-    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/upload_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/upload_botton"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="62dp"
-        android:overScrollMode="never" />
+        android:layout_marginTop="50dp"
+        android:overScrollMode="never"
+        android:paddingTop="5dp"
+        android:clipToPadding="false"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        />
 
     <FrameLayout
         android:id="@+id/id_root"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/upload_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/select_uploadsend" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circleround_uploadsend_bg"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

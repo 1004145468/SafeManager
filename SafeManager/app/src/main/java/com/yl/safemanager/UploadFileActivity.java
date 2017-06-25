@@ -46,8 +46,6 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
 
     private static final String TAG = "UploadFileActivity";
 
-    @BindView(R.id.upload_dobtn)
-    Button mUploadBtn;
     @BindView(R.id.upload_listview)
     RecyclerView mFileRecyclerView;
 
@@ -68,19 +66,19 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mFileRecyclerView.setLayoutManager(linearLayoutManager);
-        mFileRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
+        //mFileRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mFilePaths = new ArrayList<>();
         mFileUploadAdapter = new FileUploadAdapter(this, mDatas);
         mFileRecyclerView.setAdapter(mFileUploadAdapter);
     }
 
-    @OnClick(R.id.upload_addbtn)
+    @OnClick(R.id.upload_add)
     public void addFile() {
         SFGT.openFileChoose(this); //打开文件选择器
     }
 
-    @OnClick(R.id.upload_dobtn)
+    @OnClick(R.id.upload_send)
     public void uploadFile() {
         final int totalSize = mFilePaths.size();
         if (totalSize == 0) {

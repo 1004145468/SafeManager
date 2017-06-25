@@ -6,21 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yl.safemanager.R;
 import com.yl.safemanager.base.BaseSfHolder;
 import com.yl.safemanager.entities.SmDataModel;
 import com.yl.safemanager.interfact.OnItemClickListener;
+import com.yl.safemanager.interfact.OnItemSwipeListener;
+import com.yl.safemanager.view.SwipeItemLayout;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
-
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by YL on 2017/3/12.
@@ -28,12 +26,14 @@ import static android.media.CamcorderProfile.get;
 
 public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
-    private OnItemClickListener listener;
+    private OnItemSwipeListener<SmDataModel> mOnItemSwipeListener;
+    private OnItemClickListener<SmDataModel> mOnItemClickListener;
     private LayoutInflater mLayoutInflater;
     private List<SmDataModel> mDatas;
 
     public SMDataAdapter(Context context, List<SmDataModel> mDatas) {
-        listener = (OnItemClickListener) context;
+        mOnItemSwipeListener = (OnItemSwipeListener<SmDataModel>) context;
+        mOnItemClickListener = (OnItemClickListener<SmDataModel>) context;
         mLayoutInflater = LayoutInflater.from(context);
         this.mDatas = mDatas;
     }
@@ -58,6 +58,8 @@ public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
 
     class SMDataHolder extends BaseSfHolder {
 
+        @BindView(R.id.smdata_root)
+        SwipeItemLayout swipeItemLayout;
         @BindView(R.id.smdata_time)
         TextView timeView;
         @BindView(R.id.smdata_title)
@@ -80,19 +82,22 @@ public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             titleView.setText(smDataModel.getTitle());
         }
 
-        @OnClick(R.id.smdata_root)
-        public void onClick() {
-            if (listener != null) {
-                listener.onClick(smDataModel);
+        @OnClick({R.id.smdata_content, R.id.smdata_share, R.id.smdata_delete})
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.smdata_content:
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onClick(smDataModel);
+                    }
+                    break;
+                case R.id.smdata_share:
+                case R.id.smdata_delete:
+                    swipeItemLayout.close();
+                    if (mOnItemSwipeListener != null) {
+                        mOnItemSwipeListener.onItemDone(smDataModel, view.getId());
+                    }
+                    break;
             }
-        }
-
-        @OnLongClick(R.id.smdata_root)
-        public boolean onLongClick() {
-            if (listener != null){
-                listener.onLongClick(smDataModel);
-            }
-            return true;
         }
     }
 

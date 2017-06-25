@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/word_bg"
     >
 
     <include layout="@layout/activity_base_title_back" />
@@ -12,10 +11,9 @@
         android:id="@+id/download_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="62dp"
-        android:overScrollMode="never" />
+        android:layout_marginTop="50dp"
+        android:overScrollMode="never"
+        />
 
     <FrameLayout
         android:id="@+id/id_root"
