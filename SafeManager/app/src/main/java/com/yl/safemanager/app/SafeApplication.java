@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.mob.MobApplication;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
@@ -16,7 +17,7 @@ import io.rong.imkit.RongIM;
  * Created by YL on 2017/2/24.
  */
 
-public class SafeApplication extends Application {
+public class SafeApplication extends MobApplication {
 
     private static final String TAG = "SafeApplication";
 
