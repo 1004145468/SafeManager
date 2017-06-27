@@ -48,20 +48,19 @@
 			Plurk          http://www.plurk.com/API
     -->
 
-	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
 	<QQ
 		Id="1"
 		SortId="1"
-		AppId="1106249826"
-		AppKey="aEI8L7PMnRd1tF9D"
+		AppId="1106113100"
+		AppKey="GQToQfOdEMAJzJ9O"
 		ShareByAppClient="true"
 		Enable="true" />
 
     <QZone
         Id="2"
         SortId="2"
-        AppId="1106249826"
-        AppKey="aEI8L7PMnRd1tF9D"
+        AppId="1106113100"
+        AppKey="GQToQfOdEMAJzJ9O"
         Enable="true" />
     
     <!-- 
@@ -94,15 +93,5 @@
         AppSecret="64020361b8ec4c99936c0e3999a9f249"
         BypassApproval="false"
         Enable="true" />
-        
-	<WechatFavorite
-        Id="5"
-        SortId="5"
-        AppId="wx4868b35061f87885"
-        AppSecret="64020361b8ec4c99936c0e3999a9f249"
-        Enable="true" />
-    
-
-
 	
 </DevInfor>

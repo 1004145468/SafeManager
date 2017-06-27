@@ -21,4 +21,6 @@ public class Constant {
     public static final String CHANGE_SEX = "性别";
     public static final String CHANGE_UNKNOW = "未知";
     public static final String CHANGE_PSW = "修改密码";
+    public static final String APP_NAME = "安全管家";
+    public static final String DEFAULT_LINK = "https://user.qzone.qq.com/1004145468/infocenter";
 }

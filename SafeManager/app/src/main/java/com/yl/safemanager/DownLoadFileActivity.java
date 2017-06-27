@@ -18,6 +18,7 @@ import com.yl.safemanager.interfact.OnItemSwipeListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
+import com.yl.safemanager.utils.ShareUtils;
 import com.yl.safemanager.utils.ToastUtils;
 import com.yl.safemanager.view.SwipeItemLayout;
 
@@ -91,7 +92,10 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
     public void onItemDone(LoadFileInfo model, int viewid) {
         switch (viewid) {
             case R.id.file_share:  //分享
-                ToastUtils.showOriginToast(this, "开始分享");
+                String fileName = model.getFileName();
+                String fileUrl = model.getBmobFile().getFileUrl();
+                String content = getString(R.string.uploadfile_sharecontent);
+                ShareUtils.share(this, fileName, fileUrl, content, false);
                 break;
             case R.id.file_delete: // 删除
                 deleteFile(model);

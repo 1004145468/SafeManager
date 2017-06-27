@@ -111,7 +111,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" >
 
             <intent-filter>
-                <data android:scheme="tencent1106249826" />
+                <data android:scheme="tencent1106113100" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
