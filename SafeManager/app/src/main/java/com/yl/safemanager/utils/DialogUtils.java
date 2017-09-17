@@ -137,7 +137,7 @@ public class DialogUtils {
                 .setIcon(null)
                 .setPositiveButton(R.string.dialog_positive, positiveOnclick)
                 .setNegativeButton(R.string.dialog_cancel, null)
-                .setCancelable(false)
+                .setCancelable(true)
                 .show();
     }
 
@@ -198,5 +198,20 @@ public class DialogUtils {
             dialog.cancel();
             dialog = null;
         }
+    }
+
+    /**
+     * 展示一个提示对话框
+     *
+     * @param context
+     * @param msg
+     */
+    public static void showTipDialog(Context context, String msg, DialogInterface.OnClickListener positiveClick) {
+        new AlertDialog.Builder(context)
+                .setMessage(msg)
+                .setIcon(null)
+                .setPositiveButton(R.string.dialog_positive, positiveClick)
+                .setCancelable(true)
+                .show();
     }
 }

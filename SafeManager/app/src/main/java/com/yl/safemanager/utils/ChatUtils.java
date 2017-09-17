@@ -8,7 +8,12 @@ import com.yl.safemanager.entities.SafeUser;
 import com.yl.safemanager.entities.TokenResult;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
 
 import cn.bmob.v3.helper.GsonUtil;
 import io.rong.imkit.RongIM;
@@ -29,6 +34,9 @@ import static cn.bmob.v3.Bmob.getApplicationContext;
 
 public class ChatUtils {
 
+    private static final String APP_KEY = "82hegw5u8mthx";
+    private static final String APP_SRCRET = "fW5ktfa8T8l";
+
     /**
      * 获取Token
      *
@@ -42,15 +50,23 @@ public class ChatUtils {
                 return;
             }
         }
+        String randomNum = String.valueOf(Math.random() * 1000000);
+        String Timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+        String Signature = hexSHA1(APP_SRCRET + randomNum + Timestamp);
+
         final Handler handler = new Handler();
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
                 .add("userId", currentUser.getUsername())
                 .add("name", currentUser.getmNick())
-                .add("portraitUri", currentUser.getmPortrait())
+                .add("portraitUri", toUrlString(currentUser.getmPortrait()))
                 .build();
         Request request = new Request.Builder()
-                .url("http://139.199.182.122/SafeManager/user/getToken")
+                .url("http://api.cn.ronghub.com/user/getToken.json")
+                .addHeader("App-Key", APP_KEY)
+                .addHeader("Nonce", randomNum)
+                .addHeader("Timestamp", Timestamp)
+                .addHeader("Signature", Signature)
                 .post(formBody)
                 .build();
         Call tokenCall = okHttpClient.newCall(request);
@@ -95,5 +111,25 @@ public class ChatUtils {
             RongIM.connect(token, listener);
 
         }
+    }
+
+    public static String hexSHA1(String value) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.update(value.getBytes("utf-8"));
+            byte[] digest = md.digest();
+            return String.valueOf(Hex.encodeHex(digest));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static String toUrlString(String content) {
+        try {
+            return URLEncoder.encode(content, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

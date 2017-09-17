@@ -303,7 +303,7 @@ public class SFGT {
         try {
             if (context instanceof Activity) {
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent, 1);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -339,12 +339,26 @@ public class SFGT {
 
     /**
      * 进入聊天界面
+     *
      * @param context
      * @param frientId
      */
-    public static void gotoConversionActivity(Context context, String frientId) {
+    public static void gotoConversionActivity(Context context, String frientId, String title) {
         if (context instanceof Activity) {
-            RongIM.getInstance().startPrivateChat(context, frientId, frientId);
+            RongIM.getInstance().startPrivateChat(context, frientId, title);
+        }
+    }
+
+    /**
+     * 进入系统的设置-安全界面
+     */
+    public static void gotoSetttingActivity(Context context) {
+        if (context instanceof Activity) {
+            try {
+                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                ((Activity) context).startActivityForResult(intent, 1);
+            } catch (Exception e) {
+            }
         }
     }
 }

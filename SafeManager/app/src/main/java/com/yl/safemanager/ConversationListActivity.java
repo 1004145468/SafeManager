@@ -42,7 +42,7 @@ public class ConversationListActivity extends FragmentActivity {
 
     @OnClick(R.id.chatto)
     public void chatWithFriend() {
-        String frientId = mFriendView.getText().toString().trim();
+        final String frientId = mFriendView.getText().toString().trim();
         if (TextUtils.isEmpty(frientId)) {
             return;
         }
@@ -53,7 +53,7 @@ public class ConversationListActivity extends FragmentActivity {
             public void onResult(SafeUser findUser) {
                 DialogUtils.shutdownIndeterminateDialog();
                 if (findUser != null) {
-                    SFGT.gotoConversionActivity(ConversationListActivity.this, findUser.getmNick());
+                    SFGT.gotoConversionActivity(ConversationListActivity.this, findUser.getUsername(), findUser.getmNick());
                 } else {
                     //提示用户不存在
                     ToastUtils.showOriginToast(ConversationListActivity.this, getString(R.string.peopleisnotexist));

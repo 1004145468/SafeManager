@@ -1,17 +1,17 @@
 package com.yl.safemanager;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.base.BaseActivity;
 import com.yl.safemanager.utils.AppUtils;
+import com.yl.safemanager.utils.DialogUtils;
 import com.yl.safemanager.utils.EncryptUtils;
 import com.yl.safemanager.utils.SFGT;
 import com.yl.safemanager.utils.SpUtils;
@@ -40,6 +40,7 @@ public class LockConfigActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lockconfig);
         ButterKnife.bind(this);
+        showTipDialog();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class LockConfigActivity extends BaseActivity {
     private void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !AppUtils.hasUsageStatsPermission(this)) {
             mAlertView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mAlertView.setVisibility(View.INVISIBLE);
         }
     }
@@ -75,12 +76,21 @@ public class LockConfigActivity extends BaseActivity {
             return;
         }
 
-        ToastUtils.showToast(this, getString(R.string.functionisnavai), Effects.thumbSlider, R.id.id_root);
         //保存
         SpUtils.saveString(this, SHORT_CODE, EncryptUtils.md5Encrypt(shortCode));
         finish();
         overridePendingTransition(0, R.anim.slide_tobottom);
     }
 
-
+    private void showTipDialog() {
+        String shortCode = SpUtils.getString(this, LockConfigActivity.SHORT_CODE);
+        if(TextUtils.isEmpty(shortCode)){
+            DialogUtils.showTipDialog(this, getString(R.string.open_floattingwindow_tip), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SFGT.gotoSetttingActivity(LockConfigActivity.this);
+                }
+            });
+        }
+    }
 }
