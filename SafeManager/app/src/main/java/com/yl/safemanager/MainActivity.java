@@ -256,9 +256,9 @@ public class MainActivity extends BaseActivity implements OnHeadItemClickListene
      */
     @Override
     public void onBackPressed() {
-        DialogUtils.showMessageDialog(this, getString(R.string.exitapp), new DialogInterface.OnClickListener() {
+        DialogUtils.showMessageDialog(this, getString(R.string.exitapp), new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
                 finish();
             }
         });

@@ -108,7 +108,7 @@ public class SFGT {
         if (context instanceof Activity) {
             String shortCode = SpUtils.getString(context, LockConfigActivity.SHORT_CODE);
             if (shortCode == null) {
-                gotoLockConfigActivity(context);
+                gotoLockConfigActivity(context, true);
             } else {
                 Intent intent = new Intent(context, AppLockActivity.class);
                 context.startActivity(intent);
@@ -291,9 +291,10 @@ public class SFGT {
      *
      * @param context
      */
-    public static void gotoLockConfigActivity(Context context) {
+    public static void gotoLockConfigActivity(Context context, boolean autoLockActivity) {
         if (context instanceof Activity) {
             Intent intent = new Intent(context, LockConfigActivity.class);
+            intent.putExtra(LockConfigActivity.BACKTOLOCKACTIVITY, autoLockActivity);
             context.startActivity(intent);
             ((Activity) context).overridePendingTransition(R.anim.slide_totop, 0);
         }
@@ -350,12 +351,12 @@ public class SFGT {
     }
 
     /**
-     * 进入系统的设置-安全界面
+     * 进入系统的设置界面
      */
     public static void gotoSetttingActivity(Context context) {
         if (context instanceof Activity) {
             try {
-                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
                 ((Activity) context).startActivityForResult(intent, 1);
             } catch (Exception e) {
             }

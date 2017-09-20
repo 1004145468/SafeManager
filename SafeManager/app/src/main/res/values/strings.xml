@@ -67,6 +67,7 @@
     <string name="data_update_success">数据更新成功</string>
     <string name="upload_file">正在上传文件</string>
     <string name="upload_filefail">文件上传失败</string>
+    <string name="upload_filefail_emptysuffix">不支持后缀名为空的文件</string>
     <string name="upload_filesavafail">文件存储失败</string>
     <string name="download_file">正在下载文件</string>
     <string name="delete_file">删除同步文件中</string>
@@ -90,7 +91,8 @@
     <string name="chpsw_ok">确认修改</string>
     <string name="config_shortnum">请设置解锁应用密码</string>
     <string name="functionisnavai">应用锁功能不可用</string>
-    <string name="alert_not">使用应用锁需要打开该选项,点我！</string>
+    <string name="alert_not">为确保您能使用应用锁需要打开该选项,点我！</string>
+    <string name="alert_again">请在权限管理中心为应用开启悬浮窗权限</string>
     <string name="exit">退　出</string>
     <string name="shortcodeisemp">请输入应用解锁密码！</string>
     <string name="shortcodeisshort">请输入6位应用解锁密码！</string>
@@ -106,4 +108,5 @@
     <string name="delete">删除</string>
     <string name="uploadfile_sharecontent">我分享了一个文件，点击查看</string>
     <string name="open_floattingwindow_tip">请在系统设置中为应用添加悬浮窗权限</string>
+    <string name="tip">提示</string>
 </resources>

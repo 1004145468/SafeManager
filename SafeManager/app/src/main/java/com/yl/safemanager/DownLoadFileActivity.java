@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.FileDownLoadAdapter;
@@ -75,6 +76,7 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
         mDatas = new ArrayList<>();
         mAdapter = new FileDownLoadAdapter(this, mDatas);
         mDownLoadListView.setAdapter(mAdapter);
+        mDownLoadListView.addItemDecoration(new SafeEmptyItemDecoration());
         mDownLoadListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
@@ -133,9 +135,9 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
 
     private void deleteFile(final LoadFileInfo model) {
         final String objectId = model.getObjectId();
-        DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new DialogInterface.OnClickListener() {
+        DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
                 //删除文件
                 final String downLoadString = getString(R.string.delete_file);
                 DialogUtils.showIndeterminateDialog(DownLoadFileActivity.this, downLoadString, false, null);

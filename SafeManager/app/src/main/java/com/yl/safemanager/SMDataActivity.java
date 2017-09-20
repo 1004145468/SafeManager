@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.yl.safemanager.adapter.SMDataAdapter;
@@ -147,9 +148,9 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemSwipe
     }
 
     private void deleteNote(final SmDataModel model) {
-        DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new DialogInterface.OnClickListener() {
+        DialogUtils.showMessageDialog(this, getString(R.string.dialog_deletemsg), new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
                 DialogUtils.showIndeterminateDialog(SMDataActivity.this, getString(R.string.load_data), false, null);  //打开进度
                 SmDataModel smDataModel = new SmDataModel();
                 smDataModel.setObjectId(model.getObjectId());

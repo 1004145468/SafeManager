@@ -5,7 +5,7 @@
     android:background="@drawable/login_bg">
 
     <LinearLayout
-        android:id="@+id/config_alert"
+        android:id="@+id/config_stepone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -25,6 +25,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alert_not" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/config_steptwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circleround_alert_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/alert" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alert_again" />
 
     </LinearLayout>
 
@@ -58,7 +82,8 @@
             android:hint="(≡ω≡)"
             android:maxLength="6"
             android:textColor="@color/color2"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:enabled="false"/>
 
         <TextView
             android:id="@+id/config_btn"

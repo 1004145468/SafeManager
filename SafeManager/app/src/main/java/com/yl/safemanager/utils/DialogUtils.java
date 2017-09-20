@@ -131,14 +131,29 @@ public class DialogUtils {
      * @param msg
      * @param positiveOnclick
      */
-    public static void showMessageDialog(Context context, String msg, DialogInterface.OnClickListener positiveOnclick) {
-        new AlertDialog.Builder(context)
-                .setMessage(msg)
-                .setIcon(null)
-                .setPositiveButton(R.string.dialog_positive, positiveOnclick)
-                .setNegativeButton(R.string.dialog_cancel, null)
-                .setCancelable(true)
-                .show();
+    public static void showMessageDialog(Context context, String msg, View.OnClickListener positiveOnclick) {
+        View dialogView = View.inflate(context, R.layout.dialog_confirm, null);
+        TextView contentView = (TextView) dialogView.findViewById(R.id.dialog_content);
+        TextView leftbtnView = (TextView) dialogView.findViewById(R.id.dialog_leftbtn);
+        TextView rightbtnView = (TextView) dialogView.findViewById(R.id.dialog_rightbtn);
+        contentView.setText(msg);
+        final Dialog dialog = new Dialog(context, R.style.dialog);
+        dialog.setContentView(dialogView);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Window dialogWindow = dialog.getWindow(); //Dialog的承载体,设置Dialog的显示效果
+        WindowManager.LayoutParams attributes = dialogWindow.getAttributes();
+        attributes.width = DensityUtils.dip2px(context, 240);
+        attributes.height = DensityUtils.dip2px(context, 120);
+        dialogWindow.setAttributes(attributes);
+        leftbtnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        rightbtnView.setOnClickListener(positiveOnclick);
     }
 
     public static void showFileLoadDialog(Context context, String dialogmsg) {
@@ -204,14 +219,22 @@ public class DialogUtils {
      * 展示一个提示对话框
      *
      * @param context
-     * @param msg
      */
-    public static void showTipDialog(Context context, String msg, DialogInterface.OnClickListener positiveClick) {
-        new AlertDialog.Builder(context)
-                .setMessage(msg)
-                .setIcon(null)
-                .setPositiveButton(R.string.dialog_positive, positiveClick)
-                .setCancelable(true)
-                .show();
+    public static void showTipDialog(Context context,String content,View.OnClickListener listener) {
+        View dialogView = View.inflate(context, R.layout.dialog_msgtip, null);
+        TextView contentView = (TextView) dialogView.findViewById(R.id.dialog_content);
+        TextView btnView = (TextView) dialogView.findViewById(R.id.dialog_btn);
+        btnView.setOnClickListener(listener);
+        contentView.setText(content);
+        Dialog dialog = new Dialog(context, R.style.dialog);
+        dialog.setContentView(dialogView);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Window dialogWindow = dialog.getWindow(); //Dialog的承载体,设置Dialog的显示效果
+        WindowManager.LayoutParams attributes = dialogWindow.getAttributes();
+        attributes.width = DensityUtils.dip2px(context, 240);
+        attributes.height = DensityUtils.dip2px(context, 120);
+        dialogWindow.setAttributes(attributes);
     }
 }

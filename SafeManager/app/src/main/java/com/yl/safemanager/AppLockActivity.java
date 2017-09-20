@@ -218,7 +218,7 @@ public class AppLockActivity extends BaseTitleBackActivity implements OnItemClic
     public void setLockConfig() {
         Intent intent = new Intent(AppLockActivity.this, LockService.class);
         stopService(intent);
-        SFGT.gotoLockConfigActivity(this);
+        SFGT.gotoLockConfigActivity(this,false);
     }
 
     @Override

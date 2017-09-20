@@ -14,6 +14,6 @@ public class SafeEmptyItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, 0, DensityUtils.dip2px(view.getContext(), 10));
+        outRect.set(0, 0, 0, DensityUtils.dip2px(view.getContext(), 8));
     }
 }

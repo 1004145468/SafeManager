@@ -66,7 +66,7 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
     private void initViews() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mFileRecyclerView.setLayoutManager(linearLayoutManager);
-        //mFileRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
+        mFileRecyclerView.addItemDecoration(new SafeEmptyItemDecoration());
         mDatas = new ArrayList<>();
         mFilePaths = new ArrayList<>();
         mFileUploadAdapter = new FileUploadAdapter(this, mDatas);
@@ -125,9 +125,13 @@ public class UploadFileActivity extends BaseTitleBackActivity implements OnItemC
             @Override
             public void onError(int i, String s) {
                 DialogUtils.closeFileLoadDialog();//关闭文件加载器
-                //展示Toast
-                ToastUtils.showToast(UploadFileActivity.this, mDatas.get(mCurRemoveIndex).getmFileName() + getString(R.string.upload_filefail),
-                        Effects.flip, R.id.id_root);
+                if (i == 9007) {
+                    ToastUtils.showToast(UploadFileActivity.this, getString(R.string.upload_filefail_emptysuffix), Effects.flip, R.id.id_root);
+                } else {
+                    //展示Toast
+                    ToastUtils.showToast(UploadFileActivity.this, mDatas.get(mCurRemoveIndex).getmFileName() + getString(R.string.upload_filefail),
+                            Effects.flip, R.id.id_root);
+                }
             }
         });
     }

@@ -36,12 +36,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_pic_popup_window.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_base_conversation.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_base_conversation.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menu_item.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menu_item.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_base_conversation.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_base_conversation.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_input_pager_layout.xml",
@@ -60,12 +60,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_information_notification_message.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_human_evaluation.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_human_evaluation.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_list.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_list.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_cs_alert_human_evaluation.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_cs_alert_human_evaluation.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_sub_menu_item.xml",
@@ -84,12 +84,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_fr_conversation_member_list.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_preview_content.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_ac_file_preview_content.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_wi_block.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_wi_block.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ac_file_preview_content.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_ac_file_preview_content.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_fr_dialog_alter.xml",
@@ -104,12 +104,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_ext_input_edit_text.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_extension_bar.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_ext_extension_bar.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_input_menus.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_input_menus.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_extension_bar.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_ext_extension_bar.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_plugin_item.xml",
@@ -144,12 +144,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_conversation.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_original.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_picsel_original.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_emoji_item.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_ext_emoji_item.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_picsel_original.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_picsel_original.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_ext_menu_container.xml",
@@ -172,12 +172,12 @@
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_picsel_grid_item.xml"
     },
     {
-        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_notification_realtime_location.xml",
-        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_notification_realtime_location.xml"
-    },
-    {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_public_service_message.xml",
         "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_item_public_service_message.xml"
+    },
+    {
+        "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_notification_realtime_location.xml",
+        "source": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\src\\main\\res\\layout\\rc_notification_realtime_location.xml"
     },
     {
         "merged": "D:\\WorkSpace\\SafeManager\\SafeMangerMain\\SafeManager\\IMKit\\build\\intermediates\\res\\merged\\debug\\layout\\rc_item_preview_fragment.xml",
