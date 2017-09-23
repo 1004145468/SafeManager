@@ -1,6 +1,8 @@
 package com.yl.safemanager;
 
-import android.content.DialogInterface;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +14,12 @@ import com.yl.safemanager.adapter.FileDownLoadAdapter;
 import com.yl.safemanager.base.BaseTitleBackActivity;
 import com.yl.safemanager.constant.Constant;
 import com.yl.safemanager.decoraion.SafeEmptyItemDecoration;
-import com.yl.safemanager.decoraion.SafeItemDecoration;
 import com.yl.safemanager.entities.LoadFileInfo;
 import com.yl.safemanager.interfact.OnItemClickListener;
 import com.yl.safemanager.interfact.OnItemSwipeListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
-import com.yl.safemanager.utils.ShareUtils;
 import com.yl.safemanager.utils.ToastUtils;
 import com.yl.safemanager.view.SwipeItemLayout;
 
@@ -30,6 +30,8 @@ import butterknife.BindView;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.UpdateListener;
+
+import static android.content.ClipData.newPlainText;
 
 /**
  * Created by YL on 2017/3/17.
@@ -93,11 +95,11 @@ public class DownLoadFileActivity extends BaseTitleBackActivity implements OnIte
     @Override
     public void onItemDone(LoadFileInfo model, int viewid) {
         switch (viewid) {
-            case R.id.file_share:  //分享
-                String fileName = model.getFileName();
-                String fileUrl = model.getBmobFile().getFileUrl();
-                String content = getString(R.string.uploadfile_sharecontent);
-                ShareUtils.share(this, fileName, fileUrl, content, false);
+            case R.id.file_copy:  //复制
+                ClipData clipData = ClipData.newPlainText(Constant.APP_NAME, model.getBmobFile().getFileUrl());
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboardManager.setPrimaryClip(clipData);
+                ToastUtils.showToast(DownLoadFileActivity.this, getString(R.string.file_copy), Effects.flip, R.id.id_root);
                 break;
             case R.id.file_delete: // 删除
                 deleteFile(model);

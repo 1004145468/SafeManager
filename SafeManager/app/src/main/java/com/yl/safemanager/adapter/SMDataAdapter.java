@@ -82,7 +82,7 @@ public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             titleView.setText(smDataModel.getTitle());
         }
 
-        @OnClick({R.id.smdata_content, R.id.smdata_share, R.id.smdata_delete})
+        @OnClick({R.id.smdata_content, R.id.smdata_copy, R.id.smdata_delete})
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.smdata_content:
@@ -90,7 +90,7 @@ public class SMDataAdapter extends RecyclerView.Adapter<BaseSfHolder> {
                         mOnItemClickListener.onClick(smDataModel);
                     }
                     break;
-                case R.id.smdata_share:
+                case R.id.smdata_copy:
                 case R.id.smdata_delete:
                     swipeItemLayout.close();
                     if (mOnItemSwipeListener != null) {

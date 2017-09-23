@@ -61,11 +61,11 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/smdata_share"
+            android:id="@+id/smdata_copy"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/share"
+            android:text="@string/copy"
             android:textColor="@color/color8"
             android:textSize="15sp" />
 

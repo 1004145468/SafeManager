@@ -84,7 +84,7 @@ public class FileDownLoadAdapter extends RecyclerView.Adapter<BaseSfHolder> {
             fileTimeView.setText(loadFileInfo.getUploadTime());
         }
 
-        @OnClick({R.id.file_download, R.id.file_share, R.id.file_delete})
+        @OnClick({R.id.file_download, R.id.file_copy, R.id.file_delete})
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.file_download:  //下载
@@ -92,7 +92,7 @@ public class FileDownLoadAdapter extends RecyclerView.Adapter<BaseSfHolder> {
                         mOnItemClickListener.onClick(loadFileInfo);
                     }
                     break;
-                case R.id.file_share: // 分享
+                case R.id.file_copy: // 分享
                 case R.id.file_delete:  //删除
                     swipeItemLayout.close();
                     if (mOnItemSwipeListener != null) {

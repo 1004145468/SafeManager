@@ -1,6 +1,8 @@
 package com.yl.safemanager;
 
-import android.content.DialogInterface;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +20,6 @@ import com.yl.safemanager.interfact.OnItemSwipeListener;
 import com.yl.safemanager.interfact.OnResultAttachedListener;
 import com.yl.safemanager.utils.BmobUtils;
 import com.yl.safemanager.utils.DialogUtils;
-import com.yl.safemanager.utils.ShareUtils;
 import com.yl.safemanager.utils.ToastUtils;
 import com.yl.safemanager.view.SwipeItemLayout;
 
@@ -136,10 +137,13 @@ public class SMDataActivity extends BaseTitleBackActivity implements OnItemSwipe
     @Override
     public void onItemDone(SmDataModel smDataModel, int viewid) {
         switch (viewid) {
-            case R.id.smdata_share:  //分享
-                String title = "分享个人记录";
+            case R.id.smdata_copy:  //分享
+                String title = smDataModel.getTitle();
                 String content = smDataModel.getContent();
-                ShareUtils.share(this, title, "http://www.baidu.com", content, true);
+                ClipData clipData = ClipData.newPlainText(Constant.APP_NAME,  "《 "+ title + " 》\n" + content);
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboardManager.setPrimaryClip(clipData);
+                ToastUtils.showToast(SMDataActivity.this, getString(R.string.smdata_copy), Effects.flip, R.id.id_root);
                 break;
             case R.id.smdata_delete: //删除
                 deleteNote(smDataModel);
